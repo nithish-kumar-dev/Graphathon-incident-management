@@ -12,10 +12,10 @@ export const TAB_IDS = ["live", "evidence", "knowledge", "review", "history"] as
 export type TabId = (typeof TAB_IDS)[number];
 
 export const TAB_LABELS: Record<TabId, string> = {
-  live: "Live Investigation",
-  evidence: "Evidence Graph",
-  knowledge: "Knowledge & Memory",
-  review: "Human Review",
+  live: "Investigation",
+  evidence: "Evidence graph",
+  knowledge: "Knowledge & memory",
+  review: "Human review",
   history: "History",
 };
 

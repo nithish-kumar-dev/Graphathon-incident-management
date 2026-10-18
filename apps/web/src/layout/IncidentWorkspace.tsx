@@ -12,7 +12,7 @@ import { NavProvider } from "../features/NavContext";
 import HumanReviewTab from "../features/review/HumanReviewTab";
 import { TAB_IDS, TAB_LABELS, type TabId } from "../features/types";
 import { useAsync } from "../hooks/useAsync";
-import { IncidentHeader } from "./IncidentHeader";
+import { IncidentHeader, RunBanner } from "./IncidentHeader";
 
 const TAB_CONTENT: Record<TabId, () => ReactNode> = {
   live: () => <LiveInvestigationTab />,
@@ -24,17 +24,19 @@ const TAB_CONTENT: Record<TabId, () => ReactNode> = {
 
 export interface IncidentWorkspaceProps {
   incidentId: string;
+  /** Change it to refetch the incident and every tab (e.g. after a demo graph change). */
+  refreshKey?: number;
   tab: TabId;
   onTabChange: (tab: TabId) => void;
   /** Reports the live stage so the incident navigator can show it without extra requests. */
   onSummaryChange?: (incidentId: string, summary: StageSummary) => void;
 }
 
-export function IncidentWorkspace({ incidentId, tab, onTabChange, onSummaryChange }: IncidentWorkspaceProps) {
+export function IncidentWorkspace({ incidentId, refreshKey = 0, tab, onTabChange, onSummaryChange }: IncidentWorkspaceProps) {
   const { client, user } = useApi();
   const { data: incident, error, loading, reload } = useAsync(
     (signal) => client.getIncident(incidentId, signal),
-    [client, incidentId, user],
+    [client, incidentId, user, refreshKey],
   );
 
   if (!incident) {
@@ -86,8 +88,9 @@ function Workspace({
   const tabs: TabItem<TabId>[] = TAB_IDS.map((id) => ({ id, label: TAB_LABELS[id], content: TAB_CONTENT[id]() }));
 
   return (
-    <div className="flex min-w-0 flex-col gap-4">
+    <div className="flex min-w-0 flex-col gap-5">
       <IncidentHeader user={user} onViewInvestigation={viewInvestigation} />
+      <RunBanner compact={tab !== "live"} onViewWorkstream={tab !== "live" ? viewInvestigation : undefined} />
       {/* Above the tabs so progress is visible from every section. */}
       <ProcessTracker stages={view.stages} compact={tab !== "live"} />
       <Tabs label="Incident sections" tabs={tabs} selectedId={tab} onSelect={onTabChange} />

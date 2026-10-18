@@ -337,6 +337,52 @@ function decidedStages(
   }
 }
 
+// ---------------------------------------------------------------- paced display
+
+/** Minimum time a paced stage frame stays on screen before the next real change is revealed. */
+export const STAGE_PACE_MS = 3000;
+
+/**
+ * A stage list's *progress* only: ids and statuses, ignoring captions. Captions carry live counts and
+ * relative times that change on every poll without the run having moved, so pacing keys off this.
+ */
+export function stagesProgressSignature(stages: readonly Stage[]): string {
+  return stages.map((s) => `${s.id}:${s.status}`).join("|");
+}
+
+/** How far through a stage a status is. Only used to prove a paced frame never leads the real one. */
+const STATUS_RANK: Record<StageStatus, number> = {
+  unavailable: 0,
+  pending: 0,
+  running: 1,
+  waiting: 2,
+  completed: 3,
+  failed: 3,
+  skipped: 3,
+};
+
+/**
+ * One step of a paced display: `shown` moved exactly one stage closer to `real`.
+ *
+ * Every stage in the result is taken verbatim either from `real` (the backend's current truth) or
+ * from `shown` (a frame that was itself real at an earlier moment) — no status is ever synthesised
+ * — and a stage is only ever held back when its displayed status ranks strictly *behind* the real
+ * one. So for every stage the displayed status is at or behind the backend's, never ahead of it.
+ * Each call makes at least one more stage match `real`, so repeated calls converge on the truth.
+ */
+export function advanceStages(shown: readonly Stage[], real: readonly Stage[]): Stage[] {
+  const previous = new Map(shown.map((s) => [s.id, s]));
+  let revealed = false;
+  return real.map((r) => {
+    const prev = previous.get(r.id);
+    // Nothing older, or nothing behind to hold on to: show what the backend currently reports.
+    if (!prev || prev.status === r.status || STATUS_RANK[prev.status] >= STATUS_RANK[r.status]) return r;
+    if (revealed) return prev;
+    revealed = true;
+    return r;
+  });
+}
+
 export function currentStage(stages: readonly Stage[]): StageId | null {
   const active = stages.find((x) => x.status === "running" || x.status === "waiting" || x.status === "failed");
   if (active) return active.id;

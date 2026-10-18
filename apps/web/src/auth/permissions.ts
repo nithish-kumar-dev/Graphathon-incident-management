@@ -10,13 +10,14 @@ export const PERMISSIONS = [
   "alert:ingest",
   "investigation:create",
   "action:review",
+  "demo:control",
 ] as const;
 export type Permission = (typeof PERMISSIONS)[number];
 
 const GRANTS: Record<DemoUser, readonly Permission[]> = {
   "demo-viewer": ["incident:read"],
-  "demo-responder": ["incident:read", "incident:write", "alert:ingest", "investigation:create"],
-  "payments-lead": ["incident:read", "incident:write", "investigation:create", "action:review"],
+  "demo-responder": ["incident:read", "incident:write", "alert:ingest", "investigation:create", "demo:control"],
+  "payments-lead": ["incident:read", "incident:write", "investigation:create", "action:review", "demo:control"],
 };
 
 const ROLES: Record<DemoUser, readonly string[]> = {

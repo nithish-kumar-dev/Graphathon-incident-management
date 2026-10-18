@@ -75,7 +75,7 @@ export default function EvidenceTab({ incident, user }: TabProps) {
 }
 
 function IdList({ ids }: { ids: string[] }) {
-  if (ids.length === 0) return <span className="text-slate-500">—</span>;
+  if (ids.length === 0) return <span className="text-faint">—</span>;
   return (
     <ul className="flex flex-col gap-0.5">
       {ids.map((id) => (
@@ -111,7 +111,7 @@ function EvidenceTable({ evidence, usedIds }: { evidence: EvidenceOut[]; usedIds
               {evidence.map((e) => {
                 const used = usedIds.has(e.id);
                 return (
-                  <tr key={e.id} className={cx(used && "bg-amber-50/60")} data-used-in-path={used ? "true" : undefined}>
+                  <tr key={e.id} className={cx(used && "bg-warn-tint")} data-used-in-path={used ? "true" : undefined}>
                     <th scope="row" className={cx(TD_ID, "text-left font-normal")}>
                       <CodeBlock inline value={e.id} />
                       {used ? (
@@ -126,7 +126,7 @@ function EvidenceTable({ evidence, usedIds }: { evidence: EvidenceOut[]; usedIds
                     <td className={TD}>
                       <UtcTime iso={e.observed_at} />
                     </td>
-                    <td className={cx(TD, "min-w-48")}>{e.excerpt ?? <span className="text-slate-500">—</span>}</td>
+                    <td className={cx(TD, "min-w-48")}>{e.excerpt ?? <span className="text-faint">—</span>}</td>
                     <td className={TD_REF}>
                       <CodeBlock inline value={e.source_ref} />
                     </td>
@@ -175,7 +175,7 @@ function SourceRefsSection({ entries }: { entries: SourceRefEntry[] }) {
                     <ul className="flex flex-col gap-0.5">
                       {entry.owners.map((o) => (
                         <li key={`${o.kind}:${o.id}`}>
-                          <span className="text-xs text-slate-500">{o.kind}</span> <CodeBlock inline value={o.id} />
+                          <span className="kicker">{o.kind}</span> <CodeBlock inline value={o.id} />
                         </li>
                       ))}
                     </ul>

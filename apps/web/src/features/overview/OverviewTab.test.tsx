@@ -267,7 +267,7 @@ describe("OverviewTab with Phase 4 results", () => {
     const badge = screen.getByText("stub-fallback(ollama timeout)");
     expect(badge).toHaveAttribute("title", expect.stringMatching(/^Fallback: the configured LLM investigator was unavailable/));
     expect(badge).toHaveTextContent("⚠");
-    expect(badge.className).toMatch(/bg-amber-600/);
+    expect(badge.className).toMatch(/bg-warn(?!-)/);
     expect(screen.queryByTitle("Investigator: stub-fallback(ollama timeout)")).not.toBeInTheDocument();
   });
 

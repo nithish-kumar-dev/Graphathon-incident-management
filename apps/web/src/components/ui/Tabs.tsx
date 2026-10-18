@@ -51,7 +51,7 @@ export function Tabs<Id extends string>({ tabs, selectedId, onSelect, label, cla
         role="tablist"
         aria-label={label}
         onKeyDown={onKeyDown}
-        className="flex gap-1 overflow-x-auto border-b border-slate-200"
+        className="flex gap-1 overflow-x-auto border-b border-line"
       >
         {tabs.map((t, i) => {
           const selected = i === selectedIndex;
@@ -69,10 +69,10 @@ export function Tabs<Id extends string>({ tabs, selectedId, onSelect, label, cla
               tabIndex={selected ? 0 : -1}
               onClick={() => onSelect(t.id)}
               className={cx(
-                "-mb-px whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600",
+                "-mb-px whitespace-nowrap border-b-2 px-4 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
                 selected
-                  ? "border-sky-700 text-sky-800"
-                  : "border-transparent text-slate-600 hover:border-slate-300 hover:text-slate-900",
+                  ? "border-brand font-bold text-brand"
+                  : "border-transparent font-medium text-muted hover:border-line-strong hover:text-ink",
               )}
             >
               {t.label}

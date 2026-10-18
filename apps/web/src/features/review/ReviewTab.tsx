@@ -29,7 +29,7 @@ export default function ReviewTab({ incident, investigation }: TabProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="rounded-md border border-slate-300 bg-slate-50 p-3 text-sm text-slate-700">
+      <p className="rounded-md border border-line-strong bg-surface-muted p-3 text-sm text-muted">
         <span className="font-semibold">Raw proposal details.</span>{" "}
         {proposals.length > 0
           ? "These are the exact proposals from the investigation run. Decisions are recorded in the Human Review section above; nothing can be decided here."
@@ -37,7 +37,7 @@ export default function ReviewTab({ incident, investigation }: TabProps) {
       </p>
 
       {investigation?.status === "awaiting_review" ? (
-        <div role="status" className="rounded-md border border-violet-300 bg-violet-50 p-3 text-sm text-violet-900">
+        <div role="status" className="rounded-md border border-brand-line bg-brand-tint p-3 text-sm text-brand">
           <p className="font-semibold">Pending your approval</p>
           <p>
             Investigation <Code>{investigation.id}</Code> is awaiting human review. Record the decision in the Human Review section above.
@@ -109,14 +109,14 @@ function CandidateCard({
           <Field label="Deployment">
             <Code>{path.deployment.id}</Code> version <Code>{path.deployment.version}</Code>
             {path.deployment.deployed_at ? (
-              <span className="text-slate-600">
+              <span className="text-muted">
                 {" "}
                 deployed <UtcTime value={path.deployment.deployed_at} />
               </span>
             ) : null}
           </Field>
           <Field label="Runbook">
-            {c.runbook.title} <Code>{c.runbook.id}</Code> <span className="text-slate-600">v{c.runbook.version}</span>
+            {c.runbook.title} <Code>{c.runbook.id}</Code> <span className="text-muted">v{c.runbook.version}</span>
           </Field>
           <Field label="Risk">{riskFor(c.actionType)}</Field>
           <Field label="Owner team">
@@ -128,9 +128,9 @@ function CandidateCard({
         </Fields>
 
         <div>
-          <h4 className="mb-1 text-sm font-semibold text-slate-800">Exact arguments</h4>
+          <h4 className="mb-1 text-sm font-semibold text-ink">Exact arguments</h4>
           <CodeBlock value={candidateArgs(c)} label={`Exact arguments for ${c.actionType}`} />
-          <p className="mt-1 text-xs text-slate-600">
+          <p className="mt-1 text-xs text-muted">
             Preview derived from graph evidence. A real proposal with its SHA-256 spec hash is created server-side when
             an investigation runs.
           </p>
@@ -187,12 +187,12 @@ function ProposalCard({
             <Code>{p.target_service_id}</Code>
           </Field>
           <Field label="Deployment">
-            {p.deployment_id ? <Code>{p.deployment_id}</Code> : <span className="text-slate-500">none</span>}
+            {p.deployment_id ? <Code>{p.deployment_id}</Code> : <span className="text-faint">none</span>}
           </Field>
           <Field label="Runbook">
             {runbook ? <>{runbook.title} </> : null}
             <Code>{p.runbook_id}</Code>
-            {runbook ? <span className="text-slate-600"> v{runbook.version}</span> : null}
+            {runbook ? <span className="text-muted"> v{runbook.version}</span> : null}
           </Field>
           <Field label="Risk">{p.risk}</Field>
           <Field label="Owner team">
@@ -202,18 +202,18 @@ function ProposalCard({
             {path ? (
               <ApprovalPolicy path={path} />
             ) : (
-              <span className="text-slate-600">No explanation path matches this proposal; no governing decision found.</span>
+              <span className="text-muted">No explanation path matches this proposal; no governing decision found.</span>
             )}
           </Field>
           <Field label="Rationale">{p.rationale}</Field>
         </Fields>
 
         <div>
-          <h4 className="mb-1 text-sm font-semibold text-slate-800">Exact spec</h4>
+          <h4 className="mb-1 text-sm font-semibold text-ink">Exact spec</h4>
           <CodeBlock value={p.spec} label={`Exact spec for ${p.action_type}`} />
-          <h4 className="mt-3 mb-1 text-sm font-semibold text-slate-800">Spec hash (SHA-256)</h4>
+          <h4 className="mt-3 mb-1 text-sm font-semibold text-ink">Spec hash (SHA-256)</h4>
           <CodeBlock inline value={p.spec_hash} label="Spec hash" className="[overflow-wrap:anywhere]" />
-          <p className="mt-1 text-xs text-slate-600">
+          <p className="mt-1 text-xs text-muted">
             An approval binds to this exact spec and hash.
           </p>
         </div>
@@ -234,7 +234,7 @@ function ApprovalPolicy({ path }: { path: ExplanationPath }) {
     );
   }
   if ((path.governing_decisions ?? []).length === 0) {
-    return <span className="text-slate-500">policy in force, no governing decision recorded</span>;
+    return <span className="text-faint">policy in force, no governing decision recorded</span>;
   }
   return (
     <ul className="space-y-1">
@@ -245,11 +245,11 @@ function ApprovalPolicy({ path }: { path: ExplanationPath }) {
               Requires role <Code>{d.required_approver_role}</Code>
             </>
           ) : (
-            <span className="text-slate-600">no approver role recorded</span>
+            <span className="text-muted">no approver role recorded</span>
           )}{" "}
           — {d.title}{" "}
           {d.documented_in?.map((doc) => (
-            <span key={doc.id} className="text-slate-600">
+            <span key={doc.id} className="text-muted">
               ({doc.title ?? doc.id})
             </span>
           ))}
@@ -262,16 +262,16 @@ function ApprovalPolicy({ path }: { path: ExplanationPath }) {
 function SupportingEvidence({ evidence, empty }: { evidence: EvidenceRef[]; empty: string }) {
   return (
     <div>
-      <h4 className="mb-1 text-sm font-semibold text-slate-800">Supporting evidence</h4>
+      <h4 className="mb-1 text-sm font-semibold text-ink">Supporting evidence</h4>
       {evidence.length === 0 ? (
-        <p className="text-sm text-slate-500">{empty}</p>
+        <p className="text-sm text-faint">{empty}</p>
       ) : (
         <ul className="space-y-1 text-sm">
           {evidence.map((ev) => (
             <li key={ev.id} className="flex min-w-0 flex-wrap items-center gap-1.5">
               <Code>{ev.id}</Code>
               <Badge variant="outline">{ev.kind}</Badge>
-              <Code className="text-slate-600">{ev.source_ref}</Code>
+              <Code className="text-muted">{ev.source_ref}</Code>
             </li>
           ))}
         </ul>
@@ -289,11 +289,11 @@ function UnconfirmedFindings({
 }) {
   return (
     <div>
-      <h4 className="mb-1 text-sm font-semibold text-slate-800">Contradictory or unconfirmed findings</h4>
+      <h4 className="mb-1 text-sm font-semibold text-ink">Contradictory or unconfirmed findings</h4>
       {!investigation ? (
-        <p className="text-sm text-slate-500">No investigation started, so there are no findings yet.</p>
+        <p className="text-sm text-faint">No investigation started, so there are no findings yet.</p>
       ) : unconfirmed.length === 0 ? (
-        <p className="text-sm text-slate-500">None: every finding of this investigation is confirmed.</p>
+        <p className="text-sm text-faint">None: every finding of this investigation is confirmed.</p>
       ) : (
         <ul className="space-y-2 text-sm">
           {unconfirmed.map((f, i) => (
@@ -303,7 +303,7 @@ function UnconfirmedFindings({
               </span>
               <span className="break-words">{f.statement}</span>
               {(f.contradicting_evidence ?? []).length > 0 ? (
-                <span className="text-xs text-red-900">
+                <span className="text-xs text-bad">
                   Contradicted by{" "}
                   {(f.contradicting_evidence ?? []).map((e, j) => (
                     <span key={e.id}>
@@ -326,7 +326,7 @@ function OwnerTeam({ serviceId }: { serviceId: string }) {
   const ctx = useAsync((signal) => client.getServiceContext(serviceId, {}, signal), [client, serviceId, user]);
   if (ctx.error) return <ErrorBanner error={ctx.error} title="Could not load owner team" onRetry={ctx.reload} />;
   if (!ctx.data) return <Spinner size="sm" label="Loading owner team" />;
-  if (ctx.data.owners.length === 0) return <span className="text-slate-500">no owning team recorded</span>;
+  if (ctx.data.owners.length === 0) return <span className="text-faint">no owning team recorded</span>;
   return (
     <ul className="space-y-0.5">
       {ctx.data.owners.map((t) => (

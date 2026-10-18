@@ -11,6 +11,7 @@ export {
 } from "./StatusBadges";
 export { GateDecisionBadge, GateViolationList } from "./Gate";
 export { Card, type CardProps } from "./Card";
+export { ArrowLink, FactRow, Kicker, MetaLine, SectionCard, type SectionCardProps } from "./surfaces";
 export { CodeBlock, type CodeBlockProps } from "./CodeBlock";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
 export { ErrorBanner, type ErrorBannerProps } from "./ErrorBanner";

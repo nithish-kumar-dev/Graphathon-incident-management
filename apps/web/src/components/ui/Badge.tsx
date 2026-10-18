@@ -15,30 +15,30 @@ export interface BadgeProps {
 }
 
 const SOFT: Record<BadgeTone, string> = {
-  neutral: "bg-slate-100 text-slate-800 ring-slate-300",
-  info: "bg-sky-50 text-sky-900 ring-sky-300",
-  success: "bg-emerald-50 text-emerald-900 ring-emerald-300",
-  warning: "bg-amber-50 text-amber-900 ring-amber-400",
-  danger: "bg-red-50 text-red-900 ring-red-300",
-  accent: "bg-violet-50 text-violet-900 ring-violet-300",
+  neutral: "bg-surface-muted text-muted ring-line",
+  info: "bg-brand-tint text-brand ring-brand-line",
+  success: "bg-good-tint text-good ring-good-line",
+  warning: "bg-warn-tint text-warn ring-warn-line",
+  danger: "bg-bad-tint text-bad ring-bad-line",
+  accent: "bg-brand-tint text-brand-deep ring-brand-line",
 };
 
 const SOLID: Record<BadgeTone, string> = {
-  neutral: "bg-slate-700 text-white ring-slate-700",
-  info: "bg-sky-700 text-white ring-sky-700",
-  success: "bg-emerald-700 text-white ring-emerald-700",
-  warning: "bg-amber-600 text-white ring-amber-600",
-  danger: "bg-red-700 text-white ring-red-700",
-  accent: "bg-violet-700 text-white ring-violet-700",
+  neutral: "bg-muted text-white ring-muted",
+  info: "bg-brand text-white ring-brand",
+  success: "bg-good text-white ring-good",
+  warning: "bg-warn text-white ring-warn",
+  danger: "bg-bad text-white ring-bad",
+  accent: "bg-brand-deep text-white ring-brand-deep",
 };
 
 const OUTLINE: Record<BadgeTone, string> = {
-  neutral: "bg-white text-slate-800 border-slate-400",
-  info: "bg-white text-sky-900 border-sky-500",
-  success: "bg-white text-emerald-900 border-emerald-600",
-  warning: "bg-white text-amber-900 border-amber-500",
-  danger: "bg-white text-red-900 border-red-500",
-  accent: "bg-white text-violet-900 border-violet-500",
+  neutral: "bg-surface text-muted border-line",
+  info: "bg-surface text-brand border-brand-line",
+  success: "bg-surface text-good border-good-line",
+  warning: "bg-surface text-warn border-warn-line",
+  danger: "bg-surface text-bad border-bad-line",
+  accent: "bg-surface text-brand-deep border-brand-line",
 };
 
 export function Badge({ tone = "neutral", variant = "soft", title, icon, className, children }: BadgeProps) {
@@ -52,7 +52,7 @@ export function Badge({ tone = "neutral", variant = "soft", title, icon, classNa
     <span
       title={title}
       className={cx(
-        "inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium",
+        "inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-semibold",
         style,
         className,
       )}

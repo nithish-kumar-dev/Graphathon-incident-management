@@ -3,7 +3,16 @@ import { useApi, type ApiError } from "../../api/client";
 import type { AgentEventOut, DemoUser, IncidentDetail, IncidentMemories, RetrievalBundle } from "../../api/types";
 import { useAsync } from "../../hooks/useAsync";
 import { useIncidentInvestigation, type IncidentInvestigationState } from "../../hooks/useIncidentInvestigation";
-import { buildInvestigationView, type InvestigationView } from "./model";
+import {
+  STAGE_PACE_MS,
+  advanceStages,
+  buildInvestigationView,
+  currentStage as currentStageOf,
+  stagesProgressSignature,
+  type InvestigationView,
+  type Phase,
+  type Stage,
+} from "./model";
 
 /**
  * One shared, live picture of an incident for every tab. It composes the existing polling hook with
@@ -50,6 +59,76 @@ export function useNow(intervalMs = 20_000): number {
     return () => clearInterval(id);
   }, [intervalMs]);
   return now;
+}
+
+/** True when the viewer has asked for reduced motion. Re-reads the query if the preference changes. */
+export function usePrefersReducedMotion(): boolean {
+  const query = () => (typeof window !== "undefined" && window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null);
+  const [reduced, setReduced] = useState(() => query()?.matches ?? false);
+  useEffect(() => {
+    const mq = query();
+    if (!mq) return;
+    const onChange = () => setReduced(mq.matches);
+    onChange();
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return reduced;
+}
+
+/**
+ * The stage tracker, paced so a live run is watchable instead of snapping from "not started" to
+ * "complete" in one poll.
+ *
+ * It only ever *delays* the real data. Every frame it returns comes out of `advanceStages`, which
+ * copies each stage verbatim from the current real list or from the previously displayed frame
+ * (itself real at an earlier moment), so no stage can be displayed further along than the backend
+ * has reported. Pacing is skipped entirely for:
+ *   - the first frame seen for a run, so a run that finished long ago is shown at once, never replayed;
+ *   - any run never observed in `queued`/`running` here, i.e. anything that was not progressing live;
+ *   - a `failed` run, which converges immediately rather than leaving a stale stage on screen;
+ *   - a different run id (restart), and for viewers who prefer reduced motion.
+ * Caption-only churn (counts, relative times) is adopted immediately and does not restart the clock.
+ */
+export function usePacedStages(real: Stage[], runId: string | null, phase: Phase, paced: boolean): Stage[] {
+  const [shown, setShown] = useState<Stage[]>(real);
+  const shownRef = useRef<Stage[]>(real);
+  const lastFrameAt = useRef<number>(Date.now());
+  const seenRunId = useRef<string | null>(runId);
+  const sawLiveRun = useRef(false);
+
+  useEffect(() => {
+    const show = (next: Stage[], restartClock: boolean) => {
+      shownRef.current = next;
+      if (restartClock) lastFrameAt.current = Date.now();
+      setShown(next);
+    };
+
+    const wasLive = sawLiveRun.current;
+    if (phase === "queued" || phase === "running") sawLiveRun.current = true;
+
+    // A different run (or no run) has nothing in common with what is on screen: show it as it is.
+    if (seenRunId.current !== runId) {
+      seenRunId.current = runId;
+      show(real, true);
+      return;
+    }
+    if (!paced || !wasLive || phase === "none" || phase === "failed") {
+      show(real, true);
+      return;
+    }
+    if (stagesProgressSignature(real) === stagesProgressSignature(shownRef.current)) {
+      // Same progress, fresher captions. Adopt without restarting the dwell timer.
+      show(real, false);
+      return;
+    }
+    const wait = Math.max(0, STAGE_PACE_MS - (Date.now() - lastFrameAt.current));
+    const id = setTimeout(() => show(advanceStages(shownRef.current, real), true), wait);
+    return () => clearTimeout(id);
+  }, [real, runId, phase, paced, shown]);
+
+  return shown;
 }
 
 /** Changes whenever the run moves (status or any branch state), not on every poll. */
@@ -117,7 +196,7 @@ export function InvestigationSessionProvider({ incident, incidentRefreshing, rel
   });
 
   const events = timeline.data?.events;
-  const view = useMemo(
+  const realView = useMemo(
     () =>
       buildInvestigationView({
         incident,
@@ -128,6 +207,14 @@ export function InvestigationSessionProvider({ incident, incidentRefreshing, rel
         runEvents: stepEvents.data?.events ?? null,
       }),
     [incident, run.investigation, retrieval.data, memories.data, events, stepEvents.data],
+  );
+
+  // Only the stage tracker is paced; every other field stays exactly what the backend reported.
+  const reducedMotion = usePrefersReducedMotion();
+  const pacedStages = usePacedStages(realView.stages, run.investigation?.id ?? null, realView.phase, !reducedMotion);
+  const view = useMemo<InvestigationView>(
+    () => (pacedStages === realView.stages ? realView : { ...realView, stages: pacedStages, currentStage: currentStageOf(pacedStages) }),
+    [realView, pacedStages],
   );
 
   const refreshRun = run.refresh;

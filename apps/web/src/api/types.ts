@@ -598,3 +598,31 @@ export interface ApiErrorBody {
     details?: unknown;
   };
 }
+
+// ------------------------------------------------------------------ demo controls (Phase 6)
+export interface DemoToggle {
+  id: string;
+  label: string;
+  description: string;
+  /** The graph relationship the toggle adds or removes, with real ids. */
+  edge: string;
+  present: boolean;
+}
+
+export type ApprovalPolicyState = "policy_in_force" | "no_active_policy_escalate" | "no_rollback_path";
+
+export interface RecommendationEffect {
+  incident_id: string;
+  rollback_paths: number;
+  target_service_ids: string[];
+  deployment_ids: string[];
+  approval_policy: ApprovalPolicyState;
+  summary: string;
+}
+
+export interface DemoControls {
+  /** False unless the deployment turned demo controls on; then there are no toggles. */
+  enabled: boolean;
+  toggles: DemoToggle[];
+  effect: RecommendationEffect | null;
+}

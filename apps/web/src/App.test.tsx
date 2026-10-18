@@ -5,16 +5,16 @@ import App from "./App";
 import { errorEnvelope, installMockApi } from "./test/mockApi";
 
 describe("App", () => {
-  it("renders the synthetic-data banner and the incident list from fixtures", async () => {
+  it("renders the synthetic-workspace marker and the incident list from fixtures", async () => {
     installMockApi();
     render(<App />);
-    expect(screen.getByText("Synthetic company data — NovaCommerce is fictional")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Graphathon Incident Investigator" })).toBeInTheDocument();
+    expect(screen.getByText(/SYNTHETIC WORKSPACE/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Incident Workbench" })).toBeInTheDocument();
     const list = await screen.findByRole("list", { name: "Incident list" });
     expect(within(list).getByText("INC-101")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Resolved \(1\)/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /1 RESOLVED/ })).toBeInTheDocument();
     expect(within(list).getByText("Checkout 5xx spike after payment release")).toBeInTheDocument();
-    expect(await screen.findByText("Backend ready")).toBeInTheDocument();
+    expect(await screen.findByText("Connected")).toBeInTheDocument();
   });
 
   it("selecting INC-101 shows the workspace header and five tabs", async () => {
@@ -26,13 +26,13 @@ describe("App", () => {
     expect(await screen.findByRole("heading", { level: 2, name: "Checkout 5xx spike after payment release" })).toBeInTheDocument();
     expect(window.location.hash).toBe("#/incidents/nova.inc.101");
     expect(screen.getAllByRole("tab").map((t) => t.textContent)).toEqual([
-      "Live Investigation",
-      "Evidence Graph",
-      "Knowledge & Memory",
-      "Human Review",
+      "Investigation",
+      "Evidence graph",
+      "Knowledge & memory",
+      "Human review",
       "History",
     ]);
-    await user.click(screen.getByRole("tab", { name: "Evidence Graph" }));
+    await user.click(screen.getByRole("tab", { name: "Evidence graph" }));
     expect(window.location.hash).toBe("#/incidents/nova.inc.101/evidence");
     expect(api.requestsTo("GET", "/api/incidents/nova.inc.101")[0]?.user).toBe("demo-viewer");
   });
@@ -47,7 +47,7 @@ describe("App", () => {
     expect(button).toBeDisabled();
     expect(button.parentElement).toHaveAttribute("title", expect.stringContaining("investigation:create"));
 
-    await user.selectOptions(screen.getByLabelText("Demo identity (not authentication)"), "demo-responder");
+    await user.selectOptions(screen.getByLabelText("Viewing as"), "demo-responder");
     expect(screen.getByRole("button", { name: "Start Investigation" })).toBeEnabled();
     expect(window.localStorage.getItem("graphathon.demoUser")).toBe("demo-responder");
 
@@ -80,7 +80,7 @@ describe("App", () => {
     installMockApi();
     window.location.hash = "#/incidents/nova.inc.101/overview";
     render(<App />);
-    const tab = await screen.findByRole("tab", { name: "Live Investigation" });
+    const tab = await screen.findByRole("tab", { name: "Investigation" });
     expect(tab).toHaveAttribute("aria-selected", "true");
   });
 
@@ -91,7 +91,7 @@ describe("App", () => {
     const list = await screen.findByRole("list", { name: "Incident list" });
     expect(within(list).getByText("INC-101")).toBeInTheDocument();
     expect(within(list).queryByText("INC-092")).not.toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: /Resolved/ }));
+    await user.click(screen.getByRole("button", { name: /RESOLVED/ }));
     expect(within(screen.getByRole("list", { name: "Incident list" })).getByText("INC-092")).toBeInTheDocument();
   });
 });

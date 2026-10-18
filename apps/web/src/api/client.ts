@@ -3,6 +3,7 @@ import type {
   AlertIn,
   AlertIngestResult,
   ApiErrorBody,
+  DemoControls,
   DemoUser,
   IncidentDetail,
   IncidentList,
@@ -126,6 +127,12 @@ export interface ApiClient {
   /** Mark the draft memory written after an execution as verified (successful or failed). */
   validateMemory(memoryId: string, outcome: "successful" | "failed", signal?: AbortSignal): Promise<MemoryReviewOut>;
   rejectMemory(memoryId: string, signal?: AbortSignal): Promise<MemoryReviewOut>;
+  /** Demo-only graph toggles. `enabled: false` (or a 404) means the deployment has them off. */
+  getDemoControls(incidentId?: string, signal?: AbortSignal): Promise<DemoControls>;
+  /** Add (`present: true`) or remove one demo edge. Idempotent. */
+  setDemoToggle(toggleId: string, present: boolean, incidentId?: string, signal?: AbortSignal): Promise<DemoControls>;
+  /** Restore both demo edges. */
+  resetDemoControls(incidentId?: string, signal?: AbortSignal): Promise<DemoControls>;
   /** 201 -> created: true (new alert); 200 -> created: false (dedup or replay). */
   ingestAlert(alert: AlertIn, signal?: AbortSignal): Promise<AlertIngestResult & { created: boolean }>;
   /** Never throws for 503; resolves with ready: false. Network failures still throw ApiError("network_error"). */
@@ -253,6 +260,18 @@ export function createClient(getUser: () => DemoUser, options: CreateClientOptio
       (await request<MemoryReviewOut>("POST", `/api/memories/${seg(id)}/validate`, { body: { outcome }, signal })).data,
     rejectMemory: async (id, signal) =>
       (await request<MemoryReviewOut>("POST", `/api/memories/${seg(id)}/reject`, { signal })).data,
+    getDemoControls: (incidentId, signal) =>
+      get<DemoControls>("/api/demo/controls", { incident_id: incidentId }, signal),
+    setDemoToggle: async (toggleId, present, incidentId, signal) =>
+      (
+        await request<DemoControls>("PUT", `/api/demo/controls/${seg(toggleId)}`, {
+          query: { incident_id: incidentId },
+          body: { present },
+          signal,
+        })
+      ).data,
+    resetDemoControls: async (incidentId, signal) =>
+      (await request<DemoControls>("PUT", "/api/demo/controls/reset", { query: { incident_id: incidentId }, signal })).data,
     ingestAlert: async (alert, signal) => {
       const r = await request<AlertIngestResult>("POST", "/api/alerts", { body: alert, signal });
       return { ...r.data, created: r.status === 201 };

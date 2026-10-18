@@ -2,7 +2,7 @@ import type { DecisionRef, ExplanationPath, PathHop, RunbookRef } from "../../ap
 import { Card, CodeBlock, EmptyState } from "../../components/ui";
 import { HypothesisNote, NodeLabel, RelArrow, UtcTime } from "../overview/format";
 
-const SUBHEAD = "mt-4 mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500";
+const SUBHEAD = "kicker mt-4 mb-1.5";
 
 /** One stored edge, exactly as returned: [from_label] from_id —REL→ [to_label] to_id. */
 export function HopLine({ hop }: { hop: PathHop }) {
@@ -20,18 +20,18 @@ export function HopLine({ hop }: { hop: PathHop }) {
 function DecisionItem({ decision, targetId }: { decision: DecisionRef; targetId: string }) {
   const docs = decision.documented_in ?? [];
   return (
-    <li className="rounded-md border border-slate-200 p-2">
+    <li className="rounded-md border border-line bg-surface p-2.5">
       <HopLine hop={{ from_label: "Decision", from_id: decision.id, rel: "GOVERNS", to_label: "Service", to_id: targetId }} />
       <p className="mt-1 text-sm">
         <span className="font-medium">{decision.title}</span>{" "}
-        <span className="text-xs text-slate-500">status {decision.status}</span>
+        <span className="text-xs text-faint">status {decision.status}</span>
       </p>
-      <p className="text-sm text-slate-700">
+      <p className="text-sm text-muted">
         Required approver role:{" "}
         {decision.required_approver_role ? (
           <CodeBlock inline value={decision.required_approver_role} />
         ) : (
-          <span className="text-slate-500">not recorded</span>
+          <span className="text-faint">not recorded</span>
         )}
       </p>
       {docs.length > 0 ? (
@@ -41,7 +41,7 @@ function DecisionItem({ decision, targetId }: { decision: DecisionRef; targetId:
               <HopLine
                 hop={{ from_label: "Decision", from_id: decision.id, rel: "DOCUMENTED_IN", to_label: "Document", to_id: doc.id }}
               />
-              <div className="mt-0.5 pl-1 text-xs text-slate-600">
+              <div className="mt-0.5 pl-1 text-xs text-muted">
                 {doc.title ?? "Untitled document"}
                 {doc.uri ? (
                   <>
@@ -54,7 +54,7 @@ function DecisionItem({ decision, targetId }: { decision: DecisionRef; targetId:
           ))}
         </ul>
       ) : (
-        <p className="text-xs text-slate-500">No documents recorded.</p>
+        <p className="text-xs text-faint">No documents recorded.</p>
       )}
     </li>
   );
@@ -63,11 +63,11 @@ function DecisionItem({ decision, targetId }: { decision: DecisionRef; targetId:
 function RunbookItem({ runbook, targetId }: { runbook: RunbookRef; targetId: string }) {
   const actions = runbook.allowed_action_types ?? [];
   return (
-    <li className="rounded-md border border-slate-200 p-2">
+    <li className="rounded-md border border-line bg-surface p-2.5">
       <HopLine hop={{ from_label: "Runbook", from_id: runbook.id, rel: "APPLIES_TO", to_label: "Service", to_id: targetId }} />
       <p className="mt-1 text-sm">
         <span className="font-medium">{runbook.title}</span>{" "}
-        <span className="text-xs text-slate-500">version {runbook.version}</span>
+        <span className="text-xs text-faint">version {runbook.version}</span>
         {runbook.uri ? (
           <>
             {" "}
@@ -75,7 +75,7 @@ function RunbookItem({ runbook, targetId }: { runbook: RunbookRef; targetId: str
           </>
         ) : null}
       </p>
-      <p className="text-sm text-slate-700">
+      <p className="text-sm text-muted">
         Allowed action types:{" "}
         {actions.length > 0
           ? actions.map((a, i) => (
@@ -84,7 +84,7 @@ function RunbookItem({ runbook, targetId }: { runbook: RunbookRef; targetId: str
                 <CodeBlock inline value={a} />
               </span>
             ))
-          : <span className="text-slate-500">none</span>}
+          : <span className="text-faint">none</span>}
       </p>
     </li>
   );
@@ -93,15 +93,15 @@ function RunbookItem({ runbook, targetId }: { runbook: RunbookRef; targetId: str
 function PathItem({ path, index }: { path: ExplanationPath; index: number }) {
   const n = index + 1;
   return (
-    <li className="rounded-md border border-dashed border-amber-400 p-3">
+    <li className="rounded-md border border-dashed border-warn-line bg-warn-tint p-3.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h4 className="text-sm font-semibold text-slate-900">
-          Path {n} · <span className="font-normal text-slate-600">{path.kind}</span>
+        <h4 className="text-sm font-bold text-ink">
+          Path {n} · <span className="font-normal text-muted">{path.kind}</span>
         </h4>
         <HypothesisNote />
       </div>
-      <p className="mt-2 text-sm text-slate-800">{path.summary}</p>
-      <p className="mt-1 text-xs text-slate-600">
+      <p className="mt-2 text-sm text-ink">{path.summary}</p>
+      <p className="mt-1 text-xs text-muted">
         Target service <CodeBlock inline value={path.target_service_id} /> · deployment{" "}
         <CodeBlock inline value={path.deployment.id} /> {path.deployment.version}, deployed{" "}
         <UtcTime iso={path.deployment.deployed_at} /> · approval policy <CodeBlock inline value={path.approval_policy} />
@@ -109,7 +109,7 @@ function PathItem({ path, index }: { path: ExplanationPath; index: number }) {
 
       <h5 className={SUBHEAD}>Hops, in stored edge direction</h5>
       {path.hops.length === 0 ? (
-        <p className="text-sm text-slate-600">No hops recorded.</p>
+        <p className="text-sm text-muted">No hops recorded.</p>
       ) : (
         <ol aria-label={`Hops of path ${n}`} className="flex list-decimal flex-col gap-1.5 pl-6 text-sm">
           {path.hops.map((hop, i) => (
@@ -122,12 +122,12 @@ function PathItem({ path, index }: { path: ExplanationPath; index: number }) {
 
       <h5 className={SUBHEAD}>Evidence on this path</h5>
       {path.evidence.length === 0 ? (
-        <p className="text-sm text-slate-600">No evidence recorded.</p>
+        <p className="text-sm text-muted">No evidence recorded.</p>
       ) : (
         <ul aria-label={`Evidence on path ${n}`} className="flex flex-col gap-1 text-sm">
           {path.evidence.map((e) => (
             <li key={e.id}>
-              <CodeBlock inline value={e.id} /> <span className="text-xs text-slate-500">source</span>{" "}
+              <CodeBlock inline value={e.id} /> <span className="text-xs text-faint">source</span>{" "}
               <CodeBlock inline value={e.source_ref} />
             </li>
           ))}
@@ -136,7 +136,7 @@ function PathItem({ path, index }: { path: ExplanationPath; index: number }) {
 
       <h5 className={SUBHEAD}>Governing decisions</h5>
       {path.governing_decisions.length === 0 ? (
-        <p className="text-sm font-medium text-red-800">No active decision governs the target service — escalate.</p>
+        <p className="text-sm font-medium text-bad">No active decision governs the target service — escalate.</p>
       ) : (
         <ul aria-label={`Governing decisions of path ${n}`} className="flex flex-col gap-2">
           {path.governing_decisions.map((d) => (
@@ -147,7 +147,7 @@ function PathItem({ path, index }: { path: ExplanationPath; index: number }) {
 
       <h5 className={SUBHEAD}>Runbooks</h5>
       {path.runbooks.length === 0 ? (
-        <p className="text-sm text-slate-600">No runbook applies to the target service.</p>
+        <p className="text-sm text-muted">No runbook applies to the target service.</p>
       ) : (
         <ul aria-label={`Runbooks of path ${n}`} className="flex flex-col gap-2">
           {path.runbooks.map((r) => (

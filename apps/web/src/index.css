@@ -1,11 +1,58 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
+
+  --color-canvas: #f5f7f8;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f8fafb;
+  --color-surface-sunken: #fbfcfd;
+
+  --color-line: #dee5e9;
+  --color-line-strong: #c8d3da;
+
+  --color-ink: #1b2935;
+  --color-muted: #617180;
+  --color-faint: #8a96a2;
+
+  --color-brand: #175c83;
+  --color-brand-deep: #2c596c;
+  --color-brand-tint: #eaf3f8;
+  --color-brand-line: #bbdaea;
+
+  --color-good: #19734e;
+  --color-good-tint: #ecf7f1;
+  --color-good-line: #c4e3d3;
+
+  --color-warn: #a45a25;
+  --color-warn-tint: #fff5e8;
+  --color-warn-line: #efdac9;
+
+  --color-bad: #a3312a;
+  --color-bad-tint: #fdeceb;
+  --color-bad-line: #f0cdc9;
+
+  --color-shell: #172637;
+  --color-shell-raised: #233748;
+  --color-shell-line: #3a4e5b;
+  --color-shell-text: #cbd7e0;
+  --color-shell-faint: #9aabb9;
+  --color-live: #62b89b;
+}
+
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-md bg-sky-700 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-600;
+    @apply inline-flex items-center justify-center rounded-md bg-brand px-3.5 py-2 text-sm font-bold text-white shadow-sm hover:bg-[#12496a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:bg-[#e9ecef] disabled:text-faint disabled:shadow-none;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex items-center justify-center rounded-md border border-line bg-surface px-3.5 py-2 text-sm font-bold text-ink hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:bg-[#e9ecef] disabled:text-faint;
+  }
+  /* Small uppercase label above a card title or field, as in the mockups. */
+  .kicker {
+    @apply text-[10px] font-extrabold uppercase tracking-[0.1em] text-muted;
+  }
+  .card {
+    @apply rounded-lg border border-line bg-surface shadow-sm;
   }
 }
 

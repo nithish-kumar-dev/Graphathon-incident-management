@@ -83,15 +83,15 @@ function InvestigationCard({ investigation }: { investigation: InvestigationOut 
         <Field label="Thread">
           <Code>{inv.thread_id}</Code>
         </Field>
-        <Field label="Requested by">{inv.requested_by ?? <span className="text-slate-500">not recorded</span>}</Field>
+        <Field label="Requested by">{inv.requested_by ?? <span className="text-faint">not recorded</span>}</Field>
         <Field label="Started">
           <UtcTime value={inv.started_at} />
         </Field>
         <Field label="Ended">
-          {inv.ended_at ? <UtcTime value={inv.ended_at} /> : <span className="text-slate-500">not ended</span>}
+          {inv.ended_at ? <UtcTime value={inv.ended_at} /> : <span className="text-faint">not ended</span>}
         </Field>
         <Field label="Investigator">
-          {inv.investigator ? <InvestigatorBadge investigator={inv.investigator} /> : <span className="text-slate-500">not recorded</span>}
+          {inv.investigator ? <InvestigatorBadge investigator={inv.investigator} /> : <span className="text-faint">not recorded</span>}
         </Field>
         <Field label="Gate decision">
           {inv.gate ? (
@@ -104,20 +104,20 @@ function InvestigationCard({ investigation }: { investigation: InvestigationOut 
               ) : null}
             </div>
           ) : (
-            <span className="text-slate-500">not recorded</span>
+            <span className="text-faint">not recorded</span>
           )}
         </Field>
         <Field label="Revisions">{inv.revision_count ?? 0}</Field>
         {inv.error ? (
           <Field label="Error">
-            <span className="font-semibold text-red-800">{inv.error}</span>
+            <span className="font-semibold text-bad">{inv.error}</span>
           </Field>
         ) : null}
         <Field label="Integrity warnings">
           {warnings.length === 0 ? (
-            <span className="text-slate-500">none</span>
+            <span className="text-faint">none</span>
           ) : (
-            <ul className="list-disc space-y-0.5 pl-5 text-amber-900">
+            <ul className="list-disc space-y-0.5 pl-5 text-warn">
               {warnings.map((w) => (
                 <li key={w}>{w}</li>
               ))}
@@ -141,11 +141,11 @@ function BranchesCard({ investigation }: { investigation: InvestigationOut | nul
   return (
     <Card title="Coordinator branches" subtitle="The coordinator fans out to three context branches.">
       {!investigation ? (
-        <p className="text-sm text-slate-600">Branch states appear once an investigation is started.</p>
+        <p className="text-sm text-muted">Branch states appear once an investigation is started.</p>
       ) : (
         <>
           {investigation.status === "queued" ? (
-            <p className="mb-3 rounded-md border border-slate-300 bg-slate-50 p-2 text-sm text-slate-700">
+            <p className="mb-3 rounded-md border border-line-strong bg-surface-muted p-2 text-sm text-muted">
               Queued: the orchestrator (Phase 4) has not picked this investigation up yet, so every branch is still
               pending.
             </p>
@@ -170,24 +170,24 @@ function BranchItem({ name, state }: { name: BranchName; state: BranchState | un
     <li
       className={cx(
         "min-w-0 rounded-md border p-3 text-sm",
-        failed && "border-red-400 border-l-4 bg-red-50",
-        skipped && "border-dashed border-slate-400 bg-slate-50",
-        !failed && !skipped && "border-slate-200 bg-white",
+        failed && "border-bad-line border-l-4 bg-bad-tint",
+        skipped && "border-dashed border-line-strong bg-surface-muted",
+        !failed && !skipped && "border-line bg-surface",
       )}
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="font-medium text-slate-900">{label.title}</span>
+        <span className="font-medium text-ink">{label.title}</span>
         <BranchStatusBadge status={status} />
       </div>
       <p className="mt-0.5">
         <Code>{name}</Code>
       </p>
-      <p className="mt-1 text-xs text-slate-600">{label.help}</p>
-      {failed ? <p className="mt-2 font-semibold text-red-800">✕ Branch failed</p> : null}
-      {skipped ? <p className="mt-2 font-semibold text-slate-700">⤼ Branch skipped</p> : null}
-      {!state ? <p className="mt-2 text-xs text-slate-600">Not present in the investigation response.</p> : null}
+      <p className="mt-1 text-xs text-muted">{label.help}</p>
+      {failed ? <p className="mt-2 font-semibold text-bad">✕ Branch failed</p> : null}
+      {skipped ? <p className="mt-2 font-semibold text-muted">⤼ Branch skipped</p> : null}
+      {!state ? <p className="mt-2 text-xs text-muted">Not present in the investigation response.</p> : null}
       {state?.detail ? (
-        <p className={cx("mt-1 break-words", failed ? "text-red-900" : "text-slate-800")}>
+        <p className={cx("mt-1 break-words", failed ? "text-bad" : "text-ink")}>
           <span className="font-medium">Detail: </span>
           {state.detail}
         </p>
@@ -213,6 +213,8 @@ function stepFallback(name: RetrievalStepName, step: StepStatus): string | null 
   return "Graph context is required; results without it are incomplete.";
 }
 
+// The scroll wrapper is `relative` so the sr-only caption (position: absolute) is clipped by the
+// scroller instead of landing in the page's scroll area at its static position.
 function RetrievalSteps({ bundle }: { bundle: RetrievalBundle }) {
   const present = STEP_ORDER.filter((n) => bundle.steps?.[n]);
   const extracted = bundle.extracted;
@@ -221,10 +223,10 @@ function RetrievalSteps({ bundle }: { bundle: RetrievalBundle }) {
       {present.length === 0 ? (
         <EmptyState title="No retrieval steps reported" />
       ) : (
-        <div className="overflow-x-auto">
+        <div className="relative overflow-x-auto">
           <table className="w-full min-w-[32rem] text-left text-sm">
             <caption className="sr-only">Retrieval steps</caption>
-            <thead className="border-b border-slate-200 text-xs uppercase text-slate-600">
+            <thead className="border-b border-line text-xs uppercase text-muted">
               <tr>
                 <th scope="col" className="py-2 pr-3">
                   Step
@@ -249,11 +251,11 @@ function RetrievalSteps({ bundle }: { bundle: RetrievalBundle }) {
                   <tr
                     key={name}
                     className={cx(
-                      "border-b border-slate-100 align-top",
-                      step?.status === "failed" && "bg-red-50",
+                      "border-b border-line align-top",
+                      step?.status === "failed" && "bg-bad-tint",
                     )}
                   >
-                    <th scope="row" className="py-2 pr-3 font-medium text-slate-900">
+                    <th scope="row" className="py-2 pr-3 font-medium text-ink">
                       {name}
                     </th>
                     <td className="py-2 pr-3">
@@ -267,8 +269,8 @@ function RetrievalSteps({ bundle }: { bundle: RetrievalBundle }) {
                     </td>
                     <td className="py-2 pr-3 tabular-nums">{step?.candidates ?? "—"}</td>
                     <td className="py-2 break-words">
-                      {step?.detail ? <span>{step.detail}</span> : <span className="text-slate-500">—</span>}
-                      {fallback ? <p className="mt-1 text-xs font-medium text-amber-900">{fallback}</p> : null}
+                      {step?.detail ? <span>{step.detail}</span> : <span className="text-faint">—</span>}
+                      {fallback ? <p className="mt-1 text-xs font-medium text-warn">{fallback}</p> : null}
                     </td>
                   </tr>
                 );
@@ -291,11 +293,11 @@ function RetrievalSteps({ bundle }: { bundle: RetrievalBundle }) {
               ))}
             </ul>
           ) : (
-            <span className="text-slate-500">none</span>
+            <span className="text-faint">none</span>
           )}
         </Field>
         <Field label="Embedding model">
-          {bundle.embedding_model ? <Code>{bundle.embedding_model}</Code> : <span className="text-slate-500">none</span>}
+          {bundle.embedding_model ? <Code>{bundle.embedding_model}</Code> : <span className="text-faint">none</span>}
         </Field>
         <Field label="As of">
           <UtcTime value={bundle.as_of} />
@@ -322,12 +324,12 @@ function highlightTone(type: string): BadgeTone | null {
 }
 
 const BORDER: Record<BadgeTone, string> = {
-  neutral: "border-l-slate-300",
-  info: "border-l-sky-500",
-  success: "border-l-emerald-600",
-  warning: "border-l-amber-500",
-  danger: "border-l-red-500",
-  accent: "border-l-violet-500",
+  neutral: "border-l-line-strong",
+  info: "border-l-brand",
+  success: "border-l-good",
+  warning: "border-l-warn",
+  danger: "border-l-bad",
+  accent: "border-l-brand-deep",
 };
 
 function Timeline({ events }: { events: TimelineEventOut[] }) {
@@ -345,24 +347,24 @@ function Timeline({ events }: { events: TimelineEventOut[] }) {
           <li
             key={ev.id}
             className={cx(
-              "min-w-0 rounded-md border border-slate-200 border-l-4 p-2 text-sm",
-              tone ? cx(BORDER[tone], "bg-white") : "border-l-slate-200 bg-slate-50",
+              "min-w-0 rounded-md border border-line border-l-4 p-2 text-sm",
+              tone ? cx(BORDER[tone], "bg-surface") : "border-l-line bg-surface-muted",
             )}
           >
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-xs text-slate-700">
+              <span className="font-mono text-xs text-muted">
                 <UtcTime value={ev.at} />
               </span>
               <Badge tone={tone ?? "neutral"} variant={tone ? "soft" : "outline"}>
                 {ev.type}
               </Badge>
-              <span className="text-slate-700">
+              <span className="text-muted">
                 by <span className="font-medium">{ev.actor ?? "unknown actor"}</span>
               </span>
             </div>
-            <p className="mt-1 break-words text-slate-900">{ev.summary ?? <span className="text-slate-500">no summary</span>}</p>
+            <p className="mt-1 break-words text-ink">{ev.summary ?? <span className="text-faint">no summary</span>}</p>
             {ev.ref_id ? (
-              <p className="mt-1 text-xs text-slate-600">
+              <p className="mt-1 text-xs text-muted">
                 ref: <Code>{ev.ref_id}</Code>
               </p>
             ) : null}

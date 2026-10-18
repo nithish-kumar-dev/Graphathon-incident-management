@@ -108,6 +108,7 @@ function defaultRoutes(): Array<[string, string | RegExp, Responder]> {
   return [
     ["GET", "/readyz", { body: { status: "ready", checks: { falkordb: true, postgres: true } } }],
     ["GET", "/healthz", { body: { status: "ok" } }],
+    ["GET", "/api/demo/controls", { body: { enabled: false, toggles: [], effect: null } }],
     ["GET", "/api/incidents", { body: fixtures.incidents }],
     ["GET", "/api/incidents/nova.inc.101", { body: fixtures.incident_101 }],
     ["GET", "/api/incidents/nova.inc.092", { body: fixtures.incident_092 }],

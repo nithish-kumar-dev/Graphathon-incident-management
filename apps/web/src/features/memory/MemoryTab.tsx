@@ -40,9 +40,9 @@ export default function MemoryTab({ incident, user }: TabProps) {
               type="checkbox"
               checked={includeUnverified}
               onChange={(e) => setIncludeUnverified(e.target.checked)}
-              className="h-4 w-4 rounded border-slate-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+              className="h-4 w-4 rounded border-line-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             />
-            <label htmlFor={toggleId} className="text-slate-800">
+            <label htmlFor={toggleId} className="text-ink">
               Include unverified (drafts)
             </label>
           </div>
@@ -74,7 +74,7 @@ export default function MemoryTab({ incident, user }: TabProps) {
       </Card>
 
       <section aria-labelledby={`${toggleId}-brain`} className="flex flex-col gap-4">
-        <h3 id={`${toggleId}-brain`} className="text-lg font-semibold text-slate-900">
+        <h3 id={`${toggleId}-brain`} className="text-lg font-semibold text-ink">
           Company brain
         </h3>
         <Card
@@ -83,7 +83,7 @@ export default function MemoryTab({ incident, user }: TabProps) {
           subtitle="Excerpts from authorised documents. Context for the investigator, never a claim or finding."
         >
           {retrieval.error ? (
-            <p className="text-sm text-slate-600">Unavailable: ranked retrieval failed to load (see above).</p>
+            <p className="text-sm text-muted">Unavailable: ranked retrieval failed to load (see above).</p>
           ) : null}
           {retrieval.loading && !retrieval.data ? <Spinner label="Loading knowledge chunks…" /> : null}
           {retrieval.data ? <KnowledgeChunks context={retrieval.data.knowledge_context} /> : null}
@@ -121,7 +121,7 @@ function MemoryItem({ memory: m }: { memory: MemoryOut }) {
     <li
       className={
         verified
-          ? "min-w-0 rounded-md border border-slate-200 bg-white p-3"
+          ? "min-w-0 rounded-md border border-line bg-surface p-3"
           : "min-w-0 rounded-md border border-dashed border-amber-400 bg-amber-50/40 p-3"
       }
     >
@@ -133,27 +133,27 @@ function MemoryItem({ memory: m }: { memory: MemoryOut }) {
         </Badge>
         <Badge variant="outline">outcome: {m.outcome}</Badge>
       </div>
-      <p className="mt-2 font-medium break-words text-slate-900">{m.summary}</p>
+      <p className="mt-2 font-medium break-words text-ink">{m.summary}</p>
       <p className="mt-0.5">
         <Code>{m.id}</Code>
       </p>
       <Fields className="mt-2">
         <Field label="About">
           <span className="font-medium">{m.about_incident_key ?? m.about_incident_id}</span>{" "}
-          <span className="text-slate-600">({m.relation === "same_incident" ? "same incident" : "shared service"})</span>
+          <span className="text-muted">({m.relation === "same_incident" ? "same incident" : "shared service"})</span>
         </Field>
         <Field label="Shared services">
           <CodeList items={m.shared_service_ids} />
         </Field>
         <Field label="Validated by">
           {m.validated_by.length === 0 ? (
-            <span className="text-slate-500">not validated</span>
+            <span className="text-faint">not validated</span>
           ) : (
             <ul className="space-y-0.5">
               {m.validated_by.map((r) => (
                 <li key={r.id}>
                   <span className="font-medium">{r.handle}</span>{" "}
-                  {r.roles?.length ? <span className="text-slate-600">({r.roles.join(", ")})</span> : null}
+                  {r.roles?.length ? <span className="text-muted">({r.roles.join(", ")})</span> : null}
                 </li>
               ))}
             </ul>
@@ -163,18 +163,18 @@ function MemoryItem({ memory: m }: { memory: MemoryOut }) {
           <UtcTime value={m.validated_at} />
         </Field>
         <Field label="Validation method">
-          {m.validation_method ?? <span className="text-slate-500">not recorded</span>}
+          {m.validation_method ?? <span className="text-faint">not recorded</span>}
         </Field>
         <Field label="Grounded in">
           {m.grounded_in.length === 0 ? (
-            <span className="text-slate-500">no evidence</span>
+            <span className="text-faint">no evidence</span>
           ) : (
             <ul className="space-y-1">
               {m.grounded_in.map((ev) => (
                 <li key={ev.id} className="flex flex-wrap items-center gap-1.5">
                   <Code>{ev.id}</Code>
                   <Badge variant="outline">{ev.kind}</Badge>
-                  <Code className="text-slate-600">{ev.source_ref}</Code>
+                  <Code className="text-muted">{ev.source_ref}</Code>
                 </li>
               ))}
             </ul>
@@ -196,19 +196,19 @@ function MemoryItem({ memory: m }: { memory: MemoryOut }) {
 function ExcludedNote({ excluded, label }: { excluded: Record<string, number> | undefined; label: string }) {
   const lines = excludedLines(excluded);
   return (
-    <p className="text-sm text-slate-600" aria-label={label}>
+    <p className="text-sm text-muted" aria-label={label}>
       {lines.length === 0 ? "Nothing excluded." : `Excluded by the filter: ${lines.join(", ")}.`}
     </p>
   );
 }
 
 function Components({ components, caption }: { components: ScoreComponent[]; caption: string }) {
-  if (components.length === 0) return <span className="text-sm text-slate-500">no score components</span>;
+  if (components.length === 0) return <span className="text-sm text-faint">no score components</span>;
   return (
     <div className="overflow-x-auto">
       <table className="text-left text-xs">
         <caption className="sr-only">{caption}</caption>
-        <thead className="text-slate-600">
+        <thead className="text-muted">
           <tr>
             <th scope="col" className="pr-4 font-medium">
               Component
@@ -221,10 +221,10 @@ function Components({ components, caption }: { components: ScoreComponent[]; cap
         <tbody>
           {components.map((c) => (
             <tr key={c.name}>
-              <th scope="row" className="pr-4 font-mono font-normal text-slate-800">
+              <th scope="row" className="pr-4 font-mono font-normal text-ink">
                 {c.name}
               </th>
-              <td className="tabular-nums text-slate-900">{c.value.toFixed(4)}</td>
+              <td className="tabular-nums text-ink">{c.value.toFixed(4)}</td>
             </tr>
           ))}
         </tbody>
@@ -234,7 +234,7 @@ function Components({ components, caption }: { components: ScoreComponent[]; cap
 }
 
 function Rationale({ lines }: { lines: string[] }) {
-  if (lines.length === 0) return <span className="text-slate-500">none</span>;
+  if (lines.length === 0) return <span className="text-faint">none</span>;
   return (
     <ul className="list-disc space-y-0.5 pl-5">
       {lines.map((r, i) => (
@@ -265,9 +265,9 @@ function RankedMemories({ context }: { context: MemoryContext }) {
 
 function RankedMemoryItem({ memory: m, rank }: { memory: ScoredMemory; rank: number }) {
   return (
-    <li className="min-w-0 rounded-md border border-slate-200 p-3">
+    <li className="min-w-0 rounded-md border border-line p-3">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold text-slate-600">#{rank}</span>
+        <span className="text-xs font-semibold text-muted">#{rank}</span>
         <Badge tone="info" variant="solid" title="Rerank score">
           score {m.score.toFixed(4)}
         </Badge>
@@ -278,7 +278,7 @@ function RankedMemoryItem({ memory: m, rank }: { memory: ScoredMemory; rank: num
           textOnly={m.applicability === "text_similarity_only"}
         />
       </div>
-      <p className="mt-2 font-medium break-words text-slate-900">{m.summary}</p>
+      <p className="mt-2 font-medium break-words text-ink">{m.summary}</p>
       <p className="mt-0.5">
         <Code>{m.id}</Code>
       </p>
@@ -323,7 +323,7 @@ function KnowledgeChunks({ context }: { context: KnowledgeContext }) {
 
 function ChunkItem({ chunk: c }: { chunk: ScoredChunk }) {
   return (
-    <li className="min-w-0 rounded-md border border-slate-200 p-3">
+    <li className="min-w-0 rounded-md border border-line p-3">
       <div className="flex flex-wrap items-center gap-2">
         <Badge tone="neutral" variant="dashed" icon="ⓘ" title="Knowledge chunks are context for the investigator, never a claim.">
           Context — not a claim
@@ -333,7 +333,7 @@ function ChunkItem({ chunk: c }: { chunk: ScoredChunk }) {
         </Badge>
         <Badge variant="outline">{c.document_classification}</Badge>
       </div>
-      <p className="mt-2 font-medium break-words text-slate-900">{c.document_title}</p>
+      <p className="mt-2 font-medium break-words text-ink">{c.document_title}</p>
       <Fields className="mt-2">
         <Field label="Document">
           <Code>{c.document_id}</Code>
@@ -342,13 +342,13 @@ function ChunkItem({ chunk: c }: { chunk: ScoredChunk }) {
           <Code>{c.source_ref}</Code>
         </Field>
         <Field label="Excerpt">
-          <blockquote className="border-l-2 border-slate-300 pl-3 whitespace-pre-line text-slate-800">
+          <blockquote className="border-l-2 border-line-strong pl-3 whitespace-pre-line text-ink">
             {c.text_excerpt}
           </blockquote>
         </Field>
         <Field label="Graph links">
           {c.graph_links.length === 0 ? (
-            <span className="text-slate-500">no graph link — text match only</span>
+            <span className="text-faint">no graph link — text match only</span>
           ) : (
             <ul className="space-y-1">
               {c.graph_links.map((g) => (
@@ -388,7 +388,7 @@ function ServicePolicies({ incident }: { incident: IncidentDetail }) {
   if (ids.length === 0) return <EmptyState title="No target or affected service to look up" />;
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-muted">
         {incident.explanation_paths.length > 0
           ? "For each target service of the explanation paths."
           : "No explanation path yet; showing the first affected service."}
@@ -404,8 +404,8 @@ function ServicePolicy({ serviceId }: { serviceId: string }) {
   const { client, user } = useApi();
   const ctx = useAsync((signal) => client.getServiceContext(serviceId, {}, signal), [client, serviceId, user]);
   return (
-    <div className="min-w-0 rounded-md border border-slate-200 p-3">
-      <h5 className="font-semibold text-slate-900">
+    <div className="min-w-0 rounded-md border border-line p-3">
+      <h5 className="font-semibold text-ink">
         {ctx.data?.service.name ?? serviceId} <Code>{serviceId}</Code>
       </h5>
       <ErrorBanner error={ctx.error} title={`Could not load context for ${serviceId}`} onRetry={ctx.reload} className="mt-2" />
@@ -423,22 +423,22 @@ function ServicePolicy({ serviceId }: { serviceId: string }) {
 function Owners({ owners }: { owners: TeamOut[] }) {
   return (
     <div className="min-w-0">
-      <p className="text-sm font-medium text-slate-700">Owning team</p>
+      <p className="text-sm font-medium text-muted">Owning team</p>
       {owners.length === 0 ? (
-        <p className="text-sm text-slate-500">No owning team recorded.</p>
+        <p className="text-sm text-faint">No owning team recorded.</p>
       ) : (
         <ul className="mt-1 space-y-2 text-sm">
           {owners.map((t) => (
             <li key={t.id}>
               <span className="font-medium">{t.name}</span> <Code>{t.id}</Code>
               {t.members.length === 0 ? (
-                <p className="text-slate-500">no members</p>
+                <p className="text-faint">no members</p>
               ) : (
                 <ul className="mt-1 list-disc pl-5">
                   {t.members.map((r) => (
                     <li key={r.id}>
                       {r.handle}{" "}
-                      <span className="text-slate-600">
+                      <span className="text-muted">
                         {r.roles?.length ? `(${r.roles.join(", ")})` : "(no roles)"}
                       </span>
                     </li>
@@ -456,21 +456,21 @@ function Owners({ owners }: { owners: TeamOut[] }) {
 function Decisions({ decisions }: { decisions: DecisionOut[] }) {
   return (
     <div className="min-w-0">
-      <p className="text-sm font-medium text-slate-700">Current policy (active decisions)</p>
+      <p className="text-sm font-medium text-muted">Current policy (active decisions)</p>
       {decisions.length === 0 ? (
-        <p className="text-sm text-slate-500">No active decision — escalate before acting.</p>
+        <p className="text-sm text-faint">No active decision — escalate before acting.</p>
       ) : (
         <ul className="mt-1 space-y-3 text-sm">
           {decisions.map((d) => (
             <li key={d.id} className="min-w-0">
-              <p className="font-medium text-slate-900">{d.title}</p>
-              <p className="break-words text-slate-800">{d.statement}</p>
+              <p className="font-medium text-ink">{d.title}</p>
+              <p className="break-words text-ink">{d.statement}</p>
               <Fields className="mt-1">
                 <Field label="Decision">
                   <Code>{d.id}</Code>
                 </Field>
                 <Field label="Approver role">
-                  {d.required_approver_role ? <Code>{d.required_approver_role}</Code> : <span className="text-slate-500">none</span>}
+                  {d.required_approver_role ? <Code>{d.required_approver_role}</Code> : <span className="text-faint">none</span>}
                 </Field>
                 <Field label="Effective from">
                   <UtcTime value={d.effective_from} />
@@ -480,7 +480,7 @@ function Decisions({ decisions }: { decisions: DecisionOut[] }) {
                 </Field>
                 <Field label="Documented in">
                   {d.documented_in.length === 0 ? (
-                    <span className="text-slate-500">no document</span>
+                    <span className="text-faint">no document</span>
                   ) : (
                     <ul className="space-y-1">
                       {d.documented_in.map((doc) => (
@@ -489,7 +489,7 @@ function Decisions({ decisions }: { decisions: DecisionOut[] }) {
                           {doc.uri ? (
                             <>
                               {" "}
-                              <Code className="text-slate-600">{doc.uri}</Code>
+                              <Code className="text-muted">{doc.uri}</Code>
                             </>
                           ) : null}
                         </li>

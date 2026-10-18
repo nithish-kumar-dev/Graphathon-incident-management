@@ -10,10 +10,10 @@ export interface ServiceContextResult {
   error: ApiError | null;
 }
 
-const SUBHEAD = "mt-4 mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500";
+const SUBHEAD = "kicker mt-4 mb-1.5";
 
 function None({ children }: { children: ReactNode }) {
-  return <p className="text-sm text-slate-600">{children}</p>;
+  return <p className="text-sm text-muted">{children}</p>;
 }
 
 /** Service ids along DEPENDS_ON in stored direction, joined by the relationship arrow. */
@@ -37,7 +37,7 @@ function DependencyList({ items, label }: { items: DependencyOut[]; label: strin
       {items.map((d) => (
         <li key={`${d.service.id}-${d.path.join(">")}`}>
           <span className="font-medium">{d.service.name ?? d.service.id}</span>{" "}
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-faint">
             depth {d.depth}
             {d.service.tier ? ` · ${d.service.tier}` : ""}
           </span>
@@ -75,7 +75,7 @@ function ContextBody({ ctx }: { ctx: ServiceContext }) {
                   ))}
                 </ul>
               ) : (
-                <p className="pl-4 text-xs text-slate-500">No members recorded.</p>
+                <p className="pl-4 text-xs text-faint">No members recorded.</p>
               )}
             </li>
           ))}
@@ -94,11 +94,11 @@ function ContextBody({ ctx }: { ctx: ServiceContext }) {
       ) : (
         <ul aria-label={`Active decisions for ${ctx.service.id}`} className="flex flex-col gap-2 text-sm">
           {ctx.active_decisions.map((d) => (
-            <li key={d.id} className="rounded-md border border-slate-200 p-2">
+            <li key={d.id} className="rounded-md border border-line bg-surface-sunken p-2.5">
               <span className="font-medium">{d.title}</span> <CodeBlock inline value={d.id} />{" "}
-              <span className="text-xs text-slate-500">status {d.status}</span>
-              <p className="mt-1 text-slate-700">{d.statement}</p>
-              <p className="mt-1 text-xs text-slate-600">
+              <span className="text-xs text-faint">status {d.status}</span>
+              <p className="mt-1 text-muted">{d.statement}</p>
+              <p className="mt-1 text-xs text-muted">
                 Effective <UtcTime iso={d.effective_from} />
                 {d.effective_to ? (
                   <>
@@ -110,7 +110,7 @@ function ContextBody({ ctx }: { ctx: ServiceContext }) {
                 {d.required_approver_role ? <CodeBlock inline value={d.required_approver_role} /> : "not recorded"}
               </p>
               {d.documented_in.length > 0 ? (
-                <ul aria-label={`Documents for ${d.id}`} className="mt-1 text-xs text-slate-600">
+                <ul aria-label={`Documents for ${d.id}`} className="mt-1 text-xs text-muted">
                   {d.documented_in.map((doc) => (
                     <li key={doc.id}>
                       Documented in <CodeBlock inline value={doc.id} /> {doc.title ?? ""}
@@ -125,7 +125,7 @@ function ContextBody({ ctx }: { ctx: ServiceContext }) {
                 </ul>
               ) : null}
               {d.supersedes.length > 0 ? (
-                <p className="mt-1 text-xs text-slate-600">
+                <p className="mt-1 text-xs text-muted">
                   Supersedes{" "}
                   {d.supersedes.map((s, i) => (
                     <span key={s}>
@@ -148,7 +148,7 @@ function ContextBody({ ctx }: { ctx: ServiceContext }) {
           {ctx.runbooks.map((r) => (
             <li key={r.id}>
               <span className="font-medium">{r.title}</span> <CodeBlock inline value={r.id} />{" "}
-              <span className="text-xs text-slate-500">version {r.version}</span>
+              <span className="text-xs text-faint">version {r.version}</span>
               {r.uri ? (
                 <>
                   {" "}
@@ -156,7 +156,7 @@ function ContextBody({ ctx }: { ctx: ServiceContext }) {
                 </>
               ) : null}
               {(r.allowed_action_types ?? []).length > 0 ? (
-                <div className="text-xs text-slate-600">
+                <div className="text-xs text-muted">
                   Allowed:{" "}
                   {(r.allowed_action_types ?? []).map((a, i) => (
                     <span key={a}>
@@ -179,7 +179,7 @@ function ContextBody({ ctx }: { ctx: ServiceContext }) {
           {ctx.recent_deployments.map((dep) => (
             <li key={dep.id}>
               <CodeBlock inline value={dep.id} /> <span className="font-medium">{dep.version}</span>{" "}
-              <span className="text-xs text-slate-600">
+              <span className="text-xs text-muted">
                 <UtcTime iso={dep.deployed_at} />
                 {dep.status ? ` · ${dep.status}` : ""}
               </span>
@@ -227,9 +227,9 @@ export function ServiceContextSection({ serviceIds, fromPaths, results, loading,
           {!results && loading ? <Spinner label="Loading service context…" /> : null}
           {results?.map((r) => (
             <section key={r.id} aria-label={`Service context for ${r.id}`} className="min-w-0">
-              <h4 className="text-sm font-semibold text-slate-900">
+              <h4 className="text-sm font-bold text-ink">
                 {r.data?.service.name ?? "Service"} <CodeBlock inline value={r.id} />
-                {r.data?.service.tier ? <span className="text-xs font-normal text-slate-500"> ({r.data.service.tier})</span> : null}
+                {r.data?.service.tier ? <span className="text-xs font-normal text-faint"> ({r.data.service.tier})</span> : null}
               </h4>
               {r.error ? (
                 <ErrorBanner error={r.error} title={`Could not load context for ${r.id}`} onRetry={reload} className="mt-2" />

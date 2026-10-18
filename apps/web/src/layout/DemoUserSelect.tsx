@@ -9,18 +9,20 @@ export interface DemoUserSelectProps {
 
 export function DemoUserSelect({ value, onChange }: DemoUserSelectProps) {
   const id = useId();
+  const hintId = `${id}-hint`;
   return (
-    <div className="flex flex-col gap-0.5">
-      <label htmlFor={id} className="text-xs text-slate-300">
-        Demo identity (not authentication)
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+      <label htmlFor={id} className="text-sm font-semibold text-ink">
+        Viewing as
       </label>
       <select
         id={id}
         value={value}
+        aria-describedby={hintId}
         onChange={(e) => {
           if (isDemoUser(e.target.value)) onChange(e.target.value);
         }}
-        className="rounded-md border border-slate-600 bg-slate-800 px-2 py-1 text-sm text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+        className="rounded-md border border-line bg-surface px-3 py-1.5 text-sm font-semibold text-ink shadow-sm hover:border-line-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
         {DEMO_USERS.map((u) => (
           <option key={u} value={u}>
@@ -28,6 +30,9 @@ export function DemoUserSelect({ value, onChange }: DemoUserSelectProps) {
           </option>
         ))}
       </select>
+      <span id={hintId} className="text-xs text-muted">
+        Switches the demo identity and its permissions. Not authentication.
+      </span>
     </div>
   );
 }

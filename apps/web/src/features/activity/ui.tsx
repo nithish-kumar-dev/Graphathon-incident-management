@@ -14,7 +14,7 @@ export function formatUtc(iso: string | null | undefined): string {
 }
 
 export function UtcTime({ value }: { value: string | null | undefined }) {
-  if (!value) return <span className="text-slate-500">—</span>;
+  if (!value) return <span className="text-faint">—</span>;
   return (
     <time dateTime={value} className="whitespace-nowrap">
       {formatUtc(value)}
@@ -25,7 +25,7 @@ export function UtcTime({ value }: { value: string | null | undefined }) {
 /** Inline monospace id / ref. Wraps at `.` `:` `/` `_` `-` so long refs never cause horizontal page scroll. */
 export function Code({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <code className={cx("rounded bg-slate-100 px-1 py-0.5 font-mono text-xs text-slate-800", ID_WRAP, className)}>
+    <code className={cx("rounded bg-surface-muted px-1 py-0.5 font-mono text-xs text-ink", ID_WRAP, className)}>
       {typeof children === "string" ? withWordBreaks(children) : children}
     </code>
   );
@@ -43,15 +43,15 @@ export function Fields({ children, className }: { children: ReactNode; className
 export function Field({ label, children }: { label: ReactNode; children: ReactNode }) {
   return (
     <>
-      <dt className="font-medium text-slate-600">{label}</dt>
-      <dd className="min-w-0 break-words text-slate-900">{children}</dd>
+      <dt className="font-medium text-muted">{label}</dt>
+      <dd className="min-w-0 break-words text-ink">{children}</dd>
     </>
   );
 }
 
 /** A list of ids as code, or a muted placeholder when empty. */
 export function CodeList({ items, empty = "none" }: { items: readonly string[] | null | undefined; empty?: string }) {
-  if (!items || items.length === 0) return <span className="text-slate-500">{empty}</span>;
+  if (!items || items.length === 0) return <span className="text-faint">{empty}</span>;
   return (
     <ul className="flex flex-wrap gap-1.5">
       {items.map((item) => (

@@ -16,12 +16,12 @@ export interface CardProps {
 export function Card({ title, actions, subtitle, className, children, headingLevel = 3 }: CardProps) {
   const H = `h${headingLevel}` as "h2" | "h3" | "h4";
   return (
-    <section className={cx("rounded-lg border border-slate-200 bg-white p-4 shadow-sm", className)}>
+    <section className={cx("card p-5", className)}>
       {title || actions ? (
-        <header className="mb-3 flex flex-wrap items-start justify-between gap-2">
+        <header className="mb-4 flex flex-wrap items-start justify-between gap-2">
           <div className="min-w-0">
-            {title ? <H className="text-base font-semibold text-slate-900">{title}</H> : null}
-            {subtitle ? <p className="text-sm text-slate-600">{subtitle}</p> : null}
+            {title ? <H className="text-lg font-bold leading-tight text-ink">{title}</H> : null}
+            {subtitle ? <p className="mt-1.5 text-sm text-muted">{subtitle}</p> : null}
           </div>
           {actions ? <div className="flex shrink-0 items-center gap-2">{actions}</div> : null}
         </header>

@@ -66,24 +66,29 @@ export function IncidentList({ selectedId, onSelect, liveSummaries }: IncidentLi
   const shown = scope === "active" ? active : resolved;
 
   return (
-    <section aria-labelledby="incident-list-heading" className="flex flex-col gap-3">
+    <section aria-labelledby="incident-list-heading" className="flex flex-col gap-3.5">
       <div className="flex items-center justify-between gap-2">
-        <h2 id="incident-list-heading" className="text-lg font-semibold text-slate-900">
+        <h2 id="incident-list-heading" className="text-[17px] font-bold text-ink">
           Incidents
         </h2>
         <div className="flex items-center gap-2">
           {loading && data ? <Spinner size="sm" label="Refreshing incidents" /> : null}
-          <button type="button" onClick={reload} className="btn-secondary" disabled={loading}>
+          <button
+            type="button"
+            onClick={reload}
+            disabled={loading}
+            className="rounded-md px-2 py-1 text-xs font-semibold text-brand hover:bg-brand-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:text-faint"
+          >
             Refresh
           </button>
         </div>
       </div>
 
-      <div role="group" aria-label="Incident scope" className="grid grid-cols-2 gap-1 rounded-lg bg-slate-200 p-1 text-sm">
+      <div role="group" aria-label="Incident scope" className="flex flex-wrap gap-2 text-xs">
         {(
           [
-            ["active", "Active", active.length],
-            ["resolved", "Resolved", resolved.length],
+            ["active", "ACTIVE", active.length],
+            ["resolved", "RESOLVED", resolved.length],
           ] as const
         ).map(([id, label, count]) => (
           <button
@@ -92,11 +97,13 @@ export function IncidentList({ selectedId, onSelect, liveSummaries }: IncidentLi
             aria-pressed={scope === id}
             onClick={() => setScope(id)}
             className={cx(
-              "rounded-md px-2 py-1 font-medium focus-visible:outline-2 focus-visible:outline-sky-600",
-              scope === id ? "bg-white text-slate-900 shadow-sm" : "text-slate-700 hover:bg-slate-100",
+              "rounded-full border px-3.5 py-1.5 font-semibold tracking-wide focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+              scope === id
+                ? "border-brand bg-brand-tint text-brand"
+                : "border-line bg-surface text-muted hover:border-line-strong hover:text-ink",
             )}
           >
-            {label} ({count})
+            {count} {label}
           </button>
         ))}
       </div>
@@ -124,6 +131,13 @@ export function IncidentList({ selectedId, onSelect, liveSummaries }: IncidentLi
           ))}
         </ul>
       ) : null}
+
+      <div className="mt-2 border-t border-line pt-4">
+        <p className="kicker">Workspace</p>
+        <p className="mt-2 text-xs font-semibold text-ink">NovaCommerce</p>
+        <p className="text-[11px] text-muted">Synthetic incident data</p>
+        <p className="mt-2 text-[11px] text-faint">No production actions</p>
+      </div>
     </section>
   );
 }
@@ -146,25 +160,25 @@ function IncidentRow({
       onClick={() => onSelect(incident.id)}
       aria-current={selected ? "true" : undefined}
       className={cx(
-        "w-full rounded-lg border p-3 text-left shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600",
-        selected ? "border-sky-600 bg-sky-50 ring-1 ring-sky-600" : "border-[#DDE5EF] bg-white hover:border-slate-400",
+        "relative w-full overflow-hidden rounded-lg border p-3.5 pl-4 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+        selected ? "border-brand bg-brand-tint" : "border-line bg-surface hover:border-line-strong",
       )}
     >
+      {selected ? <span aria-hidden="true" className="absolute inset-y-2.5 left-0 w-[3px] rounded-full bg-brand" /> : null}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="font-mono text-sm font-semibold text-slate-900">{incident.key}</span>
+        <span className="text-[13px] font-bold text-ink">{incident.key}</span>
         <SeverityBadge severity={incident.severity} />
         <StatusBadge status={incident.status} />
       </div>
-      <p className="mt-1 text-sm text-slate-800">{incident.title}</p>
-      <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600">
-        <span>
-          Service: <span className="font-mono">{service ? shortId(service) : "none"}</span>
-        </span>
+      <p className="mt-2 text-[13px] font-semibold leading-snug text-ink">{incident.title}</p>
+      <p className="mt-2 text-[11px] text-muted">
+        <span>{service ? shortId(service) : "no service"}</span>
+        <span aria-hidden="true"> · </span>
         <span>
           {incident.alert_count} alert{incident.alert_count === 1 ? "" : "s"}
         </span>
-      </div>
-      <p className="mt-1 text-xs font-medium text-slate-700">{stageText(summary)}</p>
+      </p>
+      <p className="mt-1 text-[11px] font-semibold text-brand">{stageText(summary)}</p>
     </button>
   );
 }

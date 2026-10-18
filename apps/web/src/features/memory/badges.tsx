@@ -71,7 +71,7 @@ export function ApplicabilityBadge({ applicability }: { applicability: MemoryApp
 }
 
 export function MatchedBy({ steps }: { steps: readonly MatchedByStep[] }) {
-  if (steps.length === 0) return <span className="text-slate-500">—</span>;
+  if (steps.length === 0) return <span className="text-faint">—</span>;
   return (
     <ul className="flex flex-wrap gap-1.5">
       {steps.map((s) => (
