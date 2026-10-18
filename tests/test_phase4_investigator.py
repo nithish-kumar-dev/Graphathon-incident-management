@@ -235,3 +235,4 @@ def test_live_ollama_golden(rag_graph, record_property, capsys):
               f"violations={[v.code for v in gate.violations]}")
     assert res.investigator == f"ollama:{MODEL}"
     assert gate.decision in {"accept", "revise"}
+    assert "invalid_arguments" not in {v.code for v in gate.violations}
