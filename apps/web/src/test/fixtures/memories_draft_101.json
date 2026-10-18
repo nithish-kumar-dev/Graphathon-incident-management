@@ -1,0 +1,150 @@
+{
+  "incident_id": "nova.inc.101",
+  "include_unverified": true,
+  "memories": [
+    {
+      "id": "nova.mem.092.restart_failed",
+      "memory_type": "episodic",
+      "verification_status": "verified",
+      "outcome": "failed",
+      "precedent": "warns_against",
+      "summary": "Restarting checkout pods did not reduce checkout 5xx during INC-092; the fault was upstream in payment.",
+      "about_incident_id": "nova.inc.092",
+      "about_incident_key": "INC-092",
+      "relation": "shared_service",
+      "shared_service_ids": [
+        "nova.svc.checkout"
+      ],
+      "grounded_in": [
+        {
+          "id": "nova.ev.092.restart",
+          "kind": "ticket",
+          "source_ref": "synthetic://tickets/OPS-4411",
+          "observed_at": "2026-08-12T09:35:00Z",
+          "excerpt": "checkout pods restarted 09:31Z; 5xx unchanged at 09:35Z"
+        }
+      ],
+      "validated_by": [
+        {
+          "id": "nova.rsp.storefront_oncall",
+          "handle": "storefront-oncall",
+          "roles": [
+            "oncall:checkout"
+          ]
+        }
+      ],
+      "derived_from_action_ids": [],
+      "provenance_refs": [
+        "nova.ev.092.restart"
+      ],
+      "validated_at": "2026-08-14T11:00:00Z",
+      "validation_method": null,
+      "model_version": "human-validated"
+    },
+    {
+      "id": "nova.mem.092.rollback_success",
+      "memory_type": "episodic",
+      "verification_status": "verified",
+      "outcome": "successful",
+      "precedent": "supports",
+      "summary": "Rolling back a payment deployment resolved checkout 5xx caused by payment DB connection pool exhaustion (INC-092).",
+      "about_incident_id": "nova.inc.092",
+      "about_incident_key": "INC-092",
+      "relation": "shared_service",
+      "shared_service_ids": [
+        "nova.svc.checkout"
+      ],
+      "grounded_in": [
+        {
+          "id": "nova.ev.092.deploy",
+          "kind": "deploy_event",
+          "source_ref": "synthetic://deploys/payment/v2.3",
+          "observed_at": "2026-08-12T09:05:00Z",
+          "excerpt": "payment v2.3 rolled out 100% at 09:05Z"
+        },
+        {
+          "id": "nova.ev.092.recovery",
+          "kind": "metric",
+          "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-08-12T10:00Z",
+          "observed_at": "2026-08-12T10:00:00Z",
+          "excerpt": "checkout 5xx back to 0.3% after payment rollback"
+        }
+      ],
+      "validated_by": [
+        {
+          "id": "nova.rsp.payments_lead",
+          "handle": "payments-lead",
+          "roles": [
+            "approver:payment",
+            "oncall:payment"
+          ]
+        }
+      ],
+      "derived_from_action_ids": [
+        "nova.act.092.rollback.v1"
+      ],
+      "provenance_refs": [
+        "nova.ev.092.deploy",
+        "nova.ev.092.recovery",
+        "synthetic://wiki/postmortems/092"
+      ],
+      "validated_at": "2026-08-14T11:00:00Z",
+      "validation_method": null,
+      "model_version": "human-validated"
+    },
+    {
+      "id": "nova.mem.092.cache_ttl_idea",
+      "memory_type": "procedural",
+      "verification_status": "draft",
+      "outcome": "unknown",
+      "precedent": "none",
+      "summary": "Increasing checkout cache TTL might reduce payment calls during incidents (unvalidated idea).",
+      "about_incident_id": "nova.inc.092",
+      "about_incident_key": "INC-092",
+      "relation": "shared_service",
+      "shared_service_ids": [
+        "nova.svc.checkout"
+      ],
+      "grounded_in": [],
+      "validated_by": [],
+      "derived_from_action_ids": [],
+      "provenance_refs": [],
+      "validated_at": null,
+      "validation_method": null,
+      "model_version": "stub-llm-0"
+    },
+    {
+      "id": "nova.mem.01draft",
+      "memory_type": "episodic",
+      "verification_status": "draft",
+      "outcome": "unknown",
+      "precedent": "none",
+      "summary": "Simulated rollback of payment v2.4 executed (SIM-0001).",
+      "about_incident_id": "nova.inc.092",
+      "about_incident_key": "INC-092",
+      "relation": "shared_service",
+      "shared_service_ids": [
+        "nova.svc.checkout"
+      ],
+      "grounded_in": [
+        {
+          "id": "nova.ev.092.restart",
+          "kind": "ticket",
+          "source_ref": "synthetic://tickets/OPS-4411",
+          "observed_at": "2026-08-12T09:35:00Z",
+          "excerpt": "checkout pods restarted 09:31Z; 5xx unchanged at 09:35Z"
+        }
+      ],
+      "validated_by": [],
+      "derived_from_action_ids": [
+        "nova.act.01m5560zc0a73drhwhahzkjrze.1.v1"
+      ],
+      "provenance_refs": [
+        "nova.ev.092.restart"
+      ],
+      "validated_at": null,
+      "validation_method": null,
+      "model_version": "human-validated"
+    }
+  ]
+}

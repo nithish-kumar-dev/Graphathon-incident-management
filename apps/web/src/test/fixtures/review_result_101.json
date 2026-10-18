@@ -1,0 +1,72 @@
+{
+  "action": {
+    "id": "nova.act.01m5560zc0a73drhwhahzkjrze.1.v1",
+    "proposal_id": "nova.prop.01m5560zc0a73drhwhahzkjrze.1",
+    "version": 1,
+    "action_type": "rollback_deployment_simulated",
+    "status": "executed_simulated",
+    "mode": "simulation",
+    "target_service_id": "nova.svc.payment",
+    "deployment_id": "nova.dep.payment.v2_4",
+    "runbook_id": "nova.rb.payment.rollback",
+    "risk": "medium",
+    "rationale": "Recommend rollback deployment simulated of payment v2.4 per runbook nova.rb.payment.rollback (Payment service deployment rollback); pending human approval under policy in force.",
+    "spec": {
+      "action_type": "rollback_deployment_simulated",
+      "deployment_id": "nova.dep.payment.v2_4",
+      "env": "prod",
+      "runbook_id": "nova.rb.payment.rollback",
+      "service_id": "nova.svc.payment",
+      "tenant_id": "nova"
+    },
+    "spec_hash": "efa9151799087f32bd378abafa54a28e22cdfcee9e2a0123e7356a1333785f3d",
+    "evidence": [
+      {
+        "id": "nova.ev.101.deploy",
+        "kind": "deploy_event",
+        "source_ref": "synthetic://deploys/payment/v2.4",
+        "observed_at": "2026-10-17T13:52:00Z",
+        "excerpt": "payment v2.4 rolled out 100% at 13:52Z"
+      }
+    ],
+    "integrity_warnings": [],
+    "required_approver_role": "approver:payment",
+    "approval_policy_id": "nova.pol.payment.rollback.v2",
+    "reviews": [
+      {
+        "id": "nova.apr.01example",
+        "decision": "APPROVE",
+        "approver_id": "nova.resp.payments_lead",
+        "approver_handle": "payments-lead",
+        "decided_at": "2026-10-17T15:04:00Z",
+        "expires_at": "2026-10-17T16:04:00Z",
+        "comment": "Rollback looks safe.",
+        "spec_hash": "efa9151799087f32bd378abafa54a28e22cdfcee9e2a0123e7356a1333785f3d",
+        "action_version": 1,
+        "policy_decision_id": "nova.dec.payment.rollback.v2"
+      }
+    ],
+    "execution": {
+      "simulated": true,
+      "result": "succeeded",
+      "ticket": "SIM-0001",
+      "executed_at": "2026-10-17T15:04:01Z",
+      "note": "Simulated rollback; no real system was touched."
+    }
+  },
+  "review": {
+    "id": "nova.apr.01example",
+    "decision": "APPROVE",
+    "approver_id": "nova.resp.payments_lead",
+    "approver_handle": "payments-lead",
+    "decided_at": "2026-10-17T15:04:00Z",
+    "expires_at": "2026-10-17T16:04:00Z",
+    "comment": "Rollback looks safe.",
+    "spec_hash": "efa9151799087f32bd378abafa54a28e22cdfcee9e2a0123e7356a1333785f3d",
+    "action_version": 1,
+    "policy_decision_id": "nova.dec.payment.rollback.v2"
+  },
+  "investigation_status": "completed",
+  "memory_id": "nova.mem.01draft",
+  "message": "Approved and executed in simulation. A draft memory was written for outcome verification."
+}

@@ -1,0 +1,1224 @@
+
+> graphathon-web@0.1.0 dev
+> vite
+
+
+  VITE v6.4.3  ready in 300 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+8:11:17 PM [vite] (client) hmr update /src/index.css
+8:11:50 PM [vite] (client) hmr update /src/components/ui/Badge.tsx, /src/index.css
+8:11:55 PM [vite] (client) hmr update /src/components/ui/Badge.tsx, /src/index.css
+8:11:59 PM [vite] (client) hmr update /src/components/ui/Tabs.tsx, /src/index.css
+8:12:05 PM [vite] (client) hmr update /src/components/ui/Tabs.tsx, /src/index.css
+8:12:12 PM [vite] (client) hmr update /src/components/ui/Card.tsx, /src/index.css
+8:12:16 PM [vite] (client) hmr update /src/App.tsx, /src/index.css, /src/layout/DemoControlsPanel.tsx, /src/layout/ReadinessDot.tsx, /src/layout/IncidentWorkspace.tsx, /src/layout/IncidentList.tsx, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx, /src/features/knowledge/cards.tsx, /src/features/review/ReviewTab.tsx, /src/features/evidence/EvidenceTab.tsx, /src/features/activity/ActivityTab.tsx, /src/features/memory/badges.tsx, /src/features/memory/MemoryTab.tsx, /src/features/activity/ui.tsx, /src/features/evidence/PathsSection.tsx, /src/features/evidence/ServiceContextSection.tsx, /src/features/overview/format.tsx
+8:12:16 PM [vite] (client) hmr invalidate /src/layout/IncidentList.tsx Could not Fast Refresh ("stageText" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:12:16 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+8:12:16 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:12:16 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:12:16 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:12:16 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+8:12:16 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:12:16 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+8:12:16 PM [vite] (client) hmr invalidate /src/features/activity/ui.tsx Could not Fast Refresh ("excludedLines" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:12:16 PM [vite] (client) hmr update /src/index.css, /src/features/review/ReviewTab.tsx, /src/features/activity/ActivityTab.tsx, /src/features/memory/MemoryTab.tsx
+8:12:16 PM [vite] (client) hmr invalidate /src/features/overview/format.tsx Could not Fast Refresh ("formatUtc" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:12:16 PM [vite] (client) hmr update /src/index.css, /src/features/evidence/EvidenceTab.tsx, /src/features/evidence/PathsSection.tsx, /src/features/evidence/ServiceContextSection.tsx
+8:12:33 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+8:12:43 PM [vite] (client) hmr update /src/layout/SyntheticDataBanner.tsx, /src/index.css
+8:12:51 PM [vite] (client) hmr update /src/layout/ReadinessDot.tsx, /src/index.css
+8:12:58 PM [vite] (client) hmr update /src/layout/ReadinessDot.tsx, /src/index.css
+8:13:06 PM [vite] (client) hmr update /src/layout/DemoUserSelect.tsx, /src/index.css
+8:13:21 PM [vite] (client) hmr update /src/layout/IncidentList.tsx, /src/index.css
+8:13:21 PM [vite] (client) hmr invalidate /src/layout/IncidentList.tsx Could not Fast Refresh ("stageText" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:13:21 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+8:13:34 PM [vite] (client) hmr update /src/layout/IncidentList.tsx, /src/index.css
+8:13:35 PM [vite] (client) hmr invalidate /src/layout/IncidentList.tsx Could not Fast Refresh ("stageText" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:13:35 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+8:13:41 PM [vite] (client) hmr update /src/layout/IncidentList.tsx, /src/index.css
+8:13:41 PM [vite] (client) hmr invalidate /src/layout/IncidentList.tsx Could not Fast Refresh ("stageText" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:13:41 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+8:13:58 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+8:14:26 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+8:14:34 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+8:14:46 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+8:14:46 PM [vite] (client) hmr invalidate /src/layout/IncidentHeader.tsx Could not Fast Refresh (new export)
+8:14:46 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:15:02 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+8:15:07 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+8:15:13 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+8:15:30 PM [vite] (client) hmr update /src/features/investigation/ProcessTracker.tsx, /src/index.css
+8:15:44 PM [vite] (client) hmr update /src/features/investigation/ui.tsx, /src/index.css
+8:15:44 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:44 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+8:15:44 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:44 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:15:44 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:44 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+8:15:49 PM [vite] (client) hmr update /src/features/investigation/ui.tsx, /src/index.css
+8:15:49 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:49 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+8:15:49 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:49 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:15:49 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:49 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+8:15:54 PM [vite] (client) hmr update /src/features/investigation/ui.tsx, /src/index.css
+8:15:54 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:54 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+8:15:54 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:54 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:15:54 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:15:54 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+8:15:59 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:16:06 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:16:12 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/App.tsx
+8:21:17 PM [vite] (client) hmr update /src/index.css, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/knowledge/cards.tsx
+8:21:17 PM [vite] (client) hmr update /src/features/knowledge/cards.tsx, /src/index.css
+8:21:17 PM [vite] (client) hmr invalidate /src/features/knowledge/cards.tsx Could not Fast Refresh (export removed)
+8:21:17 PM [vite] (client) hmr update /src/index.css, /src/features/knowledge/KnowledgeMemoryTab.tsx
+8:21:31 PM [vite] (client) hmr update /src/features/investigation/ActivityTimeline.tsx, /src/index.css
+8:21:31 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:21:31 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+8:21:41 PM [vite] (client) hmr update /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/index.css
+8:21:52 PM [vite] (client) hmr update /src/features/memory/MemoryTab.tsx, /src/index.css
+8:21:52 PM [vite] (client) hmr update /src/features/memory/badges.tsx, /src/index.css
+8:21:55 PM [vite] (client) hmr update /src/features/investigation/AgentMonitor.tsx, /src/index.css
+8:21:55 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/investigation/AgentMonitor.tsx: Unexpected token, expected "(" (16:27)
+
+  14 | const VISIBLE_DISCOVERIES = 3;
+  15 |
+> 16 | export function Agenexport function AgentCard({ agent, last = false }: { agent: AgentCardModel; last?: boolean }) {
+     |                            ^
+  17 |   const navigate = useNavigateTab();
+  18 |   const shown = agent.discoveries.slice(0, VISIBLE_DISCOVERIES);
+  19 |   const hidden = agent.discoveries.slice(VISIBLE_DISCOVERIES);
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/investigation/AgentMonitor.tsx:16:27
+  14 |  const VISIBLE_DISCOVERIES = 3;
+  15 |  
+  16 |  export function Agenexport function AgentCard({ agent, last = false }: { agent: AgentCardModel; last?: boolean }) {
+     |                             ^
+  17 |    const navigate = useNavigateTab();
+  18 |    const shown = agent.discoveries.slice(0, VISIBLE_DISCOVERIES);
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseFunctionParams (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13493:10)
+      at TypeScriptParserMixin.parseFunctionParams (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9772:11)
+      at TypeScriptParserMixin.parseFunction (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13477:10)
+      at TypeScriptParserMixin.parseFunctionStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13159:17)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12825:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13968:17)
+      at TypeScriptParserMixin.parseExportDeclaration (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9652:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13927:31)
+      at TypeScriptParserMixin.parseExport (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13846:29)
+      at TypeScriptParserMixin.parseExport (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9408:20)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12912:27)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12778:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseProgram (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12656:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12646:25)
+      at TypeScriptParserMixin.parse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:14522:25)
+      at TypeScriptParserMixin.parse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10149:18)
+      at parse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:14556:38)
+      at parser (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/core/lib/transformation/normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/gensync/index.js:261:32)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/gensync/index.js:223:11)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/gensync/index.js:189:28
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/gensync/index.js:113:33
+      at step (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/gensync/index.js:287:14)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/gensync/index.js:223:11)
+8:22:12 PM [vite] (client) hmr update /src/features/investigation/FindingsPanel.tsx, /src/index.css
+8:22:12 PM [vite] (client) hmr invalidate /src/features/investigation/FindingsPanel.tsx Could not Fast Refresh (new export)
+8:22:12 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/review/HumanReviewTab.tsx
+8:22:12 PM [vite] (client) Pre-transform error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/investigation/AgentMonitor.tsx: Unexpected token, expected "(" (16:27)
+
+  14 | const VISIBLE_DISCOVERIES = 3;
+  15 |
+> 16 | export function Agenexport function AgentCard({ agent, last = false }: { agent: AgentCardModel; last?: boolean }) {
+     |                            ^
+  17 |   const navigate = useNavigateTab();
+  18 |   const shown = agent.discoveries.slice(0, VISIBLE_DISCOVERIES);
+  19 |   const hidden = agent.discoveries.slice(VISIBLE_DISCOVERIES);
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/investigation/AgentMonitor.tsx:16:27
+  14 |  const VISIBLE_DISCOVERIES = 3;
+  15 |  
+  16 |  export function Agenexport function AgentCard({ agent, last = false }: { agent: AgentCardModel; last?: boolean }) {
+     |                             ^
+  17 |    const navigate = useNavigateTab();
+  18 |    const shown = agent.discoveries.slice(0, VISIBLE_DISCOVERIES);
+8:22:12 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:22:12 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:22:34 PM [vite] (client) hmr update /src/features/investigation/LiveInvestigationTab.tsx, /src/index.css
+8:22:34 PM [vite] (client) Pre-transform error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/investigation/AgentMonitor.tsx: Unexpected token, expected "(" (16:27)
+
+  14 | const VISIBLE_DISCOVERIES = 3;
+  15 |
+> 16 | export function Agenexport function AgentCard({ agent, last = false }: { agent: AgentCardModel; last?: boolean }) {
+     |                            ^
+  17 |   const navigate = useNavigateTab();
+  18 |   const shown = agent.discoveries.slice(0, VISIBLE_DISCOVERIES);
+  19 |   const hidden = agent.discoveries.slice(VISIBLE_DISCOVERIES);
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/investigation/AgentMonitor.tsx:16:27
+  14 |  const VISIBLE_DISCOVERIES = 3;
+  15 |  
+  16 |  export function Agenexport function AgentCard({ agent, last = false }: { agent: AgentCardModel; last?: boolean }) {
+     |                             ^
+  17 |    const navigate = useNavigateTab();
+  18 |    const shown = agent.discoveries.slice(0, VISIBLE_DISCOVERIES);
+8:22:50 PM [vite] (client) hmr update /src/features/investigation/AgentMonitor.tsx, /src/index.css
+8:22:54 PM [vite] (client) page reload src/App.test.tsx
+8:23:00 PM [vite] (client) page reload src/App.test.tsx
+8:23:08 PM [vite] (client) page reload src/App.test.tsx
+8:23:10 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:23:15 PM [vite] (client) page reload src/App.test.tsx
+8:23:19 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:23:24 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:23:30 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:23:32 PM [vite] (client) page reload src/features/overview/OverviewTab.test.tsx
+8:23:38 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:24:40 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+8:24:59 PM [vite] (client) hmr update /src/features/review/HumanReviewTab.tsx, /src/index.css
+8:24:59 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:24:59 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:25:10 PM [vite] (client) hmr update /src/features/review/HumanReviewTab.tsx, /src/index.css
+8:25:10 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:25:10 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:25:11 PM [vite] (client) hmr update /src/features/review/HumanReviewTab.tsx, /src/index.css
+8:25:11 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:25:11 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:25:11 PM [vite] (client) hmr update /src/features/graph/NodeDetailsPanel.tsx, /src/index.css
+8:25:40 PM [vite] (client) hmr update /src/features/graph/EvidenceGraphTab.tsx, /src/index.css
+8:26:15 PM [vite] (client) hmr update /src/features/evidence/EvidenceTab.tsx, /src/index.css
+8:26:16 PM [vite] (client) hmr update /src/features/evidence/EvidenceTab.tsx, /src/index.css
+8:26:23 PM [vite] (client) hmr update /src/features/evidence/EvidenceTab.tsx, /src/index.css
+8:26:25 PM [vite] (client) hmr update /src/features/evidence/EvidenceTab.tsx, /src/index.css
+8:26:35 PM [vite] (client) hmr update /src/features/evidence/ServiceContextSection.tsx, /src/index.css
+8:26:35 PM [vite] (client) hmr update /src/features/evidence/PathsSection.tsx, /src/index.css
+8:26:43 PM [vite] (client) hmr update /src/features/evidence/PathsSection.tsx, /src/index.css
+8:26:45 PM [vite] (client) hmr update /src/features/evidence/PathsSection.tsx, /src/index.css
+8:26:52 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+8:26:55 PM [vite] (client) hmr update /src/features/evidence/PathsSection.tsx, /src/index.css
+8:26:55 PM [vite] (client) hmr update /src/features/evidence/ServiceContextSection.tsx, /src/index.css
+8:27:07 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+8:27:08 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+8:27:22 PM [vite] (client) page reload src/features/review/HumanReviewTab.test.tsx
+8:27:39 PM [vite] (client) hmr update /src/features/activity/ui.tsx, /src/index.css
+8:27:39 PM [vite] (client) hmr update /src/features/activity/ActivityTab.tsx, /src/index.css
+8:27:39 PM [vite] (client) hmr invalidate /src/features/activity/ui.tsx Could not Fast Refresh ("excludedLines" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:27:39 PM [vite] (client) hmr update /src/index.css, /src/features/review/ReviewTab.tsx, /src/features/activity/ActivityTab.tsx, /src/features/memory/MemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/history/HistoryTab.tsx
+8:27:39 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+8:27:39 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+8:27:48 PM [vite] (client) hmr update /src/features/activity/ActivityTab.tsx, /src/index.css
+8:27:49 PM [vite] (client) hmr update /src/features/activity/ActivityTab.tsx, /src/index.css
+8:27:52 PM [vite] (client) page reload src/features/graph/__smoke.test.tsx
+8:27:59 PM [vite] (client) hmr update /src/features/review/ReviewTab.tsx, /src/index.css
+8:27:59 PM [vite] (client) hmr update /src/features/activity/ActivityTab.tsx, /src/index.css
+8:27:59 PM [vite] (client) hmr update /src/features/activity/ui.tsx, /src/index.css
+8:28:30 PM [vite] (client) page reload src/features/review/HumanReviewTab.test.tsx
+8:28:31 PM [vite] (client) page reload src/features/review/HumanReviewTab.test.tsx
+8:28:42 PM [vite] (client) page reload src/features/history/HistoryTab.test.tsx
+8:28:43 PM [vite] (client) page reload src/features/history/HistoryTab.test.tsx
+8:29:27 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+8:31:22 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+8:31:30 PM [vite] (client) page reload index.html
+8:33:37 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:33:51 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:34:01 PM [vite] (client) hmr update /src/features/graph/EvidenceGraphTab.tsx, /src/index.css
+8:34:02 PM [vite] (client) hmr update /src/features/graph/EvidenceGraphTab.tsx, /src/index.css
+8:34:07 PM [vite] (client) hmr update /src/features/graph/EvidenceGraphTab.tsx, /src/index.css
+8:34:14 PM [vite] (client) hmr update /src/features/graph/EvidenceGraphTab.tsx, /src/index.css
+8:34:22 PM [vite] (client) hmr update /src/features/graph/EvidenceGraphTab.tsx, /src/index.css
+8:34:47 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:36:33 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:36:34 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:36:46 PM [vite] (client) page reload src/features/graph/__tmp.test.tsx
+8:36:51 PM [vite] (client) page reload src/features/graph/__tmp.test.tsx
+8:37:09 PM [vite] (client) page reload src/features/graph/__tmp.test.tsx
+8:39:33 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:39:43 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+8:39:48 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+8:39:53 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+8:39:58 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+8:40:06 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+8:40:07 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+8:40:42 PM [vite] (client) page reload src/features/graph/__tmp.test.tsx
+8:41:55 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:42:01 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:42:25 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:42:31 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:43:02 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+8:43:03 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+8:43:11 PM [vite] (client) page reload src/features/graph/__tmp.test.tsx
+8:51:29 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+8:51:29 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:51:29 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:51:30 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+8:51:30 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:51:30 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:51:31 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+8:51:31 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:51:31 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:51:34 PM [vite] (client) Pre-transform error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+8:51:34 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:51:42 PM [vite] (client) hmr update /src/features/activity/ActivityTab.tsx, /src/index.css
+8:51:42 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/activity/ActivityTab.tsx: Unexpected token, expected "," (225:13)
+
+  223 |       ) : (
+  224 |         {/* `relative` so the sr-only caption (position: absolute) is clipped by this scroller, not the page. */}
+> 225 |         <div className="relative overflow-x-auto">
+      |              ^
+  226 |           <table className="w-full min-w-[32rem] text-left text-sm">
+  227 |             <caption className="sr-only">Retrieval steps</caption>
+  228 |             <thead className="border-b border-line text-xs uppercase text-muted">
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/activity/ActivityTab.tsx:225:13
+  223|        ) : (
+  224|          {/* `relative` so the sr-only caption (position: absolute) is clipped by this scroller, not the page. */}
+  225|          <div className="relative overflow-x-auto">
+     |               ^
+  226|            <table className="w-full min-w-[32rem] text-left text-sm">
+  227|              <caption className="sr-only">Retrieval steps</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10919:29)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+8:51:42 PM [vite] (client) Pre-transform error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+8:51:42 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:51:53 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:52:19 PM [vite] (client) hmr update /src/features/activity/ActivityTab.tsx, /src/index.css
+8:52:19 PM [vite] (client) Pre-transform error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+8:52:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx: Unexpected token, expected "," (181:15)
+
+  179 |             still drags the document's horizontal scroll range out past the viewport.
+  180 |           */}
+> 181 |           <div className="relative overflow-x-auto">
+      |                ^
+  182 |             <table className="w-full border-collapse text-sm">
+  183 |               <caption className="sr-only">Investigation runs</caption>
+  184 |               <thead>
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/history/HistoryTab.tsx:181:15
+  179|              still drags the document's horizontal scroll range out past the viewport.
+  180|            */}
+  181|            <div className="relative overflow-x-auto">
+     |                 ^
+  182|              <table className="w-full border-collapse text-sm">
+  183|                <caption className="sr-only">Investigation runs</caption>
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.unexpected (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6642:16)
+      at TypeScriptParserMixin.expect (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6922:12)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11692:14)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10917:30)
+      at TypeScriptParserMixin.parseConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9626:18)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10911:17)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4650:31)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4729:36)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+8:52:21 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+8:52:28 PM [vite] (client) hmr update /src/features/history/HistoryTab.tsx, /src/index.css
+9:08:22 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+9:08:26 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+9:08:36 PM [vite] (client) hmr update /src/layout/DemoUserSelect.tsx, /src/index.css
+9:08:46 PM [vite] (client) page reload src/App.test.tsx
+9:08:51 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+9:08:51 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+9:08:51 PM [vite] (client) hmr update /src/layout/SyntheticDataBanner.tsx, /src/index.css
+9:08:55 PM [vite] (client) page reload src/App.test.tsx
+9:09:04 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+9:09:11 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+9:09:11 PM [vite] (client) hmr update /src/features/graph/GraphCanvas.tsx, /src/index.css
+9:09:12 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+9:09:18 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+9:12:40 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentList.tsx, /src/layout/IncidentHeader.tsx, /src/features/investigation/InvestigationSession.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx
+9:12:40 PM [vite] (client) hmr invalidate /src/layout/IncidentList.tsx Could not Fast Refresh ("stageText" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:12:40 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+9:12:40 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:12:40 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:12:40 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:12:40 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:12:40 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:12:40 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+9:12:45 PM [vite] (client) hmr update /src/features/investigation/InvestigationSession.tsx, /src/index.css
+9:12:45 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:12:45 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:12:45 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:12:45 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+9:12:45 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:12:45 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:12:45 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:12:45 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+9:13:04 PM [vite] (client) hmr update /src/features/investigation/InvestigationSession.tsx, /src/index.css
+9:13:04 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh (new export)
+9:13:04 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:13:04 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:04 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+9:13:04 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:04 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:13:04 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:04 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+9:13:16 PM [vite] (client) hmr update /src/features/investigation/InvestigationSession.tsx, /src/index.css
+9:13:16 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:16 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:13:16 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:16 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+9:13:16 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:16 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:13:16 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:16 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+9:13:23 PM [vite] (client) hmr update /src/features/investigation/InvestigationSession.tsx, /src/index.css
+9:13:23 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:23 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:13:23 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:23 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+9:13:23 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:23 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:13:23 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:23 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+9:13:30 PM [vite] (client) hmr update /src/features/investigation/InvestigationSession.tsx, /src/index.css
+9:13:30 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:30 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:13:30 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:30 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+9:13:30 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:30 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:13:30 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:13:30 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+9:13:39 PM [vite] (client) hmr update /src/features/investigation/LiveInvestigationTab.tsx, /src/index.css
+9:13:40 PM [vite] (client) hmr update /src/features/investigation/LiveInvestigationTab.tsx, /src/index.css
+9:13:48 PM [vite] (client) hmr update /src/features/investigation/LiveInvestigationTab.tsx, /src/index.css
+9:14:01 PM [vite] (client) hmr update /src/features/investigation/ui.tsx, /src/index.css
+9:14:01 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh (new export)
+9:14:01 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:14:01 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:14:01 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+9:14:06 PM [vite] (client) hmr update /src/features/investigation/FindingsPanel.tsx, /src/index.css
+9:14:10 PM [vite] (client) hmr update /src/features/investigation/FindingsPanel.tsx, /src/index.css
+9:14:10 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/investigation/FindingsPanel.tsx: Expected corresponding JSX closing tag for <CollapsibleCard>. (213:4)
+
+  211 |         </div>
+  212 |       )}
+> 213 |     </SectionCard>
+      |     ^
+  214 |   );
+  215 | }
+  216 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/features/investigation/FindingsPanel.tsx:213:4
+  211|          </div>
+  212|        )}
+  213|      </SectionCard>
+     |      ^
+  214|    );
+  215|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+      at TypeScriptParserMixin.parseFunction (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13478:10)
+9:14:19 PM [vite] (client) hmr update /src/features/investigation/FindingsPanel.tsx, /src/index.css
+9:15:45 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentList.tsx, /src/layout/IncidentHeader.tsx, /src/features/investigation/InvestigationSession.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx
+9:15:45 PM [vite] (client) hmr invalidate /src/layout/IncidentList.tsx Could not Fast Refresh ("stageText" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:15:45 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+9:15:45 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:15:45 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:15:45 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:15:45 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+9:15:45 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+9:15:45 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+9:18:15 PM [vite] (client) page reload src/layout/DemoControlsPanel.test.tsx
+9:18:15 PM [vite] (client) page reload src/App.test.tsx
+9:26:58 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx

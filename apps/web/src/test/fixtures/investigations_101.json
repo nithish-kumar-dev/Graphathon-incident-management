@@ -1,0 +1,29 @@
+{
+  "incident_id": "nova.inc.101",
+  "items": [
+    {
+      "id": "nova.ses.01m5560zc0a73drhwhahzkjrze",
+      "mode": "simulation",
+      "status": "awaiting_review",
+      "requested_by": "demo-responder",
+      "started_at": "2026-10-17T15:00:00Z",
+      "ended_at": null,
+      "revision_count": 0,
+      "investigator": "stub-v1",
+      "summary": "Payment v2.4 rollback recommended.",
+      "error": null
+    },
+    {
+      "id": "nova.ses.01m5560zc0f4k742hz87d9kb8w",
+      "mode": "recommendation_only",
+      "status": "completed",
+      "requested_by": "demo-responder",
+      "started_at": "2026-10-16T09:00:00Z",
+      "ended_at": "2026-10-16T09:00:12Z",
+      "revision_count": 0,
+      "investigator": "stub-v1",
+      "summary": null,
+      "error": null
+    }
+  ]
+}

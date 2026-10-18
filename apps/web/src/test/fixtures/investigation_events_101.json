@@ -1,0 +1,54 @@
+{
+  "investigation_id": "nova.ses.01m5560zc0a73drhwhahzkjrze",
+  "status": "awaiting_review",
+  "events": [
+    {
+      "id": "nova.evt.01a",
+      "kind": "intake_and_deduplicate",
+      "status": "completed",
+      "at": "2026-10-17T15:00:00Z",
+      "revision": 0,
+      "detail": null
+    },
+    {
+      "id": "nova.evt.01b",
+      "kind": "coordinator",
+      "status": "completed",
+      "at": "2026-10-17T15:00:01Z",
+      "revision": 0,
+      "detail": "3 branches"
+    },
+    {
+      "id": "nova.evt.01c",
+      "kind": "graph_context_retrieval",
+      "status": "started",
+      "at": "2026-10-17T15:00:02Z",
+      "revision": 0,
+      "detail": null
+    },
+    {
+      "id": "nova.evt.01d",
+      "kind": "graph_context_retrieval",
+      "status": "completed",
+      "at": "2026-10-17T15:00:03Z",
+      "revision": 0,
+      "detail": "3 evidence"
+    },
+    {
+      "id": "nova.evt.01e",
+      "kind": "investigator",
+      "status": "completed",
+      "at": "2026-10-17T15:00:05Z",
+      "revision": 0,
+      "detail": "stub-v1"
+    },
+    {
+      "id": "nova.evt.01f",
+      "kind": "human_review",
+      "status": "waiting",
+      "at": "2026-10-17T15:00:06Z",
+      "revision": 0,
+      "detail": "awaiting approval"
+    }
+  ]
+}
