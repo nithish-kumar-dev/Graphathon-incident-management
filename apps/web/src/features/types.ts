@@ -8,15 +8,22 @@ export interface TabProps {
   reloadIncident: () => void; // refetch IncidentDetail
 }
 
-export const TAB_IDS = ["overview", "evidence", "activity", "memory", "review"] as const;
+export const TAB_IDS = ["live", "evidence", "knowledge", "review", "history"] as const;
 export type TabId = (typeof TAB_IDS)[number];
 
 export const TAB_LABELS: Record<TabId, string> = {
-  overview: "Overview",
-  evidence: "Graph evidence",
-  activity: "Agent activity",
-  memory: "Memory & company brain",
-  review: "Human review",
+  live: "Live Investigation",
+  evidence: "Evidence Graph",
+  knowledge: "Knowledge & Memory",
+  review: "Human Review",
+  history: "History",
+};
+
+/** Hash tab names from earlier versions of the UI, kept so old links still resolve. */
+export const LEGACY_TABS: Record<string, TabId> = {
+  overview: "live",
+  activity: "history",
+  memory: "knowledge",
 };
 
 export function isTabId(value: unknown): value is TabId {

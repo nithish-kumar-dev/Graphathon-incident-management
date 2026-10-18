@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { isTabId, type TabId } from "../features/types";
+import { isTabId, LEGACY_TABS, type TabId } from "../features/types";
 
 /** Route encoded in the URL hash: `#/incidents/<id>` or `#/incidents/<id>/<tab>`. */
 export interface HashRoute {
@@ -7,7 +7,7 @@ export interface HashRoute {
   tab: TabId;
 }
 
-export const DEFAULT_TAB: TabId = "overview";
+export const DEFAULT_TAB: TabId = "live";
 
 export function parseHash(hash: string): HashRoute {
   const parts = hash.replace(/^#\/?/, "").split("/").filter(Boolean);
@@ -18,7 +18,7 @@ export function parseHash(hash: string): HashRoute {
   } catch {
     return { incidentId: null, tab: DEFAULT_TAB };
   }
-  return { incidentId, tab: isTabId(parts[2]) ? parts[2] : DEFAULT_TAB };
+  return { incidentId, tab: isTabId(parts[2]) ? parts[2] : (parts[2] ? LEGACY_TABS[parts[2]] : undefined) ?? DEFAULT_TAB };
 }
 
 export function buildHash(route: { incidentId: string | null; tab?: TabId }): string {

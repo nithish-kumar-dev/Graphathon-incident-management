@@ -152,7 +152,7 @@ def saver(request, settings):
     from app.orchestrator.checkpoint import make_saver, open_pool
     try:
         pool = open_pool(settings.postgres_dsn.get_secret_value(), max_size=4)
-    except Exception:
+    except Exception:  # noqa: BLE001 - any connection failure means "not reachable"
         pytest.skip("project Postgres not reachable; run `docker compose up -d postgres`")
     s = make_saver(pool, setup=True)
     yield s
@@ -233,7 +233,7 @@ def test_branch_failure_is_recorded_and_not_invented(mutable_graph, settings):
     def boom(_n):
         raise RuntimeError("password=hunter2 host=db.internal")
 
-    orch, calls, sid, status = run_golden(mutable_graph, settings, before_telemetry=boom)
+    orch, _calls, sid, status = run_golden(mutable_graph, settings, before_telemetry=boom)
     assert status == "completed"
     out = get(mutable_graph, sid)
     assert out.branches["telemetry_context"].status == "failed"
@@ -248,7 +248,7 @@ def test_branch_failure_is_recorded_and_not_invented(mutable_graph, settings):
 def test_missing_branch_is_skipped(mutable_graph, settings):
     repo = GraphRepository(mutable_graph, SCOPE)
     assert repo.delete_edge("Incident", INC, "AFFECTS", "Service", "nova.svc.checkout") == 1
-    orch, calls, sid, status = run_golden(mutable_graph, settings)
+    _orch, calls, sid, status = run_golden(mutable_graph, settings)
     out = get(mutable_graph, sid)
     assert out.branches["telemetry_context"].status == "skipped" and calls.n["telemetry"] == 0
     assert out.branches["graph_context"].status == "completed" and status in TERMINAL
@@ -269,7 +269,7 @@ def test_all_branches_failing_is_inconclusive_without_calling_the_investigator(m
 
 
 def test_barrier_waits_for_delayed_branches(mutable_graph, settings):
-    orch, calls, sid, status = run_golden(mutable_graph, settings,
+    orch, calls, _sid, status = run_golden(mutable_graph, settings,
                                           before_retrieve=lambda _n: time.sleep(0.5),
                                           before_telemetry=lambda _n: time.sleep(0.8))
     assert status == "completed" and calls.n["investigator"] == 1
@@ -297,7 +297,7 @@ def test_transient_graph_outage_is_retried_once(mutable_graph, settings):
         if n == 1:
             raise GraphUnavailable("graph database unavailable")
 
-    orch, calls, sid, status = run_golden(mutable_graph, settings, before_telemetry=flaky, before_retrieve=flaky)
+    _orch, calls, sid, status = run_golden(mutable_graph, settings, before_telemetry=flaky, before_retrieve=flaky)
     assert status == "completed"
     assert calls.n["telemetry"] == 2 and calls.n["retrieve"] == 2
     assert {s.status for s in get(mutable_graph, sid).branches.values()} == {"completed"}
@@ -307,7 +307,7 @@ def test_persistent_graph_outage_fails_the_branch_after_one_retry(mutable_graph,
     def down(_n):
         raise GraphUnavailable("graph database unavailable")
 
-    orch, calls, sid, status = run_golden(mutable_graph, settings, before_telemetry=down)
+    _orch, calls, sid, _status = run_golden(mutable_graph, settings, before_telemetry=down)
     out = get(mutable_graph, sid)
     assert calls.n["telemetry"] == 2
     assert out.branches["telemetry_context"].status == "failed" and "1 retry" in out.branches["telemetry_context"].detail
@@ -323,7 +323,7 @@ def test_malformed_output_then_valid_output(mutable_graph, settings):
         assert inp.revision == 1 and any("malformed" in f for f in inp.feedback)
         return stub.investigate(inp)
 
-    orch, calls, sid, status = run_golden(mutable_graph, settings, behave=behave)
+    _orch, calls, sid, status = run_golden(mutable_graph, settings, behave=behave)
     out = get(mutable_graph, sid)
     assert status == "completed" and out.revision_count == 1 and calls.n["investigator"] == 2
     assert out.gate.decision == "accept" and len(out.proposed_actions) == 1
@@ -333,7 +333,7 @@ def test_malformed_forever_is_inconclusive(mutable_graph, settings):
     def behave(inp, n):
         raise InvestigatorError("malformed", "output failed validation")
 
-    orch, calls, sid, status = run_golden(mutable_graph, settings, behave=behave)
+    _orch, calls, sid, status = run_golden(mutable_graph, settings, behave=behave)
     out = get(mutable_graph, sid)
     assert status == "inconclusive" and calls.n["investigator"] == 3          # initial + MAX_REVISIONS (2)
     assert out.revision_count == 2 and out.proposed_actions == [] and out.findings == []
@@ -365,7 +365,7 @@ def test_revisions_exhausted_with_bad_hypothesis_keeps_violations(mutable_graph,
                            supporting_evidence_ids=["nova.ev.does_not_exist"])
         return out.model_copy(update={"hypotheses": [*out.hypotheses, extra]})
 
-    orch, calls, sid, status = run_golden(mutable_graph, settings, behave=behave)
+    _orch, _calls, sid, status = run_golden(mutable_graph, settings, behave=behave)
     out = get(mutable_graph, sid)
     assert status == "completed" and out.gate.decision == "recommendation_only"
     assert [v.code for v in out.gate.violations] == ["unknown_evidence"]
@@ -393,7 +393,7 @@ def test_unexpected_error_is_failed_without_leaking_details(mutable_graph, setti
     def broken(inp, n):
         raise ValueError("dsn=postgresql://user:secret@host/db")
 
-    orch, calls, sid, status = run_golden(mutable_graph, settings, behave=broken)
+    _orch, _calls, sid, status = run_golden(mutable_graph, settings, behave=broken)
     out = get(mutable_graph, sid)
     assert status == "failed" and out.status == "failed" and out.error
     assert "secret" not in out.error and out.proposed_actions == []
@@ -467,7 +467,7 @@ def test_crash_then_resume_does_not_rerun_completed_nodes(mutable_graph, setting
 
 # ================================================================================ persist / claim
 def test_persist_is_idempotent_and_never_resets_a_reviewed_action(mutable_graph, settings):
-    orch, calls, sid, status = run_golden(mutable_graph, settings)
+    orch, _calls, sid, _status = run_golden(mutable_graph, settings)
     repo = GraphRepository(mutable_graph, SCOPE)
     state = dict(orch.graph.get_state(orch.config(get(mutable_graph, sid).thread_id)).values)
 

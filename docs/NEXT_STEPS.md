@@ -58,99 +58,21 @@ cd apps/web && npm install && GRAPHATHON_API_URL=http://127.0.0.1:8001 npm run d
 | 1 DBs, migrations, seed | Done | `docs/schema/falkordb.md`, `docs/schema/postgres.md`, `docs/falkordb-capabilities.md` |
 | 2 Typed API | Done | `docs/api.md` |
 | 3 Graph tools + hybrid GraphRAG | Done (migration 0002 applied to dev; docs indexed) | `docs/retrieval.md` |
-| 4 LangGraph orchestration | **Partially built, not integrated.** See §4 | (`docs/orchestration.md` and `docs/investigator.md` not yet written) |
+| 4 LangGraph orchestration | Done (stub and Ollama investigators, gate, parallel retrieval, Postgres checkpoints, recovery) | `docs/investigator.md`, `docs/orchestration.md` |
 | 5 Human review + executor | Not started | — |
-| 6 Frontend | Built and verified live in a browser; renders Phase 4 fields from fixtures | `apps/web/README.md` |
+| 6 Frontend | Built; fixtures regenerated from the real API; live browser re-check pending (§4) | `apps/web/README.md` |
 
-Nothing is committed yet: the repo has no commits. The remote `origin` is the empty `github.com/nithish-kumar-dev/Graphathon-incident-management`. **Step 0 of the next session:** review `git status` and make an initial commit. `.env` and `backups/` are gitignored; confirm that before committing.
+The work is committed locally (nothing pushed). The remote `origin` is the empty `github.com/nithish-kumar-dev/Graphathon-incident-management`. `.env` and `backups/` are gitignored.
 
-## 4. Phase 4: finish and integrate (do this first)
+## 4. Phase 4: done
 
-Three parallel agents built Phase 4 against the shared contract `apps/api/app/agents/contracts.py`. Treat it as read-only unless you deliberately change all sides. The web part finished. The other two were stopped mid-work.
+The deterministic golden path works end to end with `LLM_PROVIDER=stub`, and `LLM_PROVIDER=ollama` passes the gate on INC-101 (live test, no fallback). Details: `docs/investigator.md` (stub, Ollama prompt and format, fallback label, gate rules, telemetry) and `docs/orchestration.md` (nodes, state, statuses, recovery, worker).
 
-### 4a. Investigator, safety gate, telemetry: code and tests exist, docs missing
-- **Files:** `app/agents/investigator.py` (StubInvestigator, OllamaInvestigator with a timeout and a labelled `stub-fallback(...)`, `from_settings`), `app/agents/prompts.py`, `app/agents/safety_gate.py` (`evaluate()` → GateResult), and `app/telemetry/synthetic.py` (`collect()`; deterministic NovaCommerce telemetry, no network).
-- **Tests:** `tests/test_phase4_{investigator,gate,telemetry}.py` — 71 pass, including the live Ollama test.
-- **Live Ollama finding.** `qwen2.5:7b` took about 32 s, and the gate returned `revise` with violation `invalid_arguments` on its proposed action.
-  - TODO: inspect why: likely a tenant or id-prefix mismatch, or a `deployment_id` or `runbook_id` format problem.
-  - Then improve `prompts.py`, for example by listing the exact allowed ids for target, runbook and deployment in the prompt, so a revision passes.
-  - Do not loosen the gate.
-- TODO: fix the 2 lint errors, and review the code. It was not reviewed after the agent stopped.
-- TODO: write `docs/investigator.md`: stub rules, the Ollama prompt and format, fallback labelling, the gate rules and decision table (accept / revise / recommendation_only / escalate / inconclusive), and the telemetry dataset.
-
-### 4b. Orchestrator: code written, NO tests, not wired end to end
-- **Files:** `app/orchestrator/{state,graph,dependencies,checkpoint,persist,runner}.py` and `scripts/run_worker.py`.
-- The FastAPI lifespan in `app/main.py` starts `Worker` when `ORCHESTRATOR_ENABLED`.
-- `app/services/investigations.py` was edited. **Verify** that the API model changes below actually landed in `app/api/models.py`.
-- The modules import cleanly. Nothing else is verified.
-
-**Required behaviour (Phase 4 brief):**
-- **Nodes:** `intake_and_deduplicate` → `coordinator` → parallel [`graph_context_retrieval`, `memory_retrieval`, `live_evidence_retrieval`] → `fan_in`, a real barrier via `add_edge([...], "fan_in")` → `investigator` → `evidence_safety_gate` → revise loop (bounded by `MAX_INVESTIGATION_REVISIONS`, default 2) → `human_review` (Phase 4 placeholder) → `restricted_executor` (placeholder; `recommendation_only` must never reach it) → `persist_outcome` → `notify_channel`.
-- **Simple nodes are plain Python** (no LLM).
-- **State:** JSON-serialisable values only, with explicit keys `graph_context`, `memory_context`, `knowledge_context`, `telemetry_context`, and `retrieval_status`, which needs a reducer that merges per-branch completed/failed/skipped. No two nodes write the same un-reduced key.
-- **Branches:** each has a timeout (`BRANCH_TIMEOUT_S`) and one retry on a transient `GraphUnavailable`. A failure records `failed` and a detail. Never invent data.
-- **Checkpointer:** `PostgresSaver`, with `thread_id = AgentSession.thread_id`. **Restart recovery:** the worker resumes `running` sessions with `graph.invoke(None, config)`, and completed nodes do not re-run.
-- **Worker:** claims a session with ONE atomic graph write (`queued → running` only if still queued), then runs it in a small thread pool.
-- **`persist_outcome`** is idempotent, with deterministic ids from the session id:
-  - telemetry observations become Evidence nodes: same id, kind **`metric`**, `HAS_EVIDENCE` from the incident, `OBSERVED_ON` the service
-  - AgentSession gets `findings_json`, `summary`, `investigator`, `overall_uncertainty`, `gate_json`, `branch_status_json`, `revision_count`, `status` and `ended_at_ms`
-  - each accepted proposal becomes an AgentAction:
-    - id `<tenant>.act.<session-suffix>.<n>.v1`, `proposal_id` `<tenant>.prop.<session-suffix>.<n>`, version 1
-    - `spec_json = canonical_json({action_type, tenant_id, env, service_id, deployment_id, runbook_id})` and `spec_hash = sha256(spec_json)`
-    - status `proposed` (recommendation_only) or `pending_review` (simulation)
-    - edges `PART_OF` the session, `TARGETS` the service, `SUPPORTED_BY` its evidence
-  - never verify memories here
-- **Final statuses:**
-
-  | Gate decision / outcome | Status |
-  |---|---|
-  | accept + recommendation_only | `completed` |
-  | accept + simulation with actions | `awaiting_review` |
-  | recommendation_only | `completed` (violations kept) |
-  | escalate | `escalated` |
-  | inconclusive | `inconclusive` |
-  | unrecoverable error | `failed` (+ `error`) |
-  | overall run timeout | `timed_out` |
-
-- **API: `InvestigationOut` must gain:**
-  - `summary`, `investigator`, `overall_uncertainty`, `error`
-  - `gate: {decision, violations[{code,target,detail}]} | null`
-  - `proposed_actions: [{id, proposal_id, version, action_type, status, mode, target_service_id, deployment_id, runbook_id, risk, rationale, spec, spec_hash, evidence[]}]`
-  - always serialised, as null or `[]`
-- **API: `FindingOut` must gain** `contradicting_evidence[]`, `confidence` and `uncertainty`.
-
-**Tests to write** in `tests/test_phase4_orchestrator.py`, using fakes injected through the `Dependencies` dataclass and the fixtures in `tests/conftest.py`:
-- golden path: recommendation_only gives `completed`; simulation gives `awaiting_review`
-- one branch missing or failed
-- two branches delayed (the barrier waits)
-- a branch timeout
-- a transient graph outage (retried once)
-- malformed LLM output, then valid output (`revision_count == 1`)
-- max revisions exhausted → inconclusive or escalated
-- restart recovery: crash mid-run, resume on the same thread_id, branch call counters unchanged
-- recommendation_only never reaches the executor
-- persist is idempotent
-- atomic claim: of two claimers, only one wins
-- the API returns the new fields
-- **one end-to-end test with the real stub investigator, the gate and telemetry** on the golden INC-101
-
-**Gate for Phase 4:** the deterministic golden path works end to end with `LLM_PROVIDER=stub`. After that, `LLM_PROVIDER=ollama` works with strict timeouts and a clear fallback label.
-
-**Also:**
-- Write `docs/orchestration.md`: the node diagram, state keys and reducer, status mapping, revision loop, checkpoints and thread ids, recovery, and worker claim semantics.
-- Update `README.md`.
-
-### 4c. Web: done. Reconcile with the real API once 4b lands.
-The web agent's contract questions, answered:
-1. **ids:** action `<tenant>.act.<session-suffix>.<n>.v1`, proposal `<tenant>.prop.<session-suffix>.<n>`, investigation `<tenant>.ses.<ulid>`.
-2. **`spec_hash`** = sha256 of `canonical_json(spec)` (sorted keys, compact separators, UTF-8; see `app/domain/actions.py`). `spec` = `{action_type, tenant_id, env, service_id, deployment_id, runbook_id}`. Mode is NOT in the spec.
-3. **Telemetry evidence `kind` is `metric`.** **Fix the web fixtures**: `apps/web/src/test/fixtures/investigation_*_101.json` currently use `"telemetry"`, which is not a valid Evidence kind.
-4. **AgentAction statuses** (`app/graph/schema.py` ENUMS): proposed, pending_review, approved, rejected, revision_requested, escalated, executed_simulated, failed, expired, superseded.
-5. The server does not yet send the required approver role on a proposal. **Add `required_approver_role` to ProposedActionOut in Phase 5** (computed server-side from the active Decision), and have the UI prefer it over matching paths.
-6. The new fields are always serialised, as null or `[]`.
-7. **On a failed run,** `investigator` is set if it ran, otherwise null, and `gate` is null.
-
-After 4b, regenerate the web fixtures from the real API with the stub investigator, then re-run the browser check described in §6.
+- **Tests:** 306 backend (`tests/test_phase4_{investigator,gate,telemetry,orchestrator}.py` among them; the orchestrator suite also runs against the real `PostgresSaver`) and 92 web.
+- **Ollama fix.** The 7B model chose `deployment_id: null` and cited a memory id as evidence. The Ollama `format` schema now requires `deployment_id` (`output_format_schema()`), and the prompt lists `action_candidates`. The gate was not changed.
+- **Web fixtures** `apps/web/src/test/fixtures/investigation_{completed,awaiting_review,escalated,failed}_101.json` are generated from the real API by `scripts/gen_web_fixtures.py` (ephemeral `falkordb-test` only). Regenerate them whenever the investigation payload changes.
+- **Still to do from Phase 4:** the live browser check (§6) against a backed-up or test graph. Clicking Investigate on INC-101 in the dev graph is irreversible.
+- **Carried into Phase 5:** add `required_approver_role` to `ProposedActionOut` (computed server-side from the active Decision) and have the UI prefer it over matching paths. `human_review` and `restricted_executor` are placeholders. AgentAction statuses are in `app/graph/schema.py` ENUMS.
 
 ## 5. Phase 5: human review and the safe executor (after Phase 4 passes)
 - **Replace the `human_review` placeholder with LangGraph `interrupt()`** and resume with `Command(resume=...)` on the same thread_id. Use the durable Postgres checkpointer. Verify the installed API by introspection: langgraph 1.2.16 exposes `interrupt` and `Command` in `langgraph.types`.
