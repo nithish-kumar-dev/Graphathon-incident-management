@@ -26,21 +26,21 @@ def golden_input(graph, *, telemetry: bool = True, **overrides) -> InvestigatorI
     gc = b.graph_context
     services = sorted(set(gc.incident.affected_service_ids) | {p.target_service_id for p in gc.explanation_paths}
                       | {d.service.id for deps in gc.dependencies.values() for d in deps})
-    fields = dict(
-        incident_id="nova.inc.101", incident_key=gc.incident.key, incident_title=gc.incident.title,
-        tenant_id="nova", env="prod", mode="recommendation_only", revision=0,
-        branch_status={"graph_context": "completed", "memory_context": "completed",
+    fields = {
+        "incident_id": "nova.inc.101", "incident_key": gc.incident.key, "incident_title": gc.incident.title,
+        "tenant_id": "nova", "env": "prod", "mode": "recommendation_only", "revision": 0,
+        "branch_status": {"graph_context": "completed", "memory_context": "completed",
                        "telemetry_context": "completed" if telemetry else "failed"},
-        graph_context=gc, memory_context=b.memory_context, knowledge_context=b.knowledge_context,
-        telemetry_context=synthetic.collect("nova", "prod", services, WINDOW_START, NOW) if telemetry else None)
+        "graph_context": gc, "memory_context": b.memory_context, "knowledge_context": b.knowledge_context,
+        "telemetry_context": synthetic.collect("nova", "prod", services, WINDOW_START, NOW) if telemetry else None}
     fields.update(overrides)
     return InvestigatorInput(**fields)
 
 
 def empty_input(**overrides) -> InvestigatorInput:
-    fields = dict(incident_id="nova.inc.101", incident_key="INC-101", incident_title="Checkout 5xx", tenant_id="nova",
-                  env="prod", mode="recommendation_only", revision=0,
-                  branch_status={"graph_context": "failed", "memory_context": "failed", "telemetry_context": "failed"})
+    fields = {"incident_id": "nova.inc.101", "incident_key": "INC-101", "incident_title": "Checkout 5xx", "tenant_id": "nova",
+                  "env": "prod", "mode": "recommendation_only", "revision": 0,
+                  "branch_status": {"graph_context": "failed", "memory_context": "failed", "telemetry_context": "failed"}}
     fields.update(overrides)
     return InvestigatorInput(**fields)
 

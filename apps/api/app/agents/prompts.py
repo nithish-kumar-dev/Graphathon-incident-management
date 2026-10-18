@@ -21,11 +21,10 @@ Rules (a safety gate rejects anything that breaks them):
    or "hypothesis" (a possible explanation). Never use "confirmed": only humans confirm causes.
 3. Explanation paths are correlations, not proof. Memories are precedent, not proof. Knowledge chunks are
    context only and are never evidence.
-4. Propose actions only from an explanation path: action_type must be in "allowed_action_types" and in that
-   path's runbook allowed_action_types; target_service_id is the path target; deployment_id is the path
-   deployment id (always set it); runbook_id is the path runbook; evidence_ids come from the path evidence.
-   Never repeat an
-   action that a memory with precedent "warns_against" says failed. If no path exists, propose no actions.
+4. Propose actions only by copying one entry of "action_candidates" exactly: action_type, target_service_id,
+   deployment_id (never null) and runbook_id as given, with evidence_ids chosen from that entry's
+   evidence_ids. Never invent or change these ids. Never repeat an action that a memory with precedent
+   "warns_against" says failed. If "action_candidates" is empty, propose no actions.
 5. Use recommendation language ("recommend", "consider"). Actions are proposals for human approval only.
 6. Add an "observed" hypothesis for each anomalous telemetry signal (service + metric), citing its ids.
    Normal readings on the target or affected services are contradicting evidence for a correlation.
@@ -52,6 +51,7 @@ def build_user_content(inp: InvestigatorInput) -> str:
                      "tenant": inp.tenant_id, "env": inp.env, "mode": inp.mode},
         "branch_status": inp.branch_status,
         "allowed_action_types": allowed,
+        "action_candidates": [],
     }
     shown_tel = _compact_telemetry(inp) if tc else []
     hidden_tel = {o.id for o in tc.observations} - {o.id for o in shown_tel} if tc else set()
@@ -74,6 +74,11 @@ def build_user_content(inp: InvestigatorInput) -> str:
             "runbooks": [{"id": r.id, "allowed_action_types": r.allowed_action_types} for r in p.runbooks[:5]],
             "approval_policy": p.approval_policy, "summary": _cut(p.summary, SUMMARY)}
             for p in gc.explanation_paths[:5]]
+        doc["action_candidates"] = [{
+            "action_type": at, "target_service_id": p.target_service_id, "deployment_id": p.deployment.id,
+            "runbook_id": r.id, "evidence_ids": [e.id for e in p.evidence[:10]]}
+            for p in gc.explanation_paths[:5] for r in p.runbooks[:5] for at in r.allowed_action_types
+            if at in allowed]
         doc["dependencies"] = {sid: [d.service.id for d in deps[:10]] for sid, deps in gc.dependencies.items()}
         doc["recent_deployments"] = [{"id": d.id, "service_id": d.service_id, "version": d.version,
                                       "deployed_at": d.deployed_at.isoformat()} for d in gc.recent_deployments[:10]]

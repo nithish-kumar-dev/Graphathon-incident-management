@@ -255,6 +255,17 @@ def _elapsed(t0: float) -> int:
 
 
 # ============================================================================================ ollama
+def output_format_schema() -> dict:
+    """The JSON schema sent to Ollama. Stricter than the contract: a 7B model otherwise picks `null` for
+    deployment_id, which the gate rejects for a rollback. Validation of the reply still uses the contract."""
+    schema = InvestigatorOutput.model_json_schema()
+    action = schema["$defs"]["ProposedAction"]
+    action["properties"]["deployment_id"] = next(
+        b for b in action["properties"]["deployment_id"]["anyOf"] if b.get("type") == "string")
+    action["required"] = sorted({*action.get("required", []), "deployment_id"})
+    return schema
+
+
 class OllamaInvestigator:
     """Local LLM via Ollama /api/chat with `format` = the InvestigatorOutput JSON schema, temperature 0."""
 
@@ -284,7 +295,7 @@ class OllamaInvestigator:
 
     def investigate(self, inp: InvestigatorInput, *, timeout_s: float) -> InvestigatorOutput:
         body = {"model": self.model, "messages": prompts.messages(inp), "stream": False,
-                "format": InvestigatorOutput.model_json_schema(),
+                "format": output_format_schema(),
                 "options": {"temperature": 0, "num_ctx": self.num_ctx}}
         try:
             with httpx.Client(transport=self._transport, timeout=timeout_s) as client:
