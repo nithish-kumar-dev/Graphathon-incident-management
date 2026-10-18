@@ -1,0 +1,27 @@
+[build]
+  base = "apps/web"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# The client calls /api, /healthz and /readyz on its own origin; proxy them to Render.
+# Replace the host with your Render service URL.
+[[redirects]]
+  from = "/api/*"
+  to = "https://graph-sentinal-graphhacks-19.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/healthz"
+  to = "https://graph-sentinal-graphhacks-19.onrender.com/healthz"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/readyz"
+  to = "https://graph-sentinal-graphhacks-19.onrender.com/readyz"
+  status = 200
+  force = true
