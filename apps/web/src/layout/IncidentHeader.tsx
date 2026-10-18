@@ -44,7 +44,7 @@ export interface IncidentHeaderProps {
 }
 
 export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProps) {
-  const { incident, incidentRefreshing, run, view } = useInvestigationSession();
+  const { incident, incidentRefreshing, run, view, displaySettled } = useInvestigationSession();
   const [mode, setMode] = useState<Mode>("recommendation_only");
   const selectId = useId();
   const helpId = useId();
@@ -56,6 +56,10 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
   const action = primaryActionFor(view.phase);
   const others = incident.affected_services.length > 1 ? incident.affected_services.length - 1 : 0;
   const needsPermission = action.kind !== "view";
+  // The tracker is paced, so the backend can be finished while the user still sees the run moving.
+  // Offering "View investigation" or "Re-investigate" then contradicts what is on screen.
+  const catchingUp = !displaySettled;
+  const busy = run.starting || catchingUp;
 
   const onPrimary = () => {
     if (action.kind === "view") onViewInvestigation();
@@ -96,16 +100,16 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
           />
         </div>
 
-        <div className="flex flex-wrap items-end gap-2">
-          <div className="flex flex-col gap-1">
-            <label htmlFor={selectId} className="kicker">
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <label htmlFor={selectId} className="sr-only">
               Mode
             </label>
             <select
               id={selectId}
               value={action.kind === "resume" && inv ? inv.mode : mode}
               onChange={(e) => setMode(e.target.value as Mode)}
-              disabled={!allowed || run.starting || action.kind === "resume"}
+              disabled={!allowed || busy || action.kind === "resume"}
               className="rounded-md border border-line bg-surface px-2.5 py-2 text-sm font-medium text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:bg-surface-muted disabled:text-faint"
             >
               {MODES.map((m) => (
@@ -114,29 +118,29 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
                 </option>
               ))}
             </select>
-            <p className="max-w-56 text-xs leading-snug text-muted">{MODE_HINTS[action.kind === "resume" && inv ? inv.mode : mode]}</p>
-          </div>
-          {/* The wrapper carries the tooltip: disabled buttons do not get hover events in every browser. */}
-          <span title={needsPermission ? reason : undefined} className="inline-flex">
-            <button
-              type="button"
-              className="btn-primary gap-2"
-              disabled={(needsPermission && !allowed) || run.starting}
-              aria-busy={run.starting || undefined}
-              aria-describedby={needsPermission && reason ? helpId : undefined}
-              onClick={onPrimary}
-            >
-              {run.starting ? <Spinner size="sm" /> : null}
-              {run.starting ? "Starting…" : action.label}
-            </button>
-          </span>
-          {action.kind === "view" ? (
-            <span title={reason} className="inline-flex">
-              <button type="button" className="btn-secondary" disabled={!allowed || run.starting} onClick={() => void run.start(mode)}>
-                Re-investigate
+            {/* The wrapper carries the tooltip: disabled buttons do not get hover events in every browser. */}
+            <span title={needsPermission ? reason : undefined} className="inline-flex">
+              <button
+                type="button"
+                className="btn-primary gap-2"
+                disabled={(needsPermission && !allowed) || busy}
+                aria-busy={busy || undefined}
+                aria-describedby={needsPermission && reason ? helpId : undefined}
+                onClick={onPrimary}
+              >
+                {busy ? <Spinner size="sm" /> : null}
+                {run.starting ? "Starting…" : catchingUp ? "Investigating…" : action.label}
               </button>
             </span>
-          ) : null}
+            {action.kind === "view" && !catchingUp ? (
+              <span title={reason} className="inline-flex">
+                <button type="button" className="btn-secondary" disabled={!allowed || busy} onClick={() => void run.start(mode)}>
+                  Re-investigate
+                </button>
+              </span>
+            ) : null}
+          </div>
+          <p className="max-w-md text-xs leading-snug text-muted">{MODE_HINTS[action.kind === "resume" && inv ? inv.mode : mode]}</p>
         </div>
       </div>
 

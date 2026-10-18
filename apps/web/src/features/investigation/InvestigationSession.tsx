@@ -40,6 +40,12 @@ export interface InvestigationSession {
   timelineError: ApiError | null;
   timelineLoading: boolean;
   view: InvestigationView;
+  /**
+   * False while the paced stage tracker is still catching up to the backend. Controls that would
+   * contradict what the tracker is showing (such as offering "View investigation" while the user
+   * can still see the run progressing) should wait for this.
+   */
+  displaySettled: boolean;
   /** Ticks so relative times ("4 min ago") stay current without refetching. */
   now: number;
 }
@@ -245,6 +251,7 @@ export function InvestigationSessionProvider({ incident, incidentRefreshing, rel
     timelineError: timeline.error,
     timelineLoading: timeline.loading,
     view,
+    displaySettled: pacedStages === realView.stages,
     now,
   };
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;

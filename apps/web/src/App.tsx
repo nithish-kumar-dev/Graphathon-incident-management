@@ -76,7 +76,7 @@ export default function App({ client }: AppProps) {
 
         <main
           id="main"
-          className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-5 p-4 lg:grid-cols-[minmax(17rem,19rem)_minmax(0,1fr)] lg:gap-6 lg:p-6"
+          className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-5 p-4 pb-20 lg:grid-cols-[minmax(17rem,19rem)_minmax(0,1fr)] lg:gap-6 lg:p-6 lg:pb-24"
         >
           <aside className="min-w-0">
             <IncidentList

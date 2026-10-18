@@ -130,4 +130,4 @@ def test_settings_rejects_bad_graph_name_and_llm():
         Settings(_env_file=None, postgres_dsn=dsn, graph_name="__probe")
     with pytest.raises(ValueError):
         Settings(_env_file=None, postgres_dsn=dsn, llm_provider="openai")
-    assert Settings(_env_file=None, postgres_dsn=dsn, llm_provider="ollama").llm_provider == "ollama"
+    assert Settings(_env_file=None, postgres_dsn=dsn, llm_provider="gemini").llm_provider == "gemini"

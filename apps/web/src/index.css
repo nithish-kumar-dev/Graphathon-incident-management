@@ -40,6 +40,15 @@
   --color-live: #62b89b;
 }
 
+@layer base {
+  /* The page wrapper is only as tall as its content, so without this the viewport shows bare
+     white below the last card when a long page is scrolled to the end. */
+  html,
+  body {
+    background-color: var(--color-canvas);
+  }
+}
+
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-md bg-brand px-3.5 py-2 text-sm font-bold text-white shadow-sm hover:bg-[#12496a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:bg-[#e9ecef] disabled:text-faint disabled:shadow-none;

@@ -1,23 +1,25 @@
-"""Investigators: the deterministic stub on the real INC-101 context, and the Ollama client (mocked transport;
-one live test, skipped when Ollama or the model is missing)."""
+"""Investigators: the deterministic stub on the real INC-101 context, and the Gemini client (mocked transport;
+one live test, skipped when GEMINI_API_KEY is not set)."""
 
 import json
+import os
 
 import httpx
 import pytest
 from app.agents import prompts
 from app.agents.contracts import InvestigatorError, InvestigatorInput, InvestigatorOutput
-from app.agents.investigator import OllamaInvestigator, StubInvestigator, from_settings, output_format_schema
+from app.agents.investigator import GeminiInvestigator, StubInvestigator, from_settings, output_format_schema
 from app.rag.embeddings import HashingEmbedder
 from app.rag.retrieval import MemoryContext, retrieve
 from app.seeds.novacommerce import ms
 from app.telemetry import synthetic
+from pydantic import SecretStr
 
 from .conftest import ALLOWED, NOW, rctx
 
 WINDOW_START = ms("2026-10-17T13:00:00")
-MODEL = "qwen2.5:7b"
-OLLAMA = "http://127.0.0.1:11434"
+MODEL = "gemini-2.5-flash"
+KEY = "test-key"
 
 
 def golden_input(graph, *, telemetry: bool = True, **overrides) -> InvestigatorInput:
@@ -129,38 +131,47 @@ class TestStub:
         assert all(tel_id not in h.supporting_evidence_ids for h in out.hypotheses)
 
 
-# ===================================================================================== ollama (offline)
-def _ollama(handler, **kw) -> OllamaInvestigator:
-    return OllamaInvestigator(OLLAMA, MODEL, transport=httpx.MockTransport(handler), **kw)
+# ===================================================================================== gemini (offline)
+def _gemini(handler, **kw) -> GeminiInvestigator:
+    return GeminiInvestigator(KEY, MODEL, transport=httpx.MockTransport(handler), **kw)
+
+
+def _reply(text: str) -> dict:
+    return {"candidates": [{"content": {"role": "model", "parts": [{"text": text}]}}]}
 
 
 def _content(text: str):
-    return lambda request: httpx.Response(200, json={"message": {"role": "assistant", "content": text}})
+    return lambda request: httpx.Response(200, json=_reply(text))
 
 
 GOOD = InvestigatorOutput(summary="No evidence; nothing to recommend.").model_dump_json()
 
 
-def test_ollama_format_requires_deployment_id():
+def test_gemini_format_requires_deployment_id():
     action = output_format_schema()["$defs"]["ProposedAction"]
     assert "deployment_id" in action["required"] and action["properties"]["deployment_id"]["type"] == "string"
     assert InvestigatorOutput.model_json_schema()["$defs"]["ProposedAction"]["properties"]["deployment_id"].get("anyOf")
 
 
-def test_ollama_request_shape_and_success():
+def test_gemini_request_shape_and_success():
     seen = {}
 
     def handler(request: httpx.Request):
         seen.update(json.loads(request.content))
         seen["url"] = str(request.url)
-        return httpx.Response(200, json={"message": {"content": GOOD}})
+        seen["key"] = request.headers.get("x-goog-api-key")
+        return httpx.Response(200, json=_reply(GOOD))
 
-    res = _ollama(handler, fallback_to_stub=False).run(empty_input(), timeout_s=5)
-    assert res.investigator == f"ollama:{MODEL}" and res.output.summary.startswith("No evidence")
-    assert seen["url"] == f"{OLLAMA}/api/chat" and seen["stream"] is False and seen["model"] == MODEL
-    assert seen["format"] == output_format_schema() and seen["options"]["temperature"] == 0
-    assert seen["messages"][0] == {"role": "system", "content": prompts.SYSTEM_PROMPT}
-    assert json.loads(seen["messages"][1]["content"])["incident"]["id"] == "nova.inc.101"
+    res = _gemini(handler, fallback_to_stub=False).run(empty_input(), timeout_s=5)
+    assert res.investigator == f"gemini:{MODEL}" and res.output.summary.startswith("No evidence")
+    assert seen["url"].endswith(f"/models/{MODEL}:generateContent") and seen["key"] == KEY
+    assert "key=" not in seen["url"]
+    cfg = seen["generationConfig"]
+    assert cfg["responseJsonSchema"] == output_format_schema() and cfg["temperature"] == 0
+    assert cfg["responseMimeType"] == "application/json"
+    assert seen["systemInstruction"]["parts"][0]["text"] == prompts.SYSTEM_PROMPT
+    user_text = seen["contents"][0]["parts"][0]["text"]
+    assert json.loads(user_text)["incident"]["id"] == "nova.inc.101"
 
 
 @pytest.mark.parametrize("handler, kind", [
@@ -168,39 +179,40 @@ def test_ollama_request_shape_and_success():
     (_content('{"hypotheses": []}'), "malformed"),                                       # schema: summary missing
     (_content('{"summary": "x", "extra": 1}'), "malformed"),                             # extra="forbid"
     (lambda r: httpx.Response(200, text="<html>"), "malformed"),
-    (lambda r: httpx.Response(200, json={"done": True}), "malformed"),                   # no message.content
+    (lambda r: httpx.Response(200, json={"candidates": []}), "malformed"),               # blocked / no candidate
     (lambda r: (_ for _ in ()).throw(httpx.ReadTimeout("slow", request=r)), "timeout"),
     (lambda r: (_ for _ in ()).throw(httpx.ConnectTimeout("slow", request=r)), "timeout"),
     (lambda r: (_ for _ in ()).throw(httpx.ConnectError("refused", request=r)), "unavailable"),
     (lambda r: httpx.Response(500, text="boom"), "unavailable"),
     (lambda r: httpx.Response(404, json={"error": "model not found"}), "unavailable"),
+    (lambda r: httpx.Response(429, json={"error": "quota"}), "unavailable"),
 ])
-def test_ollama_error_mapping_without_fallback(handler, kind):
+def test_gemini_error_mapping_without_fallback(handler, kind):
     with pytest.raises(InvestigatorError) as err:
-        _ollama(handler, fallback_to_stub=False).run(empty_input(), timeout_s=1)
+        _gemini(handler, fallback_to_stub=False).run(empty_input(), timeout_s=1)
     assert err.value.kind == kind
 
 
 @pytest.mark.parametrize("handler, label", [
-    (_content("{not json"), "stub-fallback(ollama malformed)"),
-    (lambda r: (_ for _ in ()).throw(httpx.ReadTimeout("slow", request=r)), "stub-fallback(ollama timeout)"),
-    (lambda r: httpx.Response(503), "stub-fallback(ollama unavailable)"),
+    (_content("{not json"), "stub-fallback(gemini malformed)"),
+    (lambda r: (_ for _ in ()).throw(httpx.ReadTimeout("slow", request=r)), "stub-fallback(gemini timeout)"),
+    (lambda r: httpx.Response(503), "stub-fallback(gemini unavailable)"),
 ])
-def test_ollama_fallback_is_labelled(handler, label):
+def test_gemini_fallback_is_labelled(handler, label):
     inp = empty_input()
-    res = _ollama(handler, fallback_to_stub=True).run(inp, timeout_s=1)
+    res = _gemini(handler, fallback_to_stub=True).run(inp, timeout_s=1)
     assert res.investigator == label and res.output == StubInvestigator().investigate(inp)
 
 
 def test_from_settings(settings):
     assert isinstance(from_settings(settings.model_copy(update={"llm_provider": "stub"})), StubInvestigator)
-    inv = from_settings(settings.model_copy(update={"llm_provider": "ollama", "ollama_model": MODEL,
-                                                    "llm_fallback_to_stub": False}))
-    assert isinstance(inv, OllamaInvestigator) and inv.name == f"ollama:{MODEL}" and not inv.fallback_to_stub
+    inv = from_settings(settings.model_copy(update={"llm_provider": "gemini", "gemini_api_key": SecretStr(KEY),
+                                                    "gemini_model": MODEL, "llm_fallback_to_stub": False}))
+    assert isinstance(inv, GeminiInvestigator) and inv.name == f"gemini:{MODEL}" and not inv.fallback_to_stub
     with pytest.raises(ValueError):
-        from_settings(settings.model_copy(update={"llm_provider": "ollama", "ollama_model": ""}))
+        from_settings(settings.model_copy(update={"llm_provider": "gemini", "gemini_api_key": SecretStr("")}))
     with pytest.raises(ValueError):
-        OllamaInvestigator(OLLAMA, "  ")
+        GeminiInvestigator(KEY, "  ")
 
 
 @pytest.mark.integration
@@ -216,29 +228,21 @@ def test_prompt_is_compact_and_cites_only_context_ids(rag_graph):
     assert "nova.doc.sec_handbook" not in json.dumps(doc)
 
 
-# ===================================================================================== live ollama
-def _ollama_ready() -> bool:
-    try:
-        tags = httpx.get(f"{OLLAMA}/api/tags", timeout=2).json()
-    except (httpx.HTTPError, ValueError):
-        return False
-    return any(m.get("name") == MODEL for m in tags.get("models", []))
-
-
+# ===================================================================================== live gemini
 @pytest.mark.integration
-@pytest.mark.skipif(not _ollama_ready(), reason=f"local Ollama with {MODEL} not available")
-def test_live_ollama_golden(rag_graph, record_property, capsys):
+@pytest.mark.skipif(not os.environ.get("GEMINI_API_KEY"), reason="GEMINI_API_KEY not set")
+def test_live_gemini_golden(rag_graph, record_property, capsys):
     from app.agents.safety_gate import evaluate
 
     inp = golden_input(rag_graph)
-    res = OllamaInvestigator(OLLAMA, MODEL, fallback_to_stub=False).run(inp, timeout_s=180)
+    res = GeminiInvestigator(os.environ["GEMINI_API_KEY"], MODEL, fallback_to_stub=False).run(inp, timeout_s=60)
     gate = evaluate(res.output, inp, repo=rctx(rag_graph).repo, revision=0, max_revisions=2)
-    record_property("ollama_latency_ms", res.latency_ms)
+    record_property("gemini_latency_ms", res.latency_ms)
     record_property("gate_decision", gate.decision)
     with capsys.disabled():
-        print(f"\n[live ollama] {res.investigator} latency={res.latency_ms}ms gate={gate.decision} "
+        print(f"\n[live gemini] {res.investigator} latency={res.latency_ms}ms gate={gate.decision} "
               f"hypotheses={len(res.output.hypotheses)} actions={len(res.output.proposed_actions)} "
               f"violations={[v.code for v in gate.violations]}")
-    assert res.investigator == f"ollama:{MODEL}"
+    assert res.investigator == f"gemini:{MODEL}"
     assert gate.decision in {"accept", "revise"}
     assert "invalid_arguments" not in {v.code for v in gate.violations}

@@ -43,9 +43,11 @@ class Settings(BaseSettings):
     retrieval_allowed_classifications: str = "public,internal"
 
     llm_provider: str = "stub"
-    ollama_base_url: str = "http://127.0.0.1:11434"
-    ollama_model: str = ""
-    llm_timeout_s: float = Field(default=90.0, gt=0, le=600)       # local 7B: ~12 s cold load + generation
+    gemini_api_key: SecretStr = SecretStr("")
+    gemini_model: str = "gemini-2.5-flash"
+    ollama_base_url: str = "http://127.0.0.1:11434"                # still used by the Ollama embedder
+    # ollama_model: str = ""                                       # Ollama investigator disabled
+    llm_timeout_s: float = Field(default=90.0, gt=0, le=600)
     llm_fallback_to_stub: bool = True                              # labelled "stub-fallback(...)" when used
 
     # Phase 4 orchestration
@@ -80,8 +82,8 @@ class Settings(BaseSettings):
     @field_validator("llm_provider")
     @classmethod
     def _llm(cls, v: str) -> str:
-        if v not in {"stub", "ollama"}:
-            raise ValueError("llm_provider must be 'stub' or 'ollama'")
+        if v not in {"stub", "gemini"}:
+            raise ValueError("llm_provider must be 'stub' or 'gemini'")
         return v
 
     @field_validator("embedding_provider")

@@ -1222,3 +1222,650 @@
 9:18:15 PM [vite] (client) page reload src/layout/DemoControlsPanel.test.tsx
 9:18:15 PM [vite] (client) page reload src/App.test.tsx
 9:26:58 PM [vite] (client) hmr update /src/index.css, /src/features/graph/EvidenceGraphTab.tsx, /src/features/graph/GraphCanvas.tsx, /src/features/graph/NodeDetailsPanel.tsx
+10:31:35 PM [vite] (client) hmr update /src/features/investigation/InvestigationSession.tsx, /src/index.css
+10:31:35 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:35 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+10:31:35 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:35 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+10:31:35 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:35 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+10:31:35 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:35 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+10:31:35 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:35 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+10:31:40 PM [vite] (client) hmr update /src/features/investigation/InvestigationSession.tsx, /src/index.css
+10:31:40 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:40 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+10:31:41 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:41 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+10:31:41 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:41 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+10:31:41 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:41 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+10:31:41 PM [vite] (client) hmr invalidate /src/features/review/HumanReviewTab.tsx Could not Fast Refresh ("actionBlocker" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:31:41 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+10:31:58 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+10:32:20 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+10:32:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:20 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:22 PM [vite] (client) Pre-transform error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+10:32:22 PM [vite] Internal server error: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx: Expected corresponding JSX closing tag for <div>. (184:4)
+
+  182 |         }
+  183 |       />
+> 184 |     </header>
+      |     ^
+  185 |   );
+  186 | }
+  187 |
+  Plugin: vite:react-babel
+  File: /Users/nithish-23288/Projects/Graphathon/apps/web/src/layout/IncidentHeader.tsx:184:4
+  182|          }
+  183|        />
+  184|      </header>
+     |      ^
+  185|    );
+  186|  }
+      at constructor (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:369:19)
+      at TypeScriptParserMixin.raise (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6622:19)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4745:16)
+      at TypeScriptParserMixin.jsxParseElementAt (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4716:32)
+      at TypeScriptParserMixin.jsxParseElement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4767:17)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4777:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:39
+      at TypeScriptParserMixin.tryParse (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:6930:20)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9798:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12460:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10826:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12527:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11706:28)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11362:23)
+      at TypeScriptParserMixin.parseExprAtom (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:4782:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11107:23)
+      at TypeScriptParserMixin.parseUpdate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11092:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:11072:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9860:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10925:61)
+      at TypeScriptParserMixin.parseExprOps (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10930:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10907:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10857:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9809:20)
+      at TypeScriptParserMixin.parseExpressionBase (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10810:23)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:39
+      at TypeScriptParserMixin.allowInAnd (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12455:16)
+      at TypeScriptParserMixin.parseExpression (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:10806:17)
+      at TypeScriptParserMixin.parseReturnStatement (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13176:28)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12832:21)
+      at TypeScriptParserMixin.parseStatementContent (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9531:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12801:17)
+      at TypeScriptParserMixin.parseStatementListItem (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12781:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13350:61)
+      at TypeScriptParserMixin.parseBlockBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13343:10)
+      at TypeScriptParserMixin.parseBlock (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13331:10)
+      at TypeScriptParserMixin.parseFunctionBody (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12134:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12120:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:9195:18)
+      at /Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:13479:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/nithish-23288/Projects/Graphathon/apps/web/node_modules/@babel/parser/lib/index.js:12437:14)
+10:32:33 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+10:34:47 PM [vite] (client) hmr update /src/index.css
+10:34:56 PM [vite] (client) hmr update /src/App.tsx, /src/index.css

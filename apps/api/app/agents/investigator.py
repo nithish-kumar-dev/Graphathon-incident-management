@@ -2,9 +2,10 @@
 
 - StubInvestigator ("stub-v1"): deterministic, offline. Builds hypotheses from explanation paths and
   telemetry, and proposes actions only from the runbooks on each path.
-- OllamaInvestigator ("ollama:<model>"): a local LLM through Ollama /api/chat with the output JSON schema
-  as `format`. Errors map to InvestigatorError(timeout | unavailable | malformed). With fallback on, the
-  stub answers instead and the result is labelled "stub-fallback(ollama <kind>)", so it is never silent.
+- GeminiInvestigator ("gemini:<model>"): Google Gemini generateContent with the output JSON schema as
+  `responseJsonSchema`. Errors map to InvestigatorError(timeout | unavailable | malformed). With fallback on,
+  the stub answers instead and the result is labelled "stub-fallback(gemini <kind>)", so it is never silent.
+- OllamaInvestigator: disabled (commented out below); Gemini replaces it.
 
 Neither investigator ever claims `confirmed`: only humans confirm.
 """
@@ -254,9 +255,9 @@ def _elapsed(t0: float) -> int:
     return max(0, int((time.perf_counter() - t0) * 1000))
 
 
-# ============================================================================================ ollama
+# ============================================================================================ gemini
 def output_format_schema() -> dict:
-    """The JSON schema sent to Ollama. Stricter than the contract: a 7B model otherwise picks `null` for
+    """The JSON schema sent to the LLM. Stricter than the contract: a model otherwise may pick `null` for
     deployment_id, which the gate rejects for a rollback. Validation of the reply still uses the contract."""
     schema = InvestigatorOutput.model_json_schema()
     action = schema["$defs"]["ProposedAction"]
@@ -266,19 +267,24 @@ def output_format_schema() -> dict:
     return schema
 
 
-class OllamaInvestigator:
-    """Local LLM via Ollama /api/chat with `format` = the InvestigatorOutput JSON schema, temperature 0."""
+GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
 
-    def __init__(self, base_url: str, model: str, *, fallback_to_stub: bool = True, num_ctx: int = 8192,
-                 transport: httpx.BaseTransport | None = None) -> None:
+
+class GeminiInvestigator:
+    """Gemini generateContent with `responseJsonSchema` = the InvestigatorOutput JSON schema, temperature 0."""
+
+    def __init__(self, api_key: str, model: str, *, base_url: str = GEMINI_BASE_URL,
+                 fallback_to_stub: bool = True, transport: httpx.BaseTransport | None = None) -> None:
+        if not api_key or not api_key.strip():
+            raise ValueError("GeminiInvestigator needs an API key (GEMINI_API_KEY)")
         if not model or not model.strip():
-            raise ValueError("OllamaInvestigator needs a model name (OLLAMA_MODEL)")
+            raise ValueError("GeminiInvestigator needs a model name (GEMINI_MODEL)")
+        self._api_key = api_key.strip()
         self.base_url = base_url.rstrip("/")
         self.model = model.strip()
         self.fallback_to_stub = fallback_to_stub
-        self.num_ctx = num_ctx
         self._transport = transport          # tests inject httpx.MockTransport; never real network in tests
-        self.name = f"ollama:{self.model}"
+        self.name = f"gemini:{self.model}"
         self.stub = StubInvestigator()
 
     def run(self, inp: InvestigatorInput, *, timeout_s: float = DEFAULT_TIMEOUT_S) -> InvestigatorResult:
@@ -290,39 +296,95 @@ class OllamaInvestigator:
             if not self.fallback_to_stub:
                 raise
             out = self.stub.investigate(inp)
-            return InvestigatorResult(output=out, investigator=f"stub-fallback(ollama {exc.kind})",
+            return InvestigatorResult(output=out, investigator=f"stub-fallback(gemini {exc.kind})",
                                       latency_ms=_elapsed(t0))
 
     def investigate(self, inp: InvestigatorInput, *, timeout_s: float) -> InvestigatorOutput:
-        body = {"model": self.model, "messages": prompts.messages(inp), "stream": False,
-                "format": output_format_schema(),
-                "options": {"temperature": 0, "num_ctx": self.num_ctx}}
+        system, user = prompts.messages(inp)
+        body = {"systemInstruction": {"parts": [{"text": system["content"]}]},
+                "contents": [{"role": "user", "parts": [{"text": user["content"]}]}],
+                "generationConfig": {"temperature": 0, "responseMimeType": "application/json",
+                                     "responseJsonSchema": output_format_schema()}}
         try:
             with httpx.Client(transport=self._transport, timeout=timeout_s) as client:
-                r = client.post(f"{self.base_url}/api/chat", json=body)
+                r = client.post(f"{self.base_url}/models/{self.model}:generateContent", json=body,
+                                headers={"x-goog-api-key": self._api_key})
         except httpx.TimeoutException as exc:
-            raise InvestigatorError("timeout", f"ollama did not answer within {timeout_s:g}s") from exc
+            raise InvestigatorError("timeout", f"gemini did not answer within {timeout_s:g}s") from exc
         except httpx.HTTPError as exc:
-            raise InvestigatorError("unavailable", f"ollama unreachable ({type(exc).__name__})") from exc
+            raise InvestigatorError("unavailable", f"gemini unreachable ({type(exc).__name__})") from exc
         if r.status_code >= 400:
-            raise InvestigatorError("unavailable", f"ollama returned HTTP {r.status_code}")
+            raise InvestigatorError("unavailable", f"gemini returned HTTP {r.status_code}")
         try:
-            content = r.json()["message"]["content"]
+            content = r.json()["candidates"][0]["content"]["parts"][0]["text"]
             if not isinstance(content, str):
-                raise TypeError("message.content is not a string")
+                raise TypeError("candidate text is not a string")
             return InvestigatorOutput.model_validate_json(content)
-        except (ValueError, KeyError, TypeError, ValidationError) as exc:
-            raise InvestigatorError("malformed", f"ollama output failed validation ({type(exc).__name__})") from exc
+        except (ValueError, KeyError, IndexError, TypeError, ValidationError) as exc:
+            raise InvestigatorError("malformed", f"gemini output failed validation ({type(exc).__name__})") from exc
+
+
+# ============================================================================================ ollama (disabled)
+# class OllamaInvestigator:
+#     """Local LLM via Ollama /api/chat with `format` = the InvestigatorOutput JSON schema, temperature 0."""
+#
+#     def __init__(self, base_url: str, model: str, *, fallback_to_stub: bool = True, num_ctx: int = 8192,
+#                  transport: httpx.BaseTransport | None = None) -> None:
+#         if not model or not model.strip():
+#             raise ValueError("OllamaInvestigator needs a model name (OLLAMA_MODEL)")
+#         self.base_url = base_url.rstrip("/")
+#         self.model = model.strip()
+#         self.fallback_to_stub = fallback_to_stub
+#         self.num_ctx = num_ctx
+#         self._transport = transport
+#         self.name = f"ollama:{self.model}"
+#         self.stub = StubInvestigator()
+#
+#     def run(self, inp: InvestigatorInput, *, timeout_s: float = DEFAULT_TIMEOUT_S) -> InvestigatorResult:
+#         t0 = time.perf_counter()
+#         try:
+#             out = self.investigate(inp, timeout_s=timeout_s)
+#             return InvestigatorResult(output=out, investigator=self.name, latency_ms=_elapsed(t0))
+#         except InvestigatorError as exc:
+#             if not self.fallback_to_stub:
+#                 raise
+#             out = self.stub.investigate(inp)
+#             return InvestigatorResult(output=out, investigator=f"stub-fallback(ollama {exc.kind})",
+#                                       latency_ms=_elapsed(t0))
+#
+#     def investigate(self, inp: InvestigatorInput, *, timeout_s: float) -> InvestigatorOutput:
+#         body = {"model": self.model, "messages": prompts.messages(inp), "stream": False,
+#                 "format": output_format_schema(),
+#                 "options": {"temperature": 0, "num_ctx": self.num_ctx}}
+#         try:
+#             with httpx.Client(transport=self._transport, timeout=timeout_s) as client:
+#                 r = client.post(f"{self.base_url}/api/chat", json=body)
+#         except httpx.TimeoutException as exc:
+#             raise InvestigatorError("timeout", f"ollama did not answer within {timeout_s:g}s") from exc
+#         except httpx.HTTPError as exc:
+#             raise InvestigatorError("unavailable", f"ollama unreachable ({type(exc).__name__})") from exc
+#         if r.status_code >= 400:
+#             raise InvestigatorError("unavailable", f"ollama returned HTTP {r.status_code}")
+#         try:
+#             content = r.json()["message"]["content"]
+#             if not isinstance(content, str):
+#                 raise TypeError("message.content is not a string")
+#             return InvestigatorOutput.model_validate_json(content)
+#         except (ValueError, KeyError, TypeError, ValidationError) as exc:
+#             raise InvestigatorError("malformed", f"ollama output failed validation ({type(exc).__name__})") from exc
 
 
 # ============================================================================================ factory
-def from_settings(settings) -> StubInvestigator | OllamaInvestigator:
+def from_settings(settings) -> StubInvestigator | GeminiInvestigator:
     if settings.llm_provider == "stub":
         return StubInvestigator()
-    if settings.llm_provider == "ollama":
-        return OllamaInvestigator(settings.ollama_base_url, settings.ollama_model,
+    if settings.llm_provider == "gemini":
+        return GeminiInvestigator(settings.gemini_api_key.get_secret_value(), settings.gemini_model,
                                   fallback_to_stub=settings.llm_fallback_to_stub)
+    # if settings.llm_provider == "ollama":
+    #     return OllamaInvestigator(settings.ollama_base_url, settings.ollama_model,
+    #                               fallback_to_stub=settings.llm_fallback_to_stub)
     raise ValueError(f"unknown llm_provider {settings.llm_provider!r}")
 
 
-__all__ = ["DEFAULT_TIMEOUT_S", "Investigator", "OllamaInvestigator", "StubInvestigator", "from_settings"]
+__all__ = ["DEFAULT_TIMEOUT_S", "GeminiInvestigator", "Investigator", "StubInvestigator", "from_settings"]
