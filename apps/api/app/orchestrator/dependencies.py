@@ -19,6 +19,7 @@ from app.agents.contracts import (
     TelemetryContext,
 )
 from app.config import Settings
+from app.db.idempotency import IdempotencyStore
 from app.graph.repository import GraphRepository
 from app.rag.embeddings import Embedder
 from app.rag.retrieval import RetrievalBundle
@@ -48,6 +49,8 @@ class Dependencies:
     gate: GateFn
     clock: Callable[[], int] = wall_clock_ms
     embedder: Embedder | None = None
+    # The restricted executor fails closed (runs nothing) when this is None.
+    idempotency: IdempotencyStore | None = None
 
 
 def make_retrieve(embedder: Embedder | None, allowed_classifications: frozenset[str]) -> RetrieveFn:

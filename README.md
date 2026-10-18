@@ -4,7 +4,7 @@ Incident investigation grounded in a FalkorDB knowledge graph, with LangGraph or
 
 **All data is synthetic.** NovaCommerce is a fictional company. Nothing here is a production system.
 
-- **Status:** Phase 1 (databases, migrations, seed), Phase 2 (typed API: `docs/api.md`), Phase 3 (graph tools + hybrid retrieval: `docs/retrieval.md`) and Phase 4 (investigator, safety gate, LangGraph orchestration: `docs/investigator.md`, `docs/orchestration.md`) are done. Human review and the restricted executor (Phase 5) are placeholders; nothing is ever executed.
+- **Status:** Phase 1 (databases, migrations, seed), Phase 2 (typed API: `docs/api.md`), Phase 3 (graph tools + hybrid retrieval: `docs/retrieval.md`) and Phase 4 (investigator, safety gate, LangGraph orchestration: `docs/investigator.md`, `docs/orchestration.md`) are done. Phase 5 (human review through LangGraph `interrupt()`, and a restricted, idempotent executor that only simulates) is done. Nothing real is ever executed.
 - **Plan:** `docs/refactor-plan.md`; what comes next: `docs/NEXT_STEPS.md`
 - **Schema:** `docs/schema/`
 
@@ -24,6 +24,7 @@ docker compose up -d            # falkordb :56379 (AOF), falkordb-test :56390 (e
 python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
                                 # exact versions: requirements.lock
 
+.venv/bin/python scripts/migrate_postgres.py    # ops.* tables (idempotency records); safe to re-run
 .venv/bin/python scripts/migrate_graph.py       # graph indexes, unique constraints, full-text + vector indexes (idempotent)
 .venv/bin/python scripts/init_checkpointer.py   # LangGraph checkpoint tables via the library's own setup()
 .venv/bin/python scripts/seed.py                # NovaCommerce synthetic tenant (idempotent)
@@ -44,7 +45,7 @@ curl -H 'X-Demo-User: demo-viewer' http://127.0.0.1:8000/api/incidents/nova.inc.
 curl -H 'X-Demo-User: demo-viewer' http://127.0.0.1:8000/api/incidents/nova.inc.101/retrieval   # hybrid context
 ```
 
-With `ORCHESTRATOR_ENABLED=true` the API process also runs the investigation worker: `POST /api/investigations` queues a run, the worker claims it, and `GET /api/investigations/{id}` shows the outcome. Or run the worker on its own with `scripts/run_worker.py` and `ORCHESTRATOR_ENABLED=false` for the API. Run exactly one worker per graph. An investigation writes to the graph permanently (evidence, session, proposed actions), so back up first (`scripts/backup_falkordb.sh`) if you use the dev graph.
+With `ORCHESTRATOR_ENABLED=true` the API process also runs the investigation worker: `POST /api/investigations` queues a run, the worker claims it, and `GET /api/investigations/{id}` shows the outcome. Or run the worker on its own with `scripts/run_worker.py` and `ORCHESTRATOR_ENABLED=false` for the API. Set `DEMO_CONTROLS_ENABLED=true` to show the demo panel (toggle two graph edges and watch the recommendation change); see `docs/demo-script.md`. Run exactly one worker per graph. An investigation writes to the graph permanently (evidence, session, proposed actions), so back up first (`scripts/backup_falkordb.sh`) if you use the dev graph.
 
 Web UI (`apps/web`): `cd apps/web && npm install && npm run dev`. Vite proxies `/api` to `GRAPHATHON_API_URL` (default `http://127.0.0.1:8000`). Checks: `npm run typecheck && npm test && npm run build`. The test fixtures in `apps/web/src/test/fixtures/investigation_*.json` come from the real API: regenerate them with `.venv/bin/python scripts/gen_web_fixtures.py` (ephemeral `falkordb-test` only; it refuses a persistent server).
 

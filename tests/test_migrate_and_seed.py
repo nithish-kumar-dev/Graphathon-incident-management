@@ -69,8 +69,8 @@ def test_seed_shape(seeded_graph):
     counts = integrity.run(seeded_graph).label_counts
     nova = seeded_graph.ro_query("MATCH (n {tenant_id:'nova'}) RETURN count(n)").result_set[0][0]
     assert nova == len(novacommerce.NODES)
-    assert counts["Service"] == 5 + 2          # nova + decoy
-    assert counts["Incident"] == 2 + 1
+    assert counts["Service"] == 8 + 2          # nova + decoy
+    assert counts["Incident"] == 6 + 1
     assert counts[schema.MIGRATION_LABEL] == len(migrate.MIGRATIONS) == 3
 
 

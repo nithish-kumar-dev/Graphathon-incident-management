@@ -35,8 +35,11 @@ def test_golden_incident_bundle(api, rag_graph):
     assert [p["claim_type"] for p in paths] == ["correlated"]
 
     mems = {m["id"]: m for m in b["memory_context"]["items"]}
-    assert {k: m["precedent"] for k, m in mems.items()} == {"nova.mem.092.rollback_success": "supports",
-                                                            "nova.mem.092.restart_failed": "warns_against"}
+    assert mems["nova.mem.092.rollback_success"]["precedent"] == "supports"
+    assert mems["nova.mem.092.restart_failed"]["precedent"] == "warns_against"
+    # Neighbouring services contribute memories too; this incident's own precedent must still lead.
+    top = [m["id"] for m in sorted(b["memory_context"]["items"], key=lambda m: -m["score"])[:2]]
+    assert set(top) == {"nova.mem.092.rollback_success", "nova.mem.092.restart_failed"}
     assert all(m["verification_status"] == "verified" and m["grounded_in"] and m["rationale"]
                for m in mems.values())
     assert b["memory_context"]["excluded"] == {"draft": 1}

@@ -14,6 +14,7 @@ WRITE = "incident:write"
 INGEST = "alert:ingest"
 INVESTIGATE = "investigation:create"
 REVIEW = "action:review"  # used from Phase 5
+DEMO = "demo:control"  # flip the demo graph edges; the endpoints also need DEMO_CONTROLS_ENABLED=true
 
 
 @dataclass(frozen=True)
@@ -34,9 +35,9 @@ DEMO_USERS: dict[str, Principal] = {
     for p in [
         Principal("demo-viewer", "Demo viewer (read-only)", "nova", "prod", frozenset({READ})),
         Principal("demo-responder", "Demo responder (storefront on-call)", "nova", "prod",
-                  frozenset({READ, WRITE, INGEST, INVESTIGATE}), responder_id="nova.rsp.storefront_oncall"),
+                  frozenset({READ, WRITE, INGEST, INVESTIGATE, DEMO}), responder_id="nova.rsp.storefront_oncall"),
         Principal("payments-lead", "Payments lead (approver)", "nova", "prod",
-                  frozenset({READ, WRITE, INVESTIGATE, REVIEW}), responder_id="nova.rsp.payments_lead"),
+                  frozenset({READ, WRITE, INVESTIGATE, REVIEW, DEMO}), responder_id="nova.rsp.payments_lead"),
         Principal("acme-viewer", "Decoy tenant viewer (tests only)", "acme", "prod", frozenset({READ})),
     ]
 }

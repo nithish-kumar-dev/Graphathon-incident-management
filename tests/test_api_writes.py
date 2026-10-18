@@ -62,7 +62,7 @@ def test_new_service_opens_incident_idempotently(env):
     r = api.post("/api/alerts", json=body, headers=RESPONDER)
     assert r.status_code == 201
     j = r.json()
-    assert (j["outcome"], j["incident_key"]) == ("created_incident", "INC-102")
+    assert (j["outcome"], j["incident_key"]) == ("created_incident", "INC-105")
     inc = api.get(f"/api/incidents/{j['incident_id']}", headers=VIEWER).json()
     assert (inc["severity"], inc["status"], inc["affected_service_ids"]) == ("sev3", "open", ["nova.svc.auth"])
     assert inc["explanation_paths"] == []              # no evidence refers to any deployment: no path, not an error
@@ -80,7 +80,7 @@ def test_new_service_opens_incident_idempotently(env):
     # A different service with no open incident gets the next key.
     r3 = api.post("/api/alerts", json=alert(fingerprint="ledger:lag", service_id="nova.svc.ledger",
                                             source_ref="synthetic://alerts/ledger-1"), headers=RESPONDER)
-    assert r3.json()["incident_key"] == "INC-103"
+    assert r3.json()["incident_key"] == "INC-106"
 
 
 def test_replay_heals_alert_left_without_incident(env):

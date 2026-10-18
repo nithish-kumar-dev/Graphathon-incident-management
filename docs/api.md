@@ -46,12 +46,33 @@ Send `X-Demo-User: <user>`. In Swagger, use **Authorize** and the `DemoUser` sch
 
 ### Review (Phase 5)
 
-- The run ends as `awaiting_review`. The review is a **separate authenticated request** after that, not a LangGraph `interrupt()` and resume. The approval is bound to the action's `spec_hash` and version, so the effect is the same and nothing waits inside a checkpoint.
+- The run pauses at `human_review` with LangGraph `interrupt()` (session status `awaiting_review`, checkpoint kept in Postgres). The review is a **separate authenticated request**: the API records the `ApprovalRecord`, then resumes the same thread with `Command(resume=...)` through the orchestrator. The approval is bound to the action's `spec_hash` and version.
+- If no worker is attached to the API process (`ORCHESTRATOR_ENABLED=false`), the decision is still saved and the response says a worker will finish it; the worker's poll finds the decided review and resumes the run, so it survives a restart.
+- The executor is idempotent through `ops.idempotency_records` (key `<action id>:<spec hash>`): a repeated resume or a replay never executes twice. An approval past its TTL turns the action `expired` and nothing runs.
 - Only `simulation` runs produce a `pending_review` action. A `recommendation_only` run leaves the action `proposed`, and a review returns 409 `recommendation_only`.
 - Errors: 403 `missing_approver_role`, 403 `no_responder_identity`, 409 `action_not_reviewable`, 409 `no_active_policy`, 409 `spec_hash_mismatch`, 404 unknown action.
 - Outcomes: APPROVE then `executed_simulated` (investigation `completed`, a draft memory is written). REJECT then `rejected`. REQUEST_REVISION then `revision_requested`: **no new version is created**; the investigation is `completed` and the user starts a new run. ESCALATE then `escalated` (investigation `escalated`).
 - Execution exists only for `rollback_deployment_simulated` and never touches a real system.
 - New timeline types: `action_approved`, `action_rejected`, `action_revision_requested`, `action_escalated`, `action_executed_simulated`.
+
+### Demo controls (Phase 6)
+
+Off by default. Set `DEMO_CONTROLS_ENABLED=true` to let a presenter flip two graph edges and watch the recommendation change, with no manual database edits. Only the edges are written (`merge_edge` / `delete_edge`); nodes, constraints and indexes are never touched.
+
+| Method and path | Purpose | Notes |
+|---|---|---|
+| `GET /api/demo/controls` | State of both toggles plus the current recommendation | `incident_id` (optional). incident:read. Always 200; `enabled: false` and no toggles when the flag is off, so the UI hides the panel |
+| `PUT /api/demo/controls/{toggle_id}` | `{present: bool}` adds or removes one edge | `demo:control` (`demo-responder`, `payments-lead`). Idempotent. 404 `demo_controls_disabled` when the flag is off |
+| `PUT /api/demo/controls/reset` | Restore both edges (the seeded state) | `demo:control` |
+
+Toggle ids and what they change on INC-101:
+
+| `toggle_id` | Edge | With the edge removed |
+|---|---|---|
+| `checkout_depends_on_payment` | `nova.svc.checkout -[DEPENDS_ON]-> nova.svc.payment` | Recommendation `no_rollback_path`: the payment deployment is not reachable from the affected service (rollback paths: 0), and the explanation paths in `GET /api/incidents/{id}` disappear |
+| `rollback_policy_governs_payment` | `nova.dec.payment.rollback_v2 -[GOVERNS]-> nova.svc.payment` | Recommendation `no_active_policy_escalate`: a rollback would have to escalate instead of going to the payment approver |
+
+Every change is logged (`app.demo`). Nothing is cached, so the next read reflects the change.
 
 ## Explanation paths
 

@@ -54,6 +54,9 @@ class Settings(BaseSettings):
     max_investigation_revisions: int = Field(default=2, ge=0, le=5)
     branch_timeout_s: float = Field(default=20.0, gt=0, le=300)
 
+    # Phase 6: demo-only endpoints that flip two graph edges. Off unless a demo environment asks for it.
+    demo_controls_enabled: bool = False
+
     @field_validator("graph_name")
     @classmethod
     def _graph_name(cls, v: str) -> str:

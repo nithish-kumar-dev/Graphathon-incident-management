@@ -2,7 +2,9 @@
 
     START -> intake_and_deduplicate -> coordinator -> {graph_context_retrieval, memory_retrieval,
              live_evidence_retrieval} -> fan_in (barrier) -> investigator <-> evidence_safety_gate
-          -> [human_review -> (restricted_executor)] -> persist_outcome -> notify_channel -> END
+          -> persist_outcome -> notify_channel -> END                      (recommendation_only, not accepted)
+          -> persist_outcome -> notify_channel -> human_review (interrupt) -> restricted_executor
+             -> human_review (more actions pending) | finalize_review -> END     (simulation with actions)
 
 See docs/orchestration.md for the diagram, state keys, status mapping and recovery semantics.
 Nodes are closures over a `RunEnv` (dependencies, FalkorDB handle, settings). The tenant/env scope of a
@@ -21,6 +23,7 @@ from typing import Any
 
 from falkordb import Graph
 from langgraph.graph import END, START, StateGraph
+from langgraph.types import interrupt
 
 from app.agents.contracts import (
     GateResult,
@@ -37,6 +40,7 @@ from app.graph.client import GraphUnavailable
 from app.graph.repository import GraphRepository, Scope
 from app.orchestrator import events
 from app.orchestrator.dependencies import Dependencies
+from app.orchestrator.executor import execute_approved, pending_action_ids
 from app.orchestrator.persist import notify_channel, persist_outcome
 from app.orchestrator.state import BRANCHES, DECISION_STATUS, InvestigationState
 from app.rag.retrieval import RetrievalBundle
@@ -48,7 +52,7 @@ log = logging.getLogger("app.orchestrator")
 WINDOW_BEFORE_START_MS = 2 * 3_600_000          # live evidence window: incident start - 2 h .. now
 NODE_NAMES = ("intake_and_deduplicate", "coordinator", "graph_context_retrieval", "memory_retrieval",
               "live_evidence_retrieval", "fan_in", "investigator", "evidence_safety_gate", "human_review",
-              "restricted_executor", "persist_outcome", "notify_channel")
+              "restricted_executor", "persist_outcome", "notify_channel", "finalize_review")
 
 
 class RunTimedOut(RuntimeError):
@@ -114,8 +118,6 @@ class RunEnv:
     settings: Settings
     run_timeout_s: float
     cache: BundleCache = field(default_factory=BundleCache)
-    # Phase 4 test hook: a callable(state) -> dict that replaces the human_review placeholder body.
-    review_policy: Callable[[InvestigationState], dict] | None = None
 
     def repo(self, state: InvestigationState) -> GraphRepository:
         return GraphRepository(self.falkor, Scope(state["tenant_id"], state["env"]),
@@ -131,10 +133,12 @@ class RunEnv:
         return float("inf") if deadline is None else (deadline - self.deps.clock()) / 1000
 
 
-def _traced(env: RunEnv, name: str, fn: Callable[[InvestigationState], dict]) -> Callable[[InvestigationState], dict]:
+def _traced(env: RunEnv, name: str, fn: Callable[[InvestigationState], dict],
+            revision_of: Callable[[InvestigationState], int] | None = None) -> Callable[[InvestigationState], dict]:
     """Write a `started` and a closing AgentEvent around a node so progress is visible while the run is live."""
     def node(state: InvestigationState) -> dict:
-        repo, revision = env.repo(state), int(state.get("revision") or 0)
+        repo = env.repo(state)
+        revision = revision_of(state) if revision_of else int(state.get("revision") or 0)
         events.record(repo, state, name, "started", now_ms=env.deps.clock(), revision=revision)
         try:
             update = fn(state)
@@ -344,22 +348,44 @@ def build(env: RunEnv) -> StateGraph:
         return {"gate": gate, "status": status}
 
     def route_gate(state: InvestigationState) -> str:
-        if (state.get("gate") or {}).get("decision") == "revise":
-            return "investigator"
-        return "human_review" if state.get("status") == "awaiting_review" else "persist_outcome"
+        return "investigator" if (state.get("gate") or {}).get("decision") == "revise" else "persist_outcome"
 
-    # ---- 7. human_review (Phase 4 placeholder; Phase 5 replaces the body with interrupt())
+    # ---- 7. human_review: the run PAUSES here (LangGraph interrupt) until a human has decided. Actions and the
+    # session (`awaiting_review`) were persisted before the pause, so they are visible while it waits. Nothing is
+    # approved or executed here; the decision itself is made by the authenticated review API.
     def human_review(state: InvestigationState) -> dict:
-        if env.review_policy is not None:
-            return env.review_policy(state)
-        return {"review": {"decision": "pending", "note": "Phase 4: awaiting human review; nothing approved"},
-                "status": "awaiting_review"}
+        repo, rnd, now = env.repo(state), int((state.get("review") or {}).get("round") or 0), deps.clock()
+        pending = pending_action_ids(repo.session_actions(state["session_id"]))
+        events.record(repo, state, "human_review", "started", now_ms=now, revision=rnd, first_only=True)
+        events.record(repo, state, "human_review", "waiting", now_ms=now, revision=rnd, first_only=True,
+                      detail=f"awaiting a human decision on {len(pending)} action(s)")
+        interrupt({"session_id": state["session_id"], "action_ids": pending})
+        events.record(repo, state, "human_review", "completed", now_ms=deps.clock(), revision=rnd,
+                      detail="a human decision was recorded")
+        return {"review": {"round": rnd + 1, "pending": pending}}
 
-    # ---- 8. restricted_executor (Phase 4 placeholder: never executes anything)
+    # ---- 8. restricted_executor: re-reads graph state; runs only approved, allowlisted, unexpired, simulation actions
     def restricted_executor(state: InvestigationState) -> dict:
         if state.get("mode") != "simulation":
             raise PermissionError("restricted_executor refuses recommendation_only runs")
-        return {"execution": {"executed": False, "note": "Phase 4 placeholder: nothing is executed"}}
+        repo = env.repo(state)
+        results = execute_approved(repo, deps.idempotency, state["session_id"], now_ms=deps.clock())
+        done = {r["action_id"] for r in results}
+        prior = [r for r in (state.get("execution") or {}).get("results", []) if r["action_id"] not in done]
+        review = state.get("review") or {}
+        return {"execution": {"results": prior + results},
+                "review": {**review, "pending": pending_action_ids(repo.session_actions(state["session_id"]))}}
+
+    def route_executor(state: InvestigationState) -> str:
+        return "human_review" if (state.get("review") or {}).get("pending") else "finalize_review"
+
+    # ---- 8b. finalize_review: the session leaves `awaiting_review` once no action is left for a human
+    def finalize_review(state: InvestigationState) -> dict:
+        repo, now = env.repo(state), deps.clock()
+        rows = repo.session_actions(state["session_id"])
+        final = "escalated" if any(r["action"]["status"] == "escalated" for r in rows) else "completed"
+        repo.update_node("AgentSession", state["session_id"], {"status": final, "ended_at_ms": now}, at_ms=now)
+        return {"status": final}
 
     # ---- 9-10. persist + notify
     def persist(state: InvestigationState) -> dict:
@@ -373,11 +399,16 @@ def build(env: RunEnv) -> StateGraph:
     for name, fn in (("intake_and_deduplicate", intake), ("coordinator", coordinator),
                      ("graph_context_retrieval", graph_branch), ("memory_retrieval", memory_branch),
                      ("live_evidence_retrieval", telemetry_branch), ("fan_in", fan_in),
-                     ("investigator", investigator), ("evidence_safety_gate", gate_node),
-                     ("human_review", human_review), ("restricted_executor", restricted_executor),
-                     ("persist_outcome", persist), ("notify_channel", notify)):
-        g.add_node(name, _traced(env, name, _guard(env, name, fn))
-                   if name not in ("persist_outcome", "notify_channel") else fn)
+                     ("investigator", investigator), ("evidence_safety_gate", gate_node)):
+        g.add_node(name, _traced(env, name, _guard(env, name, fn)))
+    # After a human pause the run deadline no longer applies, so the review/executor nodes are not guarded;
+    # human_review records its own (once-only) events because it re-executes from the top on resume.
+    g.add_node("human_review", human_review)
+    g.add_node("restricted_executor", _traced(env, "restricted_executor", restricted_executor,
+                                              lambda s: max(int((s.get("review") or {}).get("round") or 1) - 1, 0)))
+    g.add_node("persist_outcome", persist)
+    g.add_node("notify_channel", notify)
+    g.add_node("finalize_review", finalize_review)
     g.add_edge(START, "intake_and_deduplicate")
     g.add_conditional_edges("intake_and_deduplicate", route_intake, ["coordinator", "persist_outcome"])
     for branch in ("graph_context_retrieval", "memory_retrieval", "live_evidence_retrieval"):
@@ -385,20 +416,21 @@ def build(env: RunEnv) -> StateGraph:
     g.add_edge(["graph_context_retrieval", "memory_retrieval", "live_evidence_retrieval"], "fan_in")
     g.add_conditional_edges("fan_in", route_fan_in, ["investigator", "persist_outcome"])
     g.add_edge("investigator", "evidence_safety_gate")
-    g.add_conditional_edges("evidence_safety_gate", route_gate, ["investigator", "human_review", "persist_outcome"])
-    g.add_conditional_edges("human_review", route_review, ["restricted_executor", "persist_outcome"])
-    g.add_edge("restricted_executor", "persist_outcome")
+    g.add_conditional_edges("evidence_safety_gate", route_gate, ["investigator", "persist_outcome"])
     g.add_edge("persist_outcome", "notify_channel")
-    g.add_edge("notify_channel", END)
+    g.add_conditional_edges("notify_channel", route_after_notify, ["human_review", END])
+    g.add_edge("human_review", "restricted_executor")
+    g.add_conditional_edges("restricted_executor", route_executor, ["human_review", "finalize_review"])
+    g.add_edge("finalize_review", END)
     return g
 
 
-def route_review(state: InvestigationState) -> str:
-    """Only an explicit human APPROVE of a simulation run may reach the executor. recommendation_only never does,
-    whatever the review says. In Phase 4 the review is always pending, so nothing reaches it."""
-    if state.get("mode") == "simulation" and (state.get("review") or {}).get("decision") == "APPROVE":
-        return "restricted_executor"
-    return "persist_outcome"
+def route_after_notify(state: InvestigationState) -> str:
+    """Only a simulation run with accepted, persisted actions pauses for a human. recommendation_only never does:
+    it cannot reach human_review, so it can never reach the executor."""
+    if state.get("mode") == "simulation" and state.get("status") == "awaiting_review" and state.get("action_ids"):
+        return "human_review"
+    return END
 
 
 def build_input(state: InvestigationState) -> InvestigatorInput:

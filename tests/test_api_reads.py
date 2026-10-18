@@ -88,14 +88,15 @@ def test_other_tenant_resources_are_404(api):
 def test_list_is_tenant_scoped(api):
     nova = {i["id"] for i in api.get("/api/incidents", headers=VIEWER).json()["items"]}
     acme = {i["id"] for i in api.get("/api/incidents", headers=ACME).json()["items"]}
-    assert nova == {"nova.inc.101", "nova.inc.092"} and acme == {"acme.inc.7"}
+    assert nova == {"nova.inc.101", "nova.inc.092", "nova.inc.103", "nova.inc.104", "nova.inc.096", "nova.inc.087"}
+    assert acme == {"acme.inc.7"}
 
 
 def test_list_filters_and_pages(api):
     j = api.get("/api/incidents?status=resolved", headers=VIEWER).json()
-    assert [i["key"] for i in j["items"]] == ["INC-092"]
-    assert [i["key"] for i in api.get("/api/incidents?limit=1", headers=VIEWER).json()["items"]] == ["INC-101"]
-    assert [i["key"] for i in api.get("/api/incidents?limit=1&offset=1", headers=VIEWER).json()["items"]] == ["INC-092"]
+    assert [i["key"] for i in j["items"]] == ["INC-096", "INC-092", "INC-087"]
+    assert [i["key"] for i in api.get("/api/incidents?limit=1", headers=VIEWER).json()["items"]] == ["INC-104"]
+    assert [i["key"] for i in api.get("/api/incidents?limit=1&offset=1", headers=VIEWER).json()["items"]] == ["INC-101"]
 
 
 def test_other_tenant_paths_never_leak(api):
@@ -136,8 +137,11 @@ def test_service_context_payment(api):
     assert [t["id"] for t in j["owners"]] == ["nova.team.payments"]
     assert {m["id"] for m in j["owners"][0]["members"]} == {"nova.rsp.payments_lead", "nova.rsp.payments_oncall"}
     assert {(d["service"]["id"], d["depth"]) for d in j["dependencies"]} == {("nova.svc.auth", 1), ("nova.svc.ledger", 1)}
-    assert [(d["service"]["id"], d["path"]) for d in j["dependents"]] == [
-        ("nova.svc.checkout", ["nova.svc.checkout", "nova.svc.payment"])]
+    assert {(d["service"]["id"], tuple(d["path"])) for d in j["dependents"]} == {
+        ("nova.svc.checkout", ("nova.svc.checkout", "nova.svc.payment")),
+        ("nova.svc.gateway", ("nova.svc.gateway", "nova.svc.checkout", "nova.svc.payment")),
+        ("nova.svc.notifications", ("nova.svc.notifications", "nova.svc.checkout", "nova.svc.payment")),
+    }
     assert [(d["id"], d["supersedes"]) for d in j["active_decisions"]] == [
         ("nova.dec.payment.rollback_v2", ["nova.dec.payment.rollback_v1"])]
     assert [d["id"] for d in j["recent_deployments"]] == ["nova.dep.payment.v2_4"]   # v2.3 is outside 30 days

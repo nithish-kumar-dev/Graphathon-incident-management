@@ -99,14 +99,17 @@ def make_client(settings):
     from app.main import app
     from fastapi.testclient import TestClient
 
-    def _make(graph_name: str, *, now: int = NOW, **overrides) -> TestClient:
+    def _make(graph_name: str, *, now: int = NOW, orchestrator=None, **overrides) -> TestClient:
+        """`orchestrator`: the in-process worker the review API resumes paused runs through (None: no worker)."""
         s = settings.model_copy(update={"graph_name": graph_name, **overrides})
         app.dependency_overrides[get_settings] = lambda: s
         app.dependency_overrides[deps.get_now_ms] = lambda: now
+        app.state.orchestrator = orchestrator
         return TestClient(app, raise_server_exceptions=False)
 
     yield _make
     app.dependency_overrides.clear()
+    app.state.orchestrator = None
 
 
 VIEWER = {"X-Demo-User": "demo-viewer"}

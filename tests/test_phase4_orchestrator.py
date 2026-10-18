@@ -19,11 +19,12 @@ from app.agents import safety_gate
 from app.agents.contracts import Hypothesis, InvestigatorError, InvestigatorResult
 from app.agents.investigator import StubInvestigator
 from app.api import models as m
+from app.db.idempotency import MemoryIdempotencyStore
 from app.domain.actions import canonical_json
 from app.graph.client import GraphUnavailable
 from app.graph.repository import GraphRepository, Scope
 from app.orchestrator.dependencies import Dependencies
-from app.orchestrator.graph import route_review
+from app.orchestrator.graph import route_after_notify
 from app.orchestrator.persist import persist_outcome
 from app.orchestrator.runner import Orchestrator, Worker
 from app.orchestrator.state import TERMINAL
@@ -32,6 +33,7 @@ from app.rag.retrieval import retrieve as real_retrieve
 from app.services import investigations
 from app.telemetry import synthetic
 from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import END
 
 from .conftest import ALLOWED, NOW, RESPONDER
 
@@ -109,7 +111,7 @@ def make_deps(calls: Calls, *, before_retrieve=None, before_telemetry=None, beha
         return safety_gate.evaluate(output, inp, repo=repo, revision=revision, max_revisions=max_revisions)
 
     return Dependencies(retrieve=retrieve, telemetry=telemetry, investigator=FakeInvestigator(calls, behave),
-                        gate=gate, clock=clock or (lambda: NOW))
+                        gate=gate, clock=clock or (lambda: NOW), idempotency=MemoryIdempotencyStore())
 
 
 def make_orch(graph, settings, deps, *, saver=None, **kw) -> Orchestrator:
@@ -224,7 +226,7 @@ def test_simulation_awaits_review_and_executes_nothing(mutable_graph, settings):
     [action] = out.proposed_actions
     assert action.status == "pending_review" and action.mode == "simulation"
     state = orch.graph.get_state(orch.config(out.thread_id)).values
-    assert state["review"]["decision"] == "pending" and state.get("execution") is None
+    assert state.get("execution") is None and state.get("review") is None
     assert [a["status"] for a in run_actions(mutable_graph, sid)] == ["pending_review"]
 
 
@@ -401,32 +403,29 @@ def test_unexpected_error_is_failed_without_leaking_details(mutable_graph, setti
 
 # ================================================================================ executor / review
 def test_recommendation_only_never_reaches_review_or_executor(mutable_graph, settings):
-    called = []
-    calls = Calls()
-    orch = make_orch(mutable_graph, settings, make_deps(calls),
-                     review_policy=lambda s: called.append(s) or {"review": {"decision": "APPROVE"}})
-    sid = start(mutable_graph)
-    assert orch.run(sid, SCOPE) == "completed"
-    assert called == []
-    assert orch.graph.get_state(orch.config(get(mutable_graph, sid).thread_id)).values.get("execution") is None
+    orch, _calls, sid, status = run_golden(mutable_graph, settings)
+    snap = orch.graph.get_state(orch.config(get(mutable_graph, sid).thread_id))
+    assert status == "completed" and snap.next == () and snap.values.get("execution") is None
+    assert snap.values.get("review") is None
 
 
-def test_route_review_only_executes_approved_simulation():
-    assert route_review({"mode": "recommendation_only", "review": {"decision": "APPROVE"}}) == "persist_outcome"
-    assert route_review({"mode": "simulation", "review": {"decision": "pending"}}) == "persist_outcome"
-    assert route_review({"mode": "simulation", "review": {"decision": "REJECT"}}) == "persist_outcome"
-    assert route_review({"mode": "simulation"}) == "persist_outcome"
-    assert route_review({"mode": "simulation", "review": {"decision": "APPROVE"}}) == "restricted_executor"
+def test_route_after_notify_pauses_only_simulation_runs_with_actions():
+    pause = {"mode": "simulation", "status": "awaiting_review", "action_ids": ["nova.act.x.1.v1"]}
+    assert route_after_notify(pause) == "human_review"
+    assert route_after_notify({**pause, "mode": "recommendation_only"}) == END
+    assert route_after_notify({**pause, "action_ids": []}) == END
+    assert route_after_notify({**pause, "status": "completed"}) == END
 
 
-def test_placeholder_executor_runs_nothing_even_when_approved(mutable_graph, settings):
-    calls = Calls()
-    orch = make_orch(mutable_graph, settings, make_deps(calls),
-                     review_policy=lambda s: {"review": {"decision": "APPROVE"}})
-    sid = start(mutable_graph, "simulation")
-    assert orch.run(sid, SCOPE) == "awaiting_review"
-    state = orch.graph.get_state(orch.config(get(mutable_graph, sid).thread_id)).values
-    assert state["execution"]["executed"] is False
+def test_simulation_pauses_at_human_review_and_executes_nothing(mutable_graph, settings):
+    orch, _calls, sid, status = run_golden(mutable_graph, settings, "simulation")
+    snap = orch.graph.get_state(orch.config(get(mutable_graph, sid).thread_id))
+    assert status == "awaiting_review" and snap.next == ("human_review",)
+    assert snap.tasks[0].interrupts and snap.values.get("execution") is None
+    assert [a["status"] for a in run_actions(mutable_graph, sid)] == ["pending_review"]
+    # Nothing is decided, so neither run() nor resume_review() moves it.
+    assert orch.run(sid, SCOPE) == "awaiting_review" and orch.resume_review(sid, SCOPE) == "awaiting_review"
+    assert orch.graph.get_state(orch.config(get(mutable_graph, sid).thread_id)).next == ("human_review",)
     assert [a["status"] for a in run_actions(mutable_graph, sid)] == ["pending_review"]
 
 

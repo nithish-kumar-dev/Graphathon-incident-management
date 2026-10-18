@@ -28,13 +28,15 @@ Introspected on 2026-10-18, read-only:
 
 `AgentSession.thread_id` in the graph is the LangGraph `thread_id`. Phase 4 resumes a run with that same ID.
 
-## Operational tables: not created yet
+## Operational tables
 
-Following refactor-plan §3.5, these are added only when a phase needs them. They go in a separate `ops` schema with numbered project migrations, so they never mix with the library's tables in `public`.
+Following refactor-plan §3.5, these are added only when a phase needs them. They go in a separate `ops` schema with numbered project migrations (`apps/api/app/db/ops_migrations/NNNN_*.sql`, applied by `scripts/migrate_postgres.py` or when the worker starts, under an advisory lock and recorded in `ops.schema_migrations`), so they never mix with the library's tables in `public`. Never edit an applied migration; add a new one.
+
+`ops.idempotency_records` exists (migration 0001). The other two are still planned.
 
 | Table | When | Shape (planned) |
 |---|---|---|
-| `ops.idempotency_records` | Phase 5 executor; Phase 2 ingest only if graph `MERGE` on alert `fingerprint` + window is not enough | `key text primary key`, `status`, `request_hash`, `response jsonb`, `created_at`, `expires_at`; index on `expires_at` |
+| `ops.idempotency_records` (done) | Phase 5 executor | `key text primary key` (`<action id>:<spec hash>`), `status` (`in_progress`/`succeeded`/`failed`), `request_hash`, `response jsonb`, `attempts`, `created_at_ms`, `updated_at_ms`, `expires_at_ms` (epoch ms); index on `expires_at_ms`. 60 s lease, 3 attempts, 7 day TTL (`app/db/idempotency.py`) |
 | `ops.notification_outbox` | Phase 5, only if `notify_channel` exists | `id`, `dedup_key unique`, `payload jsonb`, `status` (pending/sent/failed), `attempts`, `next_attempt_at` (indexed), `created_at` |
 | `ops.execution_locks` | Only if concurrent executor runs become possible | `resource text primary key`, `holder`, `expires_at` |
 

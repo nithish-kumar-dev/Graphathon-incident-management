@@ -64,9 +64,9 @@ class InvestigationState(TypedDict, total=False):
     investigator_result: dict | None  # InvestigatorResult (JSON) of the latest attempt, or None
     investigator_error: dict | None   # {kind, message} of the latest attempt, or None
     gate: dict | None                 # GateResult (JSON) or an orchestrator-synthesised equivalent
-    # ---- review / execution (Phase 4 placeholders)
-    review: dict | None
-    execution: dict | None
+    # ---- review / execution
+    review: dict | None               # {round, pending: [action ids still waiting for a human]}
+    execution: dict | None            # {results: [per-action executor results]}
     # ---- outcome
     status: str
     error: str | None

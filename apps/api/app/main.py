@@ -9,7 +9,7 @@ from fastapi import FastAPI
 
 from app.api import errors
 from app.api.logging import RequestContextMiddleware, configure_logging
-from app.api.routes import actions, alerts, health, incidents, investigations, memories, services
+from app.api.routes import actions, alerts, demo, health, incidents, investigations, memories, services
 from app.config import get_settings
 
 DESCRIPTION = """
@@ -23,6 +23,8 @@ Graph-grounded incident investigation API.
 * Investigations are run by the orchestrator worker (LangGraph, Postgres checkpoints) when
   `ORCHESTRATOR_ENABLED=true`. Actions are reviewed with `POST /api/actions/{id}/review`; an approved
   simulated rollback runs in simulation only (nothing real is changed) and leaves a draft memory a human validates.
+  A paused run is resumed by the worker (LangGraph `interrupt()`); the executor is idempotent.
+* Demo controls (`/api/demo/controls`) flip two graph edges and exist only when `DEMO_CONTROLS_ENABLED=true`.
 """
 
 log = logging.getLogger("app.orchestrator")
@@ -51,7 +53,7 @@ def create_app() -> FastAPI:
     configure_logging(settings.log_level)
     app = FastAPI(title="Graphathon incident API", version="0.2.0", description=DESCRIPTION, lifespan=lifespan)
     errors.install(app)
-    for module in (health, alerts, incidents, investigations, actions, memories, services):
+    for module in (health, alerts, incidents, investigations, actions, memories, services, demo):
         app.include_router(module.router)
     app.add_middleware(RequestContextMiddleware, max_body_bytes=settings.max_request_bytes)
     return app

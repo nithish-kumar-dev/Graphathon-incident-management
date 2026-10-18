@@ -19,19 +19,20 @@ flowchart TD
     fan --> inv[investigator]
     inv --> gate[evidence_safety_gate]
     gate -- "revise (revision < MAX)" --> inv
-    gate -- "accept + simulation + actions" --> review[human_review]
     gate -- "otherwise" --> persist[persist_outcome]
-    review -- "APPROVE and simulation" --> exec[restricted_executor]
-    review -- "anything else" --> persist
-    exec --> persist
     persist --> notify[notify_channel]
-    notify --> E([END])
+    notify -- "simulation + pending_review actions" --> review["human_review (interrupt)"]
+    notify -- "otherwise" --> E([END])
+    review -- "resume with decision" --> exec[restricted_executor]
+    exec -- "an action is still pending_review" --> review
+    exec --> fin[finalize_review]
+    fin --> E
 ```
 
 - The three branches run in parallel. `add_edge([g, m, l], "fan_in")` is a real barrier: `fan_in` runs only after all three have finished (completed, failed or skipped).
 - Nodes with no LLM (`intake`, `coordinator`, `fan_in`, `persist`, `notify`, the branches) are plain Python.
-- `human_review` and `restricted_executor` are Phase 4 placeholders. Phase 5 replaces `human_review` with `interrupt()`.
-- Every node except `persist_outcome` and `notify_channel` first checks the overall run deadline; a late run stops with `timed_out`.
+- Actions are persisted **before** the pause (`persist_outcome`, `notify_channel`), so the review page always sees them. `human_review` then calls `interrupt()`; the run resumes on the same `thread_id` with `Command(resume=...)` once a person has decided. The executor runs only after the resume, and only approved, allowlisted (`rollback_deployment_simulated`) actions.
+- Every node except `persist_outcome`, `notify_channel`, `human_review` and `restricted_executor` first checks the overall run deadline; a late run stops with `timed_out`.
 
 | Node | What it does |
 |---|---|
@@ -62,7 +63,7 @@ State is `InvestigationState` (`state.py`): JSON-serialisable values only (`mode
 | `investigator_result`, `investigator_error` | `investigator` |
 | `investigator_name` | `coordinator`, `investigator` |
 | `gate` | `evidence_safety_gate`, `fan_in` |
-| `review`, `execution` | `human_review`, `restricted_executor` (placeholders) |
+| `review`, `execution` | `human_review`, `restricted_executor` |
 | `action_ids` | `persist_outcome` |
 
 `retrieval_status` is `{branch: {status, detail}}` with status `running | completed | failed | skipped`. Its reducer (`merge_status`) merges per-branch entries, so parallel writes never collide. It is the only key with a reducer; no two nodes write the same un-reduced key.
@@ -83,7 +84,7 @@ Branch rules: each branch has a timeout (`BRANCH_TIMEOUT_S`, default 20 s) and o
 
 ## Step events (Phase 5)
 
-Every node except `persist_outcome` and `notify` is wrapped by `_traced`, which writes `AgentEvent` nodes (`started`, then `completed` / `failed` / `skipped` / `waiting`) through `orchestrator/events.py`. They are best effort and never fail a run. `human_review` records `waiting`, and the run then ends as `awaiting_review`; the decision arrives later through `POST /api/actions/{id}/review` (no `interrupt()`).
+Every node except `persist_outcome` and `notify` is wrapped by `_traced`, which writes `AgentEvent` nodes (`started`, then `completed` / `failed` / `skipped` / `waiting`) through `orchestrator/events.py`. They are best effort and never fail a run. `human_review` records `waiting` once (a resume re-enters the node, so these events are `first_only`) and then pauses at `interrupt()`; the decision arrives later through `POST /api/actions/{id}/review`.
 
 ## Revision loop
 
@@ -113,6 +114,8 @@ All ids derive from the session id (`<tenant>.ses.<ulid>`, suffix = `<ulid>`), a
 
 - **Claim.** `queued -> running` is one write query (`claim_session.cypher`). FalkorDB runs one write per graph at a time, so of several claimers exactly one wins; the others get nothing.
 - **Run.** Claimed sessions go to `max_workers` run threads (default 2), all daemon threads. `stop()` waits for in-flight runs; one that does not finish keeps its checkpoint and `running` status.
+- **Review resume.** Each poll also lists sessions in `awaiting_review` whose actions have all been decided (`review_is_ready`) and queues a `review` job; the worker resumes the paused thread with `Command(resume=...)`. A per-session guard stops the same session being driven twice at once, and a resume of an already finished thread is a no-op. The standalone worker therefore finishes approvals made through an API that has no worker attached.
+- **Setup.** On start the worker applies the `ops` SQL migrations and injects the Postgres idempotency store into the run dependencies. With no store the executor fails closed (the action stays `approved`).
 - **Scopes.** Each poll covers every configured tenant x env.
 - **One worker per graph.** Claims are atomic, but the startup recovery of `running` sessions is not leased, so two workers could resume the same session.
 

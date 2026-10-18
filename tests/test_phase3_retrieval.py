@@ -37,9 +37,13 @@ def test_investigator_context_for_golden_incident(rag_graph):
     assert [r.id for r in gc.runbooks["nova.svc.payment"]] == ["nova.rb.payment.rollback"]
 
     mems = {x.id: x for x in b.memory_context.items}
-    assert set(mems) == {"nova.mem.092.rollback_success", "nova.mem.092.restart_failed"}
+    assert {"nova.mem.092.rollback_success", "nova.mem.092.restart_failed"} <= set(mems)
     assert mems["nova.mem.092.rollback_success"].precedent == "supports"
     assert mems["nova.mem.092.restart_failed"].precedent == "warns_against"
+    # Memories from neighbouring services may also be retrieved, but the precedent for this
+    # incident's own prior outage must outrank them; the demo depends on INC-092 leading.
+    top = [x.id for x in sorted(b.memory_context.items, key=lambda x: -x.score)[:2]]
+    assert set(top) == {"nova.mem.092.rollback_success", "nova.mem.092.restart_failed"}
     assert all(x.rationale and x.components and x.grounded_in for x in mems.values())
     assert b.memory_context.excluded == {"draft": 1}
 

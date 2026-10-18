@@ -440,3 +440,31 @@ class InvestigationOut(_Out):
     proposed_actions: list[ProposedActionOut] = []
     integrity_warnings: list[str] = []
     data_classification: DataClassification = "synthetic"
+
+
+# ---------------------------------------------------------------- demo controls
+class DemoToggleOut(_Out):
+    id: str
+    label: str
+    description: str
+    edge: str = Field(description="The graph relationship this toggle adds or removes, with real ids")
+    present: bool
+
+
+class RecommendationEffect(_Out):
+    incident_id: str
+    rollback_paths: int
+    target_service_ids: list[str] = []
+    deployment_ids: list[str] = []
+    approval_policy: Literal["policy_in_force", "no_active_policy_escalate", "no_rollback_path"]
+    summary: str
+
+
+class DemoControlsOut(_Out):
+    enabled: bool = Field(description="False unless DEMO_CONTROLS_ENABLED=true; then there are no toggles")
+    toggles: list[DemoToggleOut] = []
+    effect: RecommendationEffect | None = None
+
+
+class DemoToggleIn(_In):
+    present: bool
