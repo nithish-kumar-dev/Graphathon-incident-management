@@ -86,7 +86,7 @@ class Orchestrator:
             return self._abnormal(session_id, scope, config, "timed_out", str(exc))
         except Exception as exc:  # recorded as `failed`, never silently dropped
             log.exception("investigation failed", extra={"investigation_id": session_id})
-            return self._abnormal(session_id, scope, config, "failed", f"{type(exc).__name__}: {str(exc)[:300]}")
+            return self._abnormal(session_id, scope, config, "failed", f"unexpected {type(exc).__name__}; see server log")
         finally:
             self.env.cache.drop(thread_id)
 

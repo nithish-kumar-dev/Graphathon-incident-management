@@ -7,7 +7,7 @@ import httpx
 import pytest
 from app.agents import prompts
 from app.agents.contracts import InvestigatorError, InvestigatorInput, InvestigatorOutput
-from app.agents.investigator import OllamaInvestigator, StubInvestigator, from_settings
+from app.agents.investigator import OllamaInvestigator, StubInvestigator, from_settings, output_format_schema
 from app.rag.embeddings import HashingEmbedder
 from app.rag.retrieval import MemoryContext, retrieve
 from app.seeds.novacommerce import ms
@@ -141,6 +141,12 @@ def _content(text: str):
 GOOD = InvestigatorOutput(summary="No evidence; nothing to recommend.").model_dump_json()
 
 
+def test_ollama_format_requires_deployment_id():
+    action = output_format_schema()["$defs"]["ProposedAction"]
+    assert "deployment_id" in action["required"] and action["properties"]["deployment_id"]["type"] == "string"
+    assert InvestigatorOutput.model_json_schema()["$defs"]["ProposedAction"]["properties"]["deployment_id"].get("anyOf")
+
+
 def test_ollama_request_shape_and_success():
     seen = {}
 
@@ -152,7 +158,7 @@ def test_ollama_request_shape_and_success():
     res = _ollama(handler, fallback_to_stub=False).run(empty_input(), timeout_s=5)
     assert res.investigator == f"ollama:{MODEL}" and res.output.summary.startswith("No evidence")
     assert seen["url"] == f"{OLLAMA}/api/chat" and seen["stream"] is False and seen["model"] == MODEL
-    assert seen["format"] == InvestigatorOutput.model_json_schema() and seen["options"]["temperature"] == 0
+    assert seen["format"] == output_format_schema() and seen["options"]["temperature"] == 0
     assert seen["messages"][0] == {"role": "system", "content": prompts.SYSTEM_PROMPT}
     assert json.loads(seen["messages"][1]["content"])["incident"]["id"] == "nova.inc.101"
 

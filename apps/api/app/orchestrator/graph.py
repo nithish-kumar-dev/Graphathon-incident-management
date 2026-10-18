@@ -215,7 +215,7 @@ def build(env: RunEnv) -> StateGraph:
                 return {"status": "failed", "detail": str(exc)[:300]}, None
             except Exception as exc:  # a broken branch must not invent data or kill the run
                 log.exception("branch %s failed", branch, extra={"investigation_id": state["session_id"]})
-                return {"status": "failed", "detail": f"{type(exc).__name__}: {str(exc)[:200]}"}, None
+                return {"status": "failed", "detail": f"unexpected {type(exc).__name__}; see server log"}, None
         raise AssertionError("unreachable")
 
     def _bundle(state: InvestigationState, attempt: int) -> RetrievalBundle:
