@@ -105,10 +105,24 @@ def persist_outcome(repo: GraphRepository, state: InvestigationState, *, now_ms:
         "gate_json": canonical_json({"decision": gate["decision"], "violations": gate.get("violations") or []})
         if gate else None,
         "error": (state.get("error") or "")[:500] or None,
+        "retrieval_json": _retrieval_snapshot(state, incident),
     }
     if not repo.update_node("AgentSession", session_id, props, at_ms=now_ms):
         raise SchemaViolation(f"AgentSession {session_id} vanished before its outcome was persisted")
     return action_ids
+
+
+MAX_SNAPSHOT_CHARS = 400_000
+
+
+def _retrieval_snapshot(state: InvestigationState, incident: dict | None) -> str | None:
+    """The retrieval context this run actually used (completed branches only), so the UI can show it later
+    exactly as the investigator saw it rather than re-running retrieval against a graph that has moved on."""
+    parts = {k: state.get(k) for k in ("graph_context", "knowledge_context", "memory_context")}
+    if not incident or not any(parts.values()):
+        return None
+    snap = canonical_json({"incident_id": incident["id"], "as_of_ms": state.get("window_end_ms"), **parts})
+    return snap if len(snap) <= MAX_SNAPSHOT_CHARS else None
 
 
 def notify_channel(repo: GraphRepository, state: InvestigationState, *, now_ms: int) -> str | None:

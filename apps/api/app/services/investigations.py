@@ -11,9 +11,13 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from app.api import models as m
 from app.api.errors import Conflict, NotFound
 from app.auth import Principal
-from app.domain.actions import canonical_json, spec_hash
+from app.domain.actions import canonical_json
 from app.graph.repository import GraphRepository
+from app.graph.repository import now_ms as wall_clock_ms
 from app.ids import new_id
+from app.orchestrator import events as run_events
+from app.rag.retrieval import RunRetrieval
+from app.services import actions as action_service
 from app.services.incidents import add_timeline, evidence_ref, require_incident
 
 log = logging.getLogger(__name__)
@@ -70,10 +74,11 @@ def create(repo: GraphRepository, body: m.InvestigationIn, principal: Principal,
     return get(repo, ses_id), True
 
 
-def get(repo: GraphRepository, investigation_id: str) -> m.InvestigationOut:
+def get(repo: GraphRepository, investigation_id: str, now_ms: int | None = None) -> m.InvestigationOut:
     s = repo.get_node("AgentSession", investigation_id)
     if s is None:
         raise NotFound(f"investigation {investigation_id} not found")
+    now_ms = now_ms or wall_clock_ms()
     incidents = repo.neighbors("AgentSession", investigation_id, "INVESTIGATES", "Incident", outgoing=True, limit=1)
     warnings: list[str] = []
 
@@ -100,11 +105,51 @@ def get(repo: GraphRepository, investigation_id: str) -> m.InvestigationOut:
         id=s["id"], thread_id=s["thread_id"], incident_id=incidents[0]["id"] if incidents else None,
         incident_key=incidents[0]["key"] if incidents else None, mode=s["mode"], status=s["status"],
         requested_by=s.get("requested_by"), started_at=m.to_dt(s["started_at_ms"]), ended_at=m.to_dt(s.get("ended_at_ms")),
-        revision_count=s.get("revision_count") or 0, branches=_branches(s, warnings),
+        revision_count=s.get("revision_count") or 0, branches=_branches(s, load_events(repo, investigation_id), warnings),
         findings=findings, evidence_refs=[evidence[i] for i in sorted(evidence)],
         summary=s.get("summary"), investigator=s.get("investigator"), overall_uncertainty=s.get("overall_uncertainty"),
-        error=s.get("error"), gate=_gate(s, warnings), proposed_actions=_actions(repo, investigation_id, warnings),
+        error=s.get("error"), gate=_gate(s, warnings), proposed_actions=_actions(repo, investigation_id, now_ms, warnings),
         integrity_warnings=warnings)
+
+
+def list_for_incident(repo: GraphRepository, incident_id: str, limit: int) -> m.InvestigationList:
+    require_incident(repo, incident_id)
+    rows = repo.neighbors("Incident", incident_id, "INVESTIGATES", "AgentSession", outgoing=False,
+                          order_by="started_at_ms", descending=True, limit=limit)
+    return m.InvestigationList(incident_id=incident_id, items=[m.InvestigationSummary(
+        id=r["id"], mode=r["mode"], status=r["status"], requested_by=r.get("requested_by"),
+        started_at=m.to_dt(r["started_at_ms"]), ended_at=m.to_dt(r.get("ended_at_ms")),
+        revision_count=r.get("revision_count") or 0, investigator=r.get("investigator"),
+        summary=r.get("summary"), error=r.get("error")) for r in rows])
+
+
+def events(repo: GraphRepository, investigation_id: str) -> m.InvestigationEvents:
+    s = repo.get_node("AgentSession", investigation_id)
+    if s is None:
+        raise NotFound(f"investigation {investigation_id} not found")
+    return m.InvestigationEvents(investigation_id=investigation_id, status=s["status"], events=[
+        m.AgentEventOut(id=e["id"], kind=e["kind"], status=e["status"], at=m.to_dt(e["at_ms"]),
+                        revision=e.get("revision") or 0, detail=e.get("detail"))
+        for e in load_events(repo, investigation_id)])
+
+
+def retrieval(repo: GraphRepository, investigation_id: str) -> RunRetrieval:
+    """The context this run used, as stored when it finished. 404 while the run is live or if it kept none."""
+    s = repo.get_node("AgentSession", investigation_id)
+    if s is None:
+        raise NotFound(f"investigation {investigation_id} not found")
+    if not s.get("retrieval_json"):
+        raise NotFound("this investigation has no stored retrieval context (still running, no branch completed, "
+                       "or it predates snapshots)", code="no_snapshot")
+    try:
+        raw = json.loads(s["retrieval_json"])
+        return RunRetrieval.model_validate({
+            "investigation_id": investigation_id, "incident_id": raw["incident_id"],
+            "as_of": m.to_dt(raw.get("as_of_ms")), "graph_context": raw.get("graph_context"),
+            "memory_context": raw.get("memory_context"), "knowledge_context": raw.get("knowledge_context")})
+    except (KeyError, ValueError, ValidationError):
+        log.warning("unreadable retrieval_json", extra={"investigation_id": investigation_id})
+        raise Conflict("the stored retrieval context failed validation", code="integrity_error") from None
 
 
 def _gate(s: dict, warnings: list[str]) -> m.GateOut | None:
@@ -117,29 +162,27 @@ def _gate(s: dict, warnings: list[str]) -> m.GateOut | None:
         return None
 
 
-def _actions(repo: GraphRepository, investigation_id: str, warnings: list[str]) -> list[m.ProposedActionOut]:
+def _actions(repo: GraphRepository, investigation_id: str, now_ms: int,
+             warnings: list[str]) -> list[m.ProposedActionOut]:
     """AgentAction nodes PART_OF the session. Evidence comes from real SUPPORTED_BY edges only."""
     out = []
     for row in repo.session_actions(investigation_id):
         a = row["action"]
         try:
-            spec = json.loads(a["spec_json"])
-            out.append(m.ProposedActionOut(
-                id=a["id"], proposal_id=a["proposal_id"], version=a["version"], action_type=a["action_type"],
-                status=a["status"], mode=a["mode"], target_service_id=a["target_service_id"],
-                deployment_id=a.get("deployment_id") or spec.get("deployment_id"),
-                runbook_id=a.get("runbook_id") or spec.get("runbook_id"), risk=a.get("risk"),
-                rationale=a.get("rationale"), spec=spec, spec_hash=a["spec_hash"],
-                evidence=[evidence_ref(e) for e in sorted(row["evidence"], key=lambda e: e["id"])],
-                integrity_warnings=[] if spec_hash(a["spec_json"]) == a["spec_hash"] else
-                ["spec_hash does not match spec_json"]))
+            out.append(action_service.action_out(repo, a, row["evidence"], now_ms))
         except (KeyError, ValueError, ValidationError):
             log.warning("unreadable AgentAction", extra={"investigation_id": investigation_id})
             warnings.append(f"action {a.get('id')} failed validation and was withheld")
     return out
 
 
-def _branches(s: dict, warnings: list[str]) -> dict[str, m.BranchState]:
+def load_events(repo: GraphRepository, investigation_id: str) -> list[dict]:
+    rows = repo.neighbors("AgentSession", investigation_id, "PART_OF", "AgentEvent", outgoing=False,
+                          order_by="at_ms", limit=200)
+    return sorted(rows, key=run_events.sort_key)
+
+
+def _branches(s: dict, events: list[dict], warnings: list[str]) -> dict[str, m.BranchState]:
     default = "pending" if s["status"] == "queued" else "not_recorded"
     out = {b: m.BranchState(status=default) for b in BRANCHES}
     if s.get("branch_status_json"):
@@ -151,6 +194,19 @@ def _branches(s: dict, warnings: list[str]) -> dict[str, m.BranchState]:
                     out[b] = m.BranchState(status=stored.status, detail=stored.detail)
         except (ValueError, ValidationError):
             warnings.append("stored branch states failed validation")
+    live = s["status"] == "running"
+    for node, branch in run_events.BRANCH_OF.items():
+        mine = [e for e in events if e["kind"] == node]
+        if not mine:
+            continue
+        started = [e["at_ms"] for e in mine if e["status"] == "started"]
+        closed = [e for e in mine if e["status"] != "started"]
+        state = out[branch]
+        update: dict = {"started_at": m.to_dt(min(started)) if started else None,
+                        "ended_at": m.to_dt(max(e["at_ms"] for e in closed)) if closed else None}
+        if live and state.status == "running" and closed:   # incremental view: the run has not persisted yet
+            update |= {"status": closed[-1]["status"], "detail": closed[-1].get("detail")}
+        out[branch] = state.model_copy(update=update)
     return out
 
 

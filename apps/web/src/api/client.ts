@@ -11,8 +11,13 @@ import type {
   IncidentSummary,
   IncidentTimeline,
   IncidentUpdate,
+  InvestigationEvents,
   InvestigationIn,
+  InvestigationList,
   InvestigationOut,
+  MemoryReviewOut,
+  ReviewIn,
+  ReviewResult,
   ReadinessBody,
   RetrievalBundle,
   ServiceContext,
@@ -112,6 +117,15 @@ export interface ApiClient {
   ): Promise<{ investigation: InvestigationOut; created: boolean }>;
   getInvestigation(investigationId: string, signal?: AbortSignal): Promise<InvestigationOut>;
   getRetrieval(incidentId: string, signal?: AbortSignal): Promise<RetrievalBundle>;
+  /** Earlier and current runs for an incident, newest first. */
+  listInvestigations(incidentId: string, limit?: number, signal?: AbortSignal): Promise<InvestigationList>;
+  /** Orchestrator step events for one run, in causal order. */
+  getInvestigationEvents(investigationId: string, signal?: AbortSignal): Promise<InvestigationEvents>;
+  /** Record a human decision on a proposed action. Approving a simulation run executes it in simulation only. */
+  reviewAction(actionId: string, input: ReviewIn, signal?: AbortSignal): Promise<ReviewResult>;
+  /** Mark the draft memory written after an execution as verified (successful or failed). */
+  validateMemory(memoryId: string, outcome: "successful" | "failed", signal?: AbortSignal): Promise<MemoryReviewOut>;
+  rejectMemory(memoryId: string, signal?: AbortSignal): Promise<MemoryReviewOut>;
   /** 201 -> created: true (new alert); 200 -> created: false (dedup or replay). */
   ingestAlert(alert: AlertIn, signal?: AbortSignal): Promise<AlertIngestResult & { created: boolean }>;
   /** Never throws for 503; resolves with ready: false. Network failures still throw ApiError("network_error"). */
@@ -229,6 +243,16 @@ export function createClient(getUser: () => DemoUser, options: CreateClientOptio
     },
     getInvestigation: (id, signal) => get<InvestigationOut>(`/api/investigations/${seg(id)}`, undefined, signal),
     getRetrieval: (id, signal) => get<RetrievalBundle>(`/api/incidents/${seg(id)}/retrieval`, undefined, signal),
+    listInvestigations: (id, limit, signal) =>
+      get<InvestigationList>(`/api/incidents/${seg(id)}/investigations`, { limit }, signal),
+    getInvestigationEvents: (id, signal) =>
+      get<InvestigationEvents>(`/api/investigations/${seg(id)}/events`, undefined, signal),
+    reviewAction: async (id, input, signal) =>
+      (await request<ReviewResult>("POST", `/api/actions/${seg(id)}/review`, { body: input, signal })).data,
+    validateMemory: async (id, outcome, signal) =>
+      (await request<MemoryReviewOut>("POST", `/api/memories/${seg(id)}/validate`, { body: { outcome }, signal })).data,
+    rejectMemory: async (id, signal) =>
+      (await request<MemoryReviewOut>("POST", `/api/memories/${seg(id)}/reject`, { signal })).data,
     ingestAlert: async (alert, signal) => {
       const r = await request<AlertIngestResult>("POST", "/api/alerts", { body: alert, signal });
       return { ...r.data, created: r.status === 201 };

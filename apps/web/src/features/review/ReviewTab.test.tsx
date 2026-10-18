@@ -1,5 +1,4 @@
 import { render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { ApiProvider } from "../../api/client";
 import type { DemoUser, IncidentDetail, InvestigationOut } from "../../api/types";
@@ -8,8 +7,6 @@ import type { TabProps } from "../types";
 import ReviewTab from "./ReviewTab";
 
 const clone = <T,>(v: unknown): T => JSON.parse(JSON.stringify(v)) as T;
-const DECISIONS = ["APPROVE", "REJECT", "REQUEST_REVISION", "ESCALATE"];
-const PHASE5 = "Review API not available until Phase 5 (human-in-the-loop)";
 
 function renderTab(user: DemoUser, overrides: Partial<TabProps> = {}) {
   const props: TabProps = {
@@ -24,14 +21,6 @@ function renderTab(user: DemoUser, overrides: Partial<TabProps> = {}) {
       <ReviewTab {...props} />
     </ApiProvider>,
   );
-}
-
-function reasonsFor(button: HTMLElement): string[] {
-  const id = button.getAttribute("aria-describedby");
-  expect(id).toBeTruthy();
-  const list = document.getElementById(id!);
-  expect(list).not.toBeNull();
-  return within(list!).getAllByRole("listitem").map((li) => li.textContent ?? "");
 }
 
 describe("ReviewTab", () => {
@@ -52,66 +41,11 @@ describe("ReviewTab", () => {
     expect(screen.getByText(/Payment rollback policy v2/)).toBeInTheDocument();
     expect(screen.getByText("medium (simulated rollback)")).toBeInTheDocument();
     expect(screen.getByText("nova.rb.payment.rollback")).toBeInTheDocument();
-    expect(screen.getByText(/SHA-256 spec hash and expiry are created server-side in Phase 5/)).toBeInTheDocument();
+    expect(screen.getByText(/Preview derived from graph evidence/)).toBeInTheDocument();
     expect(screen.getByText("nova.ev.101.deploy")).toBeInTheDocument();
     expect(screen.getAllByText("synthetic://deploys/payment/v2.4").length).toBeGreaterThan(0);
     expect(await screen.findByText("nova.team.payments")).toBeInTheDocument();
     expect(screen.queryAllByRole("link")).toHaveLength(0);
-  });
-
-  it.each(["demo-viewer", "demo-responder", "payments-lead"] as const)(
-    "keeps all four decision buttons disabled for %s",
-    async (user) => {
-      installMockApi();
-      renderTab(user);
-      for (const name of DECISIONS) {
-        const button = screen.getByRole("button", { name });
-        expect(button).toBeDisabled();
-        expect(button).toHaveAttribute("aria-disabled", "true");
-        expect(reasonsFor(button)).toContain(PHASE5);
-      }
-      await screen.findByText("nova.team.payments");
-    },
-  );
-
-  it("demo-viewer and demo-responder are told they lack action:review", async () => {
-    installMockApi();
-    const { unmount } = renderTab("demo-viewer");
-    expect(reasonsFor(screen.getByRole("button", { name: "APPROVE" }))).toEqual([
-      "You are signed in as demo-viewer, who lacks action:review.",
-      PHASE5,
-    ]);
-    await screen.findByText("nova.team.payments");
-    unmount();
-
-    renderTab("demo-responder");
-    expect(reasonsFor(screen.getByRole("button", { name: "REJECT" }))).toEqual([
-      "You are signed in as demo-responder, who lacks action:review.",
-      PHASE5,
-    ]);
-    expect(screen.queryByText(/satisfied/)).not.toBeInTheDocument();
-    await screen.findByText("nova.team.payments");
-  });
-
-  it("payments-lead has action:review and the role; only the Phase 5 reason remains", async () => {
-    installMockApi();
-    renderTab("payments-lead");
-    const reasons = reasonsFor(screen.getByRole("button", { name: "APPROVE" }));
-    expect(reasons).toEqual([PHASE5]);
-    expect(reasons.join(" ")).not.toMatch(/lacks action:review/);
-    expect(reasons.join(" ")).not.toMatch(/Requires approver:payment/);
-    expect(screen.getByText(/Role approver:payment satisfied for payments-lead/)).toBeInTheDocument();
-    await screen.findByText("nova.team.payments");
-  });
-
-  it("a reviewer without the required approver role is told which role is required", async () => {
-    installMockApi();
-    const incident = clone<IncidentDetail>(fixtures.incident_101);
-    incident.explanation_paths[0]!.governing_decisions[0]!.required_approver_role = "approver:ledger";
-    renderTab("payments-lead", { incident });
-    expect(reasonsFor(screen.getByRole("button", { name: "APPROVE" }))).toEqual(["Requires approver:ledger", PHASE5]);
-    expect(screen.queryByText(/satisfied/)).not.toBeInTheDocument();
-    await screen.findByText("nova.team.payments");
   });
 
   it("shows the empty state when there are no explanation paths", () => {
@@ -130,7 +64,7 @@ describe("ReviewTab", () => {
     incident.explanation_paths[0]!.governing_decisions = [];
     renderTab("payments-lead", { incident });
     expect(screen.getByText("No active policy — escalate")).toBeInTheDocument();
-    expect(reasonsFor(screen.getByRole("button", { name: "ESCALATE" }))).toEqual([PHASE5]);
+    expect(screen.queryByRole("button", { name: "ESCALATE" })).not.toBeInTheDocument();
     await screen.findByText("nova.team.payments");
   });
 
@@ -147,23 +81,11 @@ describe("ReviewTab", () => {
     expect(screen.getByText("payment pool sizing regressed in v2.4")).toBeInTheDocument();
     expect(screen.queryByText("checkout 5xx observed")).not.toBeInTheDocument();
     expect(screen.getByText("Hypothesis · not confirmed")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "APPROVE" })).toBeDisabled();
+    expect(screen.queryByRole("button", { name: "APPROVE" })).not.toBeInTheDocument();
     await screen.findByText("nova.team.payments");
   });
 
-  it("clicking disabled buttons never calls any /api/actions endpoint", async () => {
-    const api = installMockApi();
-    const user = userEvent.setup();
-    renderTab("payments-lead");
-    await screen.findByText("nova.team.payments");
-    await user.type(screen.getByLabelText("Comment (optional)"), "looks right");
-    for (const name of DECISIONS) await user.click(screen.getByRole("button", { name }));
-    expect(api.requestsTo("POST", /^\/api\/actions/)).toHaveLength(0);
-    expect(api.requests.filter((r) => r.path.startsWith("/api/actions"))).toHaveLength(0);
-    expect(screen.getByLabelText("Comment (optional)")).toHaveAttribute("maxLength", "1000");
-  });
-
-  it("awaiting_review with a real proposal: exact spec, full hash, Pending banner, buttons disabled", async () => {
+  it("awaiting_review with a real proposal: exact spec, full hash, Pending banner, no decision buttons (decisions live in Human Review)", async () => {
     const api = installMockApi();
     const inv = clone<InvestigationOut>(fixtures.investigation_awaiting_review_101);
     const proposal = inv.proposed_actions![0]!;
@@ -173,7 +95,7 @@ describe("ReviewTab", () => {
     // The real proposal replaces the path-derived preview.
     expect(screen.getByRole("heading", { level: 3, name: /Proposal: rollback_deployment_simulated/ })).toBeInTheDocument();
     expect(screen.queryByLabelText("Exact arguments for rollback_deployment_simulated")).not.toBeInTheDocument();
-    expect(screen.queryByText(/SHA-256 spec hash and expiry are created server-side/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Preview derived from graph evidence/)).not.toBeInTheDocument();
 
     const proposals = screen.getByRole("list", { name: "Proposals" });
     expect(within(proposals).getByText(proposal.id)).toBeInTheDocument();
@@ -194,25 +116,9 @@ describe("ReviewTab", () => {
     expect(proposal.spec_hash).toMatch(/^[0-9a-f]{64}$/);
     expect(within(proposals).getByText(proposal.evidence[0]!.id)).toBeInTheDocument();
     expect(screen.getByText("Payment service deployment rollback")).toBeInTheDocument();
-    expect(screen.getByText(/Role approver:payment satisfied for payments-lead/)).toBeInTheDocument();
-
-    for (const name of DECISIONS) {
-      const button = screen.getByRole("button", { name });
-      expect(button).toBeDisabled();
-      expect(reasonsFor(button)).toEqual([PHASE5]);
-    }
+    expect(screen.queryByRole("button", { name: "APPROVE" })).not.toBeInTheDocument();
     expect(await screen.findByText("nova.team.payments")).toBeInTheDocument();
     expect(api.requests.filter((r) => r.path.startsWith("/api/actions"))).toHaveLength(0);
   });
 
-  it("a real proposal still tells demo-responder it lacks action:review", async () => {
-    installMockApi();
-    renderTab("demo-responder", { investigation: clone<InvestigationOut>(fixtures.investigation_completed_101) });
-    expect(screen.queryByText("Pending your approval")).not.toBeInTheDocument();
-    expect(reasonsFor(screen.getByRole("button", { name: "APPROVE" }))).toEqual([
-      "You are signed in as demo-responder, who lacks action:review.",
-      PHASE5,
-    ]);
-    await screen.findByText("nova.team.payments");
-  });
 });

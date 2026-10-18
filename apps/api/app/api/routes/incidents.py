@@ -15,12 +15,13 @@ from app.api.models import (
     IncidentSummary,
     IncidentTimeline,
     IncidentUpdate,
+    InvestigationList,
 )
 from app.auth import Principal
 from app.graph.repository import Scope
 from app.ids import IncidentIdPath
 from app.rag.retrieval import RetrievalBundle, retrieve
-from app.services import incidents
+from app.services import incidents, investigations
 from app.tools.graph_tools import ToolContext
 
 router = APIRouter(prefix="/api/incidents", tags=["incidents"], responses=ERROR_RESPONSES)
@@ -60,6 +61,13 @@ def get_memories(incident_id: IncidentIdPath, repo: RepoDep, _: Reader, include_
     """Memories about this incident or incidents sharing an affected service. Verified only unless
     `include_unverified`; `precedent` says whether a memory supports or warns against an action."""
     return incidents.memories(repo, incident_id, include_unverified=include_unverified, limit=limit)
+
+
+@router.get("/{incident_id}/investigations", response_model=InvestigationList)
+def list_incident_investigations(incident_id: IncidentIdPath, repo: RepoDep, _: Reader,
+                                 limit: Annotated[int, Query(ge=1, le=50)] = 20) -> InvestigationList:
+    """Investigation runs for this incident, newest first (status, mode, who asked, when)."""
+    return investigations.list_for_incident(repo, incident_id, limit)
 
 
 @router.get("/{incident_id}/retrieval", response_model=RetrievalBundle)

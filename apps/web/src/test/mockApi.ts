@@ -21,6 +21,12 @@ import investigation092 from "./fixtures/investigation_092.json";
 import investigationQueued from "./fixtures/investigation_queued.json";
 import investigationAwaitingReview101 from "./fixtures/investigation_awaiting_review_101.json";
 import investigationCompleted101 from "./fixtures/investigation_completed_101.json";
+import investigationExecuted101 from "./fixtures/investigation_executed_101.json";
+import investigationRejected101 from "./fixtures/investigation_rejected_101.json";
+import investigationEvents101 from "./fixtures/investigation_events_101.json";
+import investigations101 from "./fixtures/investigations_101.json";
+import reviewResult101 from "./fixtures/review_result_101.json";
+import memoriesDraft101 from "./fixtures/memories_draft_101.json";
 import investigationEscalated101 from "./fixtures/investigation_escalated_101.json";
 import investigationFailed101 from "./fixtures/investigation_failed_101.json";
 import memories101 from "./fixtures/memories_101.json";
@@ -40,6 +46,12 @@ export const fixtures = {
   investigation_queued: investigationQueued,
   investigation_completed_101: investigationCompleted101,
   investigation_awaiting_review_101: investigationAwaitingReview101,
+  investigation_executed_101: investigationExecuted101,
+  investigation_rejected_101: investigationRejected101,
+  investigation_events_101: investigationEvents101,
+  investigations_101: investigations101,
+  review_result_101: reviewResult101,
+  memories_draft_101: memoriesDraft101,
   investigation_escalated_101: investigationEscalated101,
   investigation_failed_101: investigationFailed101,
   retrieval_101: retrieval101,
@@ -102,6 +114,8 @@ function defaultRoutes(): Array<[string, string | RegExp, Responder]> {
     ["GET", "/api/incidents/nova.inc.101/timeline", { body: fixtures.timeline_101 }],
     ["GET", "/api/incidents/nova.inc.101/memories", { body: fixtures.memories_101 }],
     ["GET", "/api/incidents/nova.inc.101/retrieval", { body: fixtures.retrieval_101 }],
+    ["GET", "/api/incidents/nova.inc.101/investigations", { body: fixtures.investigations_101 }],
+    ["GET", /^\/api\/investigations\/[^/]+\/events$/, (req) => ({ body: { ...fixtures.investigation_events_101, investigation_id: req.path.split("/")[3] } })],
     ["GET", "/api/services/nova.svc.payment/context", { body: fixtures.service_payment }],
     ["GET", "/api/investigations/nova.ses.092", { body: fixtures.investigation_092 }],
     ["GET", "/api/investigations/nova.ses.01example", { body: fixtures.investigation_queued }],

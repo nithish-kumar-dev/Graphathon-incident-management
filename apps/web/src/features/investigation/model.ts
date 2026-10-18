@@ -6,10 +6,12 @@ import type {
   FindingOut,
   IncidentDetail,
   IncidentMemories,
+  IncidentSummary,
   InvestigationOut,
   MemoryOut,
   ProposedActionOut,
   RetrievalBundle,
+  AgentEventOut,
 } from "../../api/types";
 import { formatDuration, relativeTime, shortId } from "../../lib/time";
 import type { TabId } from "../types";
@@ -131,7 +133,7 @@ function errorText(inv: InvestigationOut): string {
   return inv.error ? inv.error : "The run ended without a recorded reason.";
 }
 
-export function deriveStages(incident: IncidentDetail, inv: InvestigationOut | null): Stage[] {
+export function deriveStages(incident: IncidentSummary, inv: InvestigationOut | null): Stage[] {
   const phase = phaseOf(inv);
   const alertWord = incident.alert_count === 1 ? "alert" : "alerts";
   const detected: Stage = {
@@ -143,9 +145,10 @@ export function deriveStages(incident: IncidentDetail, inv: InvestigationOut | n
   const s = (id: StageId, status: StageStatus, caption: string): Stage => ({ id, label: STAGE_LABELS[id], status, caption });
   const execution = s(
     "execution",
-    "unavailable",
-    "Not available yet: nothing is executed and no outcome is verified or written to memory in this phase.",
+    "pending",
+    "Runs only after a person approves a proposed action in a simulation run. The execution is simulated; nothing real changes.",
   );
+  const nothingToExecute = s("execution", "skipped", "Nothing to execute.");
 
   if (!inv) {
     return [
@@ -214,7 +217,7 @@ export function deriveStages(incident: IncidentDetail, inv: InvestigationOut | n
         : s("analyzing", "failed", errorText(inv)),
       s("recommending", "skipped", "Not reached."),
       s("review", "skipped", "Nothing to review."),
-      execution,
+      nothingToExecute,
     ];
   }
 
@@ -232,12 +235,25 @@ export function deriveStages(incident: IncidentDetail, inv: InvestigationOut | n
         : s("analyzing", "skipped", "Not run."),
       s("recommending", "skipped", "No evidence-backed recommendation."),
       s("review", "skipped", "Nothing to review."),
-      execution,
+      nothingToExecute,
     ];
   }
 
   const analyzing = s("analyzing", "completed", inv.investigator ? `Investigator: ${inv.investigator}.` : "Analysis finished.");
   const hasOutput = proposals.length > 0 || inv.findings.length > 0;
+
+  const decided = first ? decidedStages(first, s) : null;
+
+  if (phase === "escalated" && decided) {
+    return [
+      detected,
+      context,
+      analyzing,
+      s("recommending", "completed", `Proposed: ${actionTitle(first!.action_type)}.`),
+      decided.review,
+      decided.execution,
+    ];
+  }
 
   if (phase === "escalated") {
     return [
@@ -246,7 +262,7 @@ export function deriveStages(incident: IncidentDetail, inv: InvestigationOut | n
       analyzing,
       s("recommending", "skipped", "The safety gate found no safe, policy-backed recommendation."),
       s("review", "waiting", "Escalated: waiting for a human to decide how to proceed. The agent proposed nothing to execute."),
-      execution,
+      nothingToExecute,
     ];
   }
 
@@ -269,11 +285,56 @@ export function deriveStages(incident: IncidentDetail, inv: InvestigationOut | n
     hasOutput
       ? s("recommending", "completed", first ? `Proposed: ${actionTitle(first.action_type)}.` : "Findings recorded.")
       : s("recommending", "skipped", "No findings or proposals were recorded."),
-    inv.mode === "recommendation_only"
-      ? s("review", "skipped", "Not required: this was a recommendation-only run, so nothing was proposed for execution.")
-      : s("review", "unavailable", "Review decisions cannot be recorded in this phase."),
-    execution,
+    decided
+      ? decided.review
+      : inv.mode === "recommendation_only"
+        ? s("review", "skipped", "Not required: this was a recommendation-only run. Start a simulation run to get an approvable proposal.")
+        : s("review", "skipped", "Nothing was proposed for review."),
+    decided ? decided.execution : nothingToExecute,
   ];
+}
+
+/** Review and execution stages once a person has decided on the first proposed action. */
+function decidedStages(
+  action: ProposedActionOut,
+  s: (id: StageId, status: StageStatus, caption: string) => Stage,
+): { review: Stage; execution: Stage } | null {
+  const last = (action.reviews ?? []).at(-1);
+  const who = last?.approver_handle ?? last?.approver_id ?? "a reviewer";
+  switch (action.status) {
+    case "executed_simulated": {
+      const failedRun = action.execution?.result === "failed";
+      const ticket = action.execution?.ticket ? ` (${action.execution.ticket})` : "";
+      return {
+        review: s("review", "completed", `Approved by ${who}.`),
+        execution: failedRun
+          ? s("execution", "failed", `The simulated execution failed${ticket}. Nothing real was changed.`)
+          : s("execution", "completed", `Simulated execution succeeded${ticket}. Nothing real was changed. Verify the outcome to add it to memory.`),
+      };
+    }
+    case "approved":
+      return {
+        review: s("review", "completed", `Approved by ${who}.`),
+        execution: s("execution", "waiting", "Approved, but the simulated execution has not completed."),
+      };
+    case "rejected":
+      return {
+        review: s("review", "completed", `Rejected by ${who}.`),
+        execution: s("execution", "skipped", "Nothing was executed."),
+      };
+    case "revision_requested":
+      return {
+        review: s("review", "completed", `${who} asked for a revision.`),
+        execution: s("execution", "skipped", "Nothing was executed. Start a new investigation for a revised proposal."),
+      };
+    case "escalated":
+      return {
+        review: s("review", "waiting", `${who} escalated this to another person.`),
+        execution: s("execution", "skipped", "Nothing was executed."),
+      };
+    default:
+      return null;
+  }
 }
 
 export function currentStage(stages: readonly Stage[]): StageId | null {
@@ -281,6 +342,21 @@ export function currentStage(stages: readonly Stage[]): StageId | null {
   if (active) return active.id;
   const done = [...stages].reverse().find((x) => x.status === "completed");
   return done?.id ?? null;
+}
+
+/** One line for the incident navigator: where this incident's investigation is right now. */
+export interface StageSummary {
+  phase: Phase;
+  stage: StageId | null;
+  status: StageStatus | null;
+}
+
+export function summarizeStage(incident: IncidentSummary, inv: InvestigationOut | null): StageSummary {
+  const phase = phaseOf(inv);
+  if (phase === "none") return { phase, stage: null, status: null };
+  const stages = deriveStages(incident, inv);
+  const id = currentStage(stages);
+  return { phase, stage: id, status: stages.find((x) => x.id === id)?.status ?? null };
 }
 
 // ------------------------------------------------------------------ situation + headline
@@ -291,7 +367,7 @@ export interface Situation {
   description: string;
 }
 
-export function deriveSituation(incident: IncidentDetail, inv: InvestigationOut | null): Situation {
+export function deriveSituation(incident: IncidentSummary, inv: InvestigationOut | null): Situation {
   const phase = phaseOf(inv);
   if (phase === "none") {
     if (incident.status === "resolved")
@@ -307,14 +383,14 @@ export function deriveSituation(incident: IncidentDetail, inv: InvestigationOut 
     running: { key: "running", label: "Investigation running", description: "Results are from run " + shortId(inv!.id) + " as the backend reports them." },
     awaiting_review: { key: "awaiting_approval", label: "Awaiting approval", description: "The run finished and proposed an action. Nothing has been executed." },
     completed: { key: "completed", label: "Investigation completed", description: "Context was retrieved by run " + shortId(inv!.id) + "." },
-    escalated: { key: "escalated", label: "Escalated to a human", description: "The safety gate handed this incident to a person." },
+    escalated: { key: "escalated", label: "Escalated to a human", description: "The incident was handed to a person, by the safety gate or by a reviewer." },
     inconclusive: { key: "inconclusive", label: "Inconclusive", description: "The run found no evidence-backed explanation." },
     failed: { key: "failed", label: "Investigation failed", description: "The run stopped before it finished; partial output is not a conclusion." },
   };
   return map[phase];
 }
 
-export function deriveHeadline(incident: IncidentDetail, inv: InvestigationOut | null, stages: readonly Stage[]): string {
+export function deriveHeadline(incident: IncidentSummary, inv: InvestigationOut | null, stages: readonly Stage[]): string {
   const phase = phaseOf(inv);
   const get = (id: StageId) => stages.find((x) => x.id === id)!;
   switch (phase) {
@@ -330,8 +406,12 @@ export function deriveHeadline(incident: IncidentDetail, inv: InvestigationOut |
         : get("context").caption;
     case "awaiting_review":
       return `Investigation complete. ${get("review").caption}`;
-    case "completed":
+    case "completed": {
+      const review = get("review");
+      const exec = get("execution");
+      if (review.status === "completed") return `Investigation complete. ${review.caption} ${exec.caption}`;
       return "Investigation complete. Findings are below; no action was proposed for execution.";
+    }
     case "escalated":
       return "Investigation escalated. The agent could not support a safe automated recommendation, so a human must decide.";
     case "inconclusive":
@@ -376,7 +456,7 @@ export interface AgentCardModel {
   details: Array<{ label: string; value: string }>;
 }
 
-const TIMING_NOTE = "The API does not report per-agent start or end times.";
+const TIMING_NOTE = "Not recorded: runs from before step events were stored have no per-branch times.";
 
 function mapBranchStatus(s: BranchStatus): AgentStatus {
   return s;
@@ -534,6 +614,9 @@ export function deriveAgents({ investigation: inv, bundle }: AgentInputs): Agent
                 : status === "pending"
                   ? "Waiting for the coordinator."
                   : "The backend did not record a state for this branch.",
+      startedAt: entry?.started_at ?? null,
+      duration: formatDuration(entry?.started_at, entry?.ended_at),
+      timingNote: "From the orchestrator's own step events.",
       resultCount: status === "completed" ? disc.count : null,
       resultLabel,
       discoveries: status === "completed" ? disc.items : [],
@@ -737,7 +820,7 @@ export function deriveActions(incident: IncidentDetail, inv: InvestigationOut | 
         deployment: p.deployment_id,
         risk: p.risk,
         runbook: runbook ? `${runbook.title} (v${runbook.version})` : p.runbook_id,
-        requiredApprovals: approvalRoles(path),
+        requiredApprovals: p.required_approver_role ? [p.required_approver_role] : approvalRoles(path),
         policy: policyText(path),
         fromRun: true,
         proposal: p,
@@ -876,7 +959,47 @@ const EVENT_LABELS: Record<string, { label: string; tone: ActivityEvent["tone"] 
   investigation_failed: { label: "Investigation failed", tone: "danger" },
   human_action: { label: "Human action", tone: "neutral" },
   approval: { label: "Approval recorded", tone: "success" },
+  action_approved: { label: "Action approved", tone: "success" },
+  action_rejected: { label: "Action rejected", tone: "danger" },
+  action_revision_requested: { label: "Revision requested", tone: "warning" },
+  action_escalated: { label: "Action escalated", tone: "warning" },
+  action_executed_simulated: { label: "Simulated execution", tone: "success" },
+  agent_step_completed: { label: "Agent step finished", tone: "neutral" },
+  agent_step_failed: { label: "Agent step failed", tone: "danger" },
+  agent_step_skipped: { label: "Agent step skipped", tone: "neutral" },
+  agent_step_waiting: { label: "Waiting for a person", tone: "warning" },
 };
+
+const STEP_LABELS: Record<string, string> = {
+  intake_and_deduplicate: "Intake and de-duplication",
+  coordinator: "Coordinator",
+  graph_context_retrieval: "Graph context retrieval",
+  memory_retrieval: "Memory retrieval",
+  live_evidence_retrieval: "Live evidence retrieval",
+  fan_in: "Fan-in",
+  investigator: "Investigator",
+  evidence_safety_gate: "Evidence safety gate",
+  human_review: "Human review",
+};
+
+/**
+ * Orchestrator step events as timeline rows. "started" events are dropped: each step's closing event
+ * already carries what happened, and showing both doubles the length of the timeline.
+ */
+export function runEventsToTimeline(events: readonly AgentEventOut[] | null | undefined): RecordedTimelineEvent[] {
+  return (events ?? [])
+    .filter((e) => e.status !== "started")
+    .map((e) => {
+      const step = STEP_LABELS[e.kind] ?? e.kind.replace(/_/g, " ");
+      return {
+        id: `run:${e.id}`,
+        at: e.at,
+        type: `agent_step_${e.status}`,
+        actor: "orchestrator",
+        summary: e.detail ? `${step}: ${e.detail}` : step,
+      };
+    });
+}
 
 export function describeEventType(type: string): { label: string; tone: ActivityEvent["tone"] } {
   return EVENT_LABELS[type] ?? { label: type.replace(/_/g, " "), tone: "neutral" };
@@ -968,8 +1091,9 @@ export function buildInvestigationView(args: {
   bundle: RetrievalBundle | null;
   memories: IncidentMemories | null;
   timeline: readonly RecordedTimelineEvent[];
+  runEvents?: readonly AgentEventOut[] | null;
 }): InvestigationView {
-  const { incident, investigation, bundle, memories, timeline } = args;
+  const { incident, investigation, bundle, memories, timeline, runEvents } = args;
   const stages = deriveStages(incident, investigation);
   return {
     phase: phaseOf(investigation),
@@ -979,7 +1103,7 @@ export function buildInvestigationView(args: {
     headline: deriveHeadline(incident, investigation, stages),
     agents: deriveAgents({ incident, investigation, bundle }),
     findings: deriveFindings(incident, investigation, memories),
-    events: deriveEvents(incident, investigation, timeline),
+    events: deriveEvents(incident, investigation, [...timeline, ...runEventsToTimeline(runEvents)]),
   };
 }
 

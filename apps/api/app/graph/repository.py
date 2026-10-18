@@ -176,6 +176,14 @@ class GraphRepository:
         return self._read_dicts(load_query("sessions_by_status"), {"statuses": list(statuses),
                                                                     "limit": _bounded(limit)})
 
+    def transition_action(self, action_id: str, *, from_status: str, to_status: str, version: int,
+                          now_ms: int) -> bool:
+        """Atomic AgentAction status change (compare-and-set). True only for the winner."""
+        schema.check_props("AgentAction", {"status": to_status}, partial=True)
+        return bool(self._write(load_query("transition_action"), {
+            "id": schema.check_id(action_id), "from_status": from_status, "to_status": to_status,
+            "version": version, "now_ms": now_ms}))
+
     def session_actions(self, session_id: str) -> list[dict]:
         rows = self._read_dicts(load_query("session_actions"), {"session_id": schema.check_id(session_id)})
         for row in rows:

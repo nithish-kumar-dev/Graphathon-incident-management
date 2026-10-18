@@ -147,6 +147,18 @@ class RetrievalBundle(_Out):
     data_classification: Literal["synthetic"] = "synthetic"
 
 
+class RunRetrieval(_Out):
+    """The retrieval context one investigation run actually used (completed branches only), as persisted when the
+    run finished. Branches that did not complete are null."""
+    investigation_id: str
+    incident_id: str
+    as_of: datetime | None = None
+    graph_context: GraphContext | None = None
+    memory_context: MemoryContext | None = None
+    knowledge_context: KnowledgeContext | None = None
+    data_classification: Literal["synthetic"] = "synthetic"
+
+
 # =============================================================================================
 def retrieve(ctx: ToolContext, incident_id: str, *, embedder: Embedder | None,
              allowed_classifications: frozenset[str], limits: Limits | None = None) -> RetrievalBundle:

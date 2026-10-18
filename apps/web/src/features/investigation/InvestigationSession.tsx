@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useApi, type ApiError } from "../../api/client";
-import type { DemoUser, IncidentDetail, IncidentMemories, RetrievalBundle } from "../../api/types";
+import type { AgentEventOut, DemoUser, IncidentDetail, IncidentMemories, RetrievalBundle } from "../../api/types";
 import { useAsync } from "../../hooks/useAsync";
 import { useIncidentInvestigation, type IncidentInvestigationState } from "../../hooks/useIncidentInvestigation";
 import { buildInvestigationView, type InvestigationView } from "./model";
@@ -8,7 +8,8 @@ import { buildInvestigationView, type InvestigationView } from "./model";
 /**
  * One shared, live picture of an incident for every tab. It composes the existing polling hook with
  * the timeline, retrieval snapshot and memories, and refreshes the slower reads when the run's
- * status or branch states change (the backend has no event stream). Nothing here invents data: each
+ * status, branch states or action states change, and polls the run's step events while it is active
+ * (the backend has no event stream, only polling). Nothing here invents data: each
  * field is either what an endpoint returned or null.
  */
 export interface InvestigationSession {
@@ -22,6 +23,11 @@ export interface InvestigationSession {
   bundleLoading: boolean;
   memories: IncidentMemories | null;
   memoriesError: ApiError | null;
+  reloadMemories: () => void;
+  /** Orchestrator step events for the current run; empty until the first fetch lands. */
+  runEvents: readonly AgentEventOut[];
+  /** Refetch the run, its timeline, events and memories (e.g. after a review decision). */
+  reloadAll: () => Promise<void>;
   timelineError: ApiError | null;
   timelineLoading: boolean;
   view: InvestigationView;
@@ -51,9 +57,10 @@ export function progressSignature(run: IncidentInvestigationState): string {
   const inv = run.investigation;
   if (!inv) return "none";
   const branches = Object.entries(inv.branches ?? {})
-    .map(([k, v]) => `${k}:${v?.status ?? ""}`)
+    .map(([k, v]) => `${k}:${v?.status ?? ""}:${v?.ended_at ?? ""}`)
     .join(",");
-  return `${inv.id}|${inv.status}|${branches}`;
+  const actions = (inv.proposed_actions ?? []).map((a) => `${a.id}:${a.status}`).join(",");
+  return `${inv.id}|${inv.status}|${branches}|${actions}`;
 }
 
 function useReloadOnChange(signature: string, reload: () => void): void {
@@ -83,8 +90,26 @@ export function InvestigationSessionProvider({ incident, incidentRefreshing, rel
   const retrieval = useAsync((signal) => client.getRetrieval(incident.id, signal), [client, incident.id, user]);
   const memories = useAsync((signal) => client.getMemories(incident.id, { includeUnverified: false }, signal), [client, incident.id, user]);
 
+  const investigationId = run.investigation?.id ?? null;
+  const stepEvents = useAsync(
+    (signal) => (investigationId ? client.getInvestigationEvents(investigationId, signal) : Promise.resolve(null)),
+    [client, investigationId, user],
+  );
+
   const status = run.investigation?.status ?? "none";
-  useReloadOnChange(progressSignature(run), timeline.reload);
+  const active = status === "queued" || status === "running";
+  // Step events (intake, investigator, safety gate...) can happen while the run's status stays "running",
+  // so refetch them on a short interval until the run leaves the active states.
+  const reloadEvents = stepEvents.reload;
+  useEffect(() => {
+    if (!active) return;
+    const id = setInterval(reloadEvents, 2500);
+    return () => clearInterval(id);
+  }, [active, reloadEvents]);
+  useReloadOnChange(progressSignature(run), () => {
+    timeline.reload();
+    reloadEvents();
+  });
   useReloadOnChange(`${run.investigation?.id ?? ""}|${status}`, () => {
     retrieval.reload();
     memories.reload();
@@ -100,9 +125,21 @@ export function InvestigationSessionProvider({ incident, incidentRefreshing, rel
         bundle: retrieval.data,
         memories: memories.data,
         timeline: events ?? [],
+        runEvents: stepEvents.data?.events ?? null,
       }),
-    [incident, run.investigation, retrieval.data, memories.data, events],
+    [incident, run.investigation, retrieval.data, memories.data, events, stepEvents.data],
   );
+
+  const refreshRun = run.refresh;
+  const reloadMemories = memories.reload;
+  const reloadTimeline = timeline.reload;
+  const reloadAll = async () => {
+    await refreshRun();
+    reloadTimeline();
+    reloadEvents();
+    reloadMemories();
+    reloadIncident();
+  };
 
   const value: InvestigationSession = {
     user,
@@ -115,6 +152,9 @@ export function InvestigationSessionProvider({ incident, incidentRefreshing, rel
     bundleLoading: retrieval.loading,
     memories: memories.data,
     memoriesError: memories.error,
+    reloadMemories,
+    runEvents: stepEvents.data?.events ?? [],
+    reloadAll,
     timelineError: timeline.error,
     timelineLoading: timeline.loading,
     view,

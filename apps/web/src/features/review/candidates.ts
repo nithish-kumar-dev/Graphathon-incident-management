@@ -1,9 +1,7 @@
 /** Pure helpers for the Human review tab: candidate previews derived from explanation paths. */
-import type { DemoUser, ExplanationPath, RunbookRef } from "../../api/types";
-import { can, rolesFor } from "../../auth/permissions";
+import type { ExplanationPath, RunbookRef } from "../../api/types";
 
 export const DECISIONS = ["APPROVE", "REJECT", "REQUEST_REVISION", "ESCALATE"] as const;
-export const PHASE5_REASON = "Review API not available until Phase 5 (human-in-the-loop)";
 
 export interface CandidateAction {
   key: string;
@@ -48,17 +46,4 @@ export function requiredRoles(path: ExplanationPath): string[] {
       (path.governing_decisions ?? []).map((d) => d.required_approver_role).filter((r): r is string => Boolean(r)),
     ),
   ];
-}
-
-/** Every reason the decision buttons are disabled for this user. Reason (c) always applies. */
-export function disabledReasons(user: DemoUser, roles: readonly string[]): string[] {
-  const reasons: string[] = [];
-  if (!can(user, "action:review")) {
-    reasons.push(`You are signed in as ${user}, who lacks action:review.`);
-  } else {
-    const held = rolesFor(user);
-    for (const role of roles) if (!held.includes(role)) reasons.push(`Requires ${role}`);
-  }
-  reasons.push(PHASE5_REASON);
-  return reasons;
 }

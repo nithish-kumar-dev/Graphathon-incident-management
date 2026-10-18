@@ -313,6 +313,8 @@ export interface InvestigationIn {
 export interface BranchState {
   status: BranchStatus;
   detail?: string | null;
+  started_at?: IsoDateTime | null;
+  ended_at?: IsoDateTime | null;
 }
 
 export interface FindingOut {
@@ -361,6 +363,93 @@ export interface ProposedActionOut {
   spec_hash: string;
   evidence: EvidenceRef[];
   integrity_warnings?: string[];
+  /** Role the active policy requires to approve this action, or null when no policy applies. */
+  required_approver_role?: string | null;
+  approval_policy_id?: string | null;
+  reviews?: ReviewOut[];
+  /** Set only after a simulated execution. */
+  execution?: ExecutionOut | null;
+}
+
+export const REVIEW_DECISIONS = ["APPROVE", "REJECT", "REQUEST_REVISION", "ESCALATE"] as const;
+export type ReviewDecision = (typeof REVIEW_DECISIONS)[number];
+
+export interface ReviewIn {
+  decision: ReviewDecision;
+  comment?: string | null;
+}
+
+export interface ReviewOut {
+  id: string;
+  decision: ReviewDecision;
+  approver_id: string;
+  approver_handle?: string | null;
+  decided_at: IsoDateTime;
+  expires_at?: IsoDateTime | null;
+  comment?: string | null;
+  spec_hash: string;
+  action_version: number;
+  policy_decision_id?: string | null;
+}
+
+/** Outcome of a SIMULATED execution. Nothing real was changed. */
+export interface ExecutionOut {
+  simulated: true;
+  result: "succeeded" | "failed";
+  ticket?: string | null;
+  executed_at: IsoDateTime;
+  note?: string | null;
+}
+
+export interface ReviewResult {
+  action: ProposedActionOut;
+  review: ReviewOut;
+  investigation_status: InvestigationStatus;
+  /** Draft memory written after a simulated execution; hidden from retrieval until a human validates it. */
+  memory_id?: string | null;
+  message: string;
+}
+
+export interface MemoryReviewOut {
+  id: string;
+  verification_status: string;
+  outcome: string;
+}
+
+export interface InvestigationSummary {
+  id: string;
+  mode: Mode;
+  status: InvestigationStatus;
+  requested_by?: string | null;
+  started_at: IsoDateTime;
+  ended_at?: IsoDateTime | null;
+  revision_count?: number;
+  investigator?: string | null;
+  summary?: string | null;
+  error?: string | null;
+}
+
+export interface InvestigationList {
+  incident_id: string;
+  items: InvestigationSummary[];
+}
+
+export type AgentEventStatus = "started" | "completed" | "failed" | "skipped" | "waiting";
+
+/** One orchestrator step transition. Dedupe by id. */
+export interface AgentEventOut {
+  id: string;
+  kind: string;
+  status: AgentEventStatus;
+  at: IsoDateTime;
+  revision?: number;
+  detail?: string | null;
+}
+
+export interface InvestigationEvents {
+  investigation_id: string;
+  status: InvestigationStatus;
+  events: AgentEventOut[];
 }
 
 export interface InvestigationOut {

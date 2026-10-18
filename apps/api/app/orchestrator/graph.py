@@ -35,6 +35,7 @@ from app.config import Settings
 from app.domain.actions import canonical_json
 from app.graph.client import GraphUnavailable
 from app.graph.repository import GraphRepository, Scope
+from app.orchestrator import events
 from app.orchestrator.dependencies import Dependencies
 from app.orchestrator.persist import notify_channel, persist_outcome
 from app.orchestrator.state import BRANCHES, DECISION_STATUS, InvestigationState
@@ -128,6 +129,24 @@ class RunEnv:
     def remaining_s(self, state: InvestigationState) -> float:
         deadline = state.get("deadline_ms")
         return float("inf") if deadline is None else (deadline - self.deps.clock()) / 1000
+
+
+def _traced(env: RunEnv, name: str, fn: Callable[[InvestigationState], dict]) -> Callable[[InvestigationState], dict]:
+    """Write a `started` and a closing AgentEvent around a node so progress is visible while the run is live."""
+    def node(state: InvestigationState) -> dict:
+        repo, revision = env.repo(state), int(state.get("revision") or 0)
+        events.record(repo, state, name, "started", now_ms=env.deps.clock(), revision=revision)
+        try:
+            update = fn(state)
+        except Exception as exc:
+            detail = str(exc) if isinstance(exc, (RunTimedOut, NotFound)) else f"unexpected {type(exc).__name__}"
+            events.record(repo, state, name, "failed", now_ms=env.deps.clock(), detail=detail, revision=revision)
+            raise
+        status, detail = events.describe(name, state, update)
+        events.record(repo, state, name, status, now_ms=env.deps.clock(), detail=detail, revision=revision)
+        return update
+    node.__name__ = name
+    return node
 
 
 def _guard(env: RunEnv, name: str, fn: Callable[[InvestigationState], dict]) -> Callable[[InvestigationState], dict]:
@@ -357,7 +376,8 @@ def build(env: RunEnv) -> StateGraph:
                      ("investigator", investigator), ("evidence_safety_gate", gate_node),
                      ("human_review", human_review), ("restricted_executor", restricted_executor),
                      ("persist_outcome", persist), ("notify_channel", notify)):
-        g.add_node(name, _guard(env, name, fn) if name not in ("persist_outcome", "notify_channel") else fn)
+        g.add_node(name, _traced(env, name, _guard(env, name, fn))
+                   if name not in ("persist_outcome", "notify_channel") else fn)
     g.add_edge(START, "intake_and_deduplicate")
     g.add_conditional_edges("intake_and_deduplicate", route_intake, ["coordinator", "persist_outcome"])
     for branch in ("graph_context_retrieval", "memory_retrieval", "live_evidence_retrieval"):

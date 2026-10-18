@@ -22,12 +22,12 @@ from types import ModuleType
 from falkordb import FalkorDB, Graph
 
 from app.graph import schema
-from app.graph.migrations import v0001_schema_v1, v0002_hybrid_retrieval
+from app.graph.migrations import v0001_schema_v1, v0002_hybrid_retrieval, v0003_agent_events
 from app.graph.repository import load_query, now_ms
 
 log = logging.getLogger(__name__)
 
-MIGRATIONS: list[ModuleType] = [v0001_schema_v1, v0002_hybrid_retrieval]
+MIGRATIONS: list[ModuleType] = [v0001_schema_v1, v0002_hybrid_retrieval, v0003_agent_events]
 CONSTRAINT_WAIT_S = 30.0
 
 

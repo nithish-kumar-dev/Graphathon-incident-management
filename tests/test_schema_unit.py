@@ -25,8 +25,9 @@ PHASE1_EDGES = [
 def test_thirteen_legacy_labels_plus_new_ones():
     legacy = {"Incident", "Alert", "AgentAction", "Runbook", "Responder", "TimelineEvent", "Service", "Team",
               "Deployment", "Decision", "Document", "AgentSession", "AgentMemory"}
-    # Evidence + ApprovalRecord (Phase 1); DocumentChunk because Phase 3 RAG was selected.
-    assert schema.LABELS == legacy | {"Evidence", "ApprovalRecord", "DocumentChunk"}
+    # Evidence + ApprovalRecord (Phase 1); DocumentChunk because Phase 3 RAG was selected;
+    # AgentEvent (Phase 5) for live run progress.
+    assert schema.LABELS == legacy | {"Evidence", "ApprovalRecord", "DocumentChunk", "AgentEvent"}
 
 
 @pytest.mark.parametrize("edge", PHASE1_EDGES)
@@ -50,7 +51,8 @@ def test_reversed_or_unknown_edges_rejected(edge):
 def test_allowed_edges_are_phase1_plus_approved_additions_only():
     extra = schema.ALLOWED_EDGES - set(PHASE1_EDGES)
     assert extra == {("Incident", "HAS_EVENT", "TimelineEvent"), ("AgentSession", "INVESTIGATES", "Incident"),
-                     ("ApprovalRecord", "DECIDED_BY", "Responder"), ("Document", "HAS_CHUNK", "DocumentChunk")}
+                     ("ApprovalRecord", "DECIDED_BY", "Responder"), ("Document", "HAS_CHUNK", "DocumentChunk"),
+                     ("AgentEvent", "PART_OF", "AgentSession")}
 
 
 def test_props_validation():

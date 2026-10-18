@@ -525,7 +525,11 @@
           "excerpt": "payment v2.4 rolled out 100% at 13:52Z"
         }
       ],
-      "integrity_warnings": []
+      "integrity_warnings": [],
+      "required_approver_role": "approver:payment",
+      "approval_policy_id": "nova.pol.payment.rollback.v2",
+      "reviews": [],
+      "execution": null
     }
   ],
   "integrity_warnings": [],

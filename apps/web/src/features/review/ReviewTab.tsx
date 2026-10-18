@@ -1,7 +1,5 @@
-import { useId, useState } from "react";
 import { useApi } from "../../api/client";
-import type { DemoUser, EvidenceRef, ExplanationPath, FindingOut, InvestigationOut, ProposedActionOut } from "../../api/types";
-import { can, rolesFor } from "../../auth/permissions";
+import type { EvidenceRef, ExplanationPath, FindingOut, InvestigationOut, ProposedActionOut } from "../../api/types";
 import {
   Badge,
   Card,
@@ -17,16 +15,13 @@ import { Code, Field, Fields, UtcTime } from "../activity/ui";
 import { pathForProposal } from "../proposals";
 import type { TabProps } from "../types";
 import {
-  DECISIONS,
   candidateArgs,
   deriveCandidates,
-  disabledReasons,
-  requiredRoles,
   riskFor,
   type CandidateAction,
 } from "./candidates";
 
-export default function ReviewTab({ incident, investigation, user }: TabProps) {
+export default function ReviewTab({ incident, investigation }: TabProps) {
   const paths = incident.explanation_paths ?? [];
   const proposals = investigation?.proposed_actions ?? [];
   const candidates = deriveCandidates(paths);
@@ -35,18 +30,17 @@ export default function ReviewTab({ incident, investigation, user }: TabProps) {
   return (
     <div className="flex flex-col gap-4">
       <p className="rounded-md border border-slate-300 bg-slate-50 p-3 text-sm text-slate-700">
-        <span className="font-semibold">Human review is not live yet.</span>{" "}
+        <span className="font-semibold">Raw proposal details.</span>{" "}
         {proposals.length > 0
-          ? "The proposals below come from the investigation run and have not been executed. The review API arrives in Phase 5, so no decision can be recorded here."
-          : "Candidate actions below are previews derived from graph evidence. Real proposals and the review API arrive in Phase 5, so no decision can be recorded here."}
+          ? "These are the exact proposals from the investigation run. Decisions are recorded in the Human Review section above; nothing can be decided here."
+          : "Candidate actions below are previews derived from graph evidence. Start an investigation to get a real proposal that can be reviewed."}
       </p>
 
       {investigation?.status === "awaiting_review" ? (
         <div role="status" className="rounded-md border border-violet-300 bg-violet-50 p-3 text-sm text-violet-900">
           <p className="font-semibold">Pending your approval</p>
           <p>
-            Investigation <Code>{investigation.id}</Code> is awaiting human review. Decision controls stay disabled until
-            the review API ships.
+            Investigation <Code>{investigation.id}</Code> is awaiting human review. Record the decision in the Human Review section above.
           </p>
         </div>
       ) : null}
@@ -58,7 +52,6 @@ export default function ReviewTab({ incident, investigation, user }: TabProps) {
               <ProposalCard
                 proposal={p}
                 path={pathForProposal(paths, p)}
-                user={user}
                 unconfirmed={unconfirmed}
                 investigation={investigation}
               />
@@ -75,7 +68,7 @@ export default function ReviewTab({ incident, investigation, user }: TabProps) {
         <ul className="flex flex-col gap-4" aria-label="Candidate actions">
           {candidates.map((c) => (
             <li key={c.key}>
-              <CandidateCard candidate={c} user={user} unconfirmed={unconfirmed} investigation={investigation} />
+              <CandidateCard candidate={c} unconfirmed={unconfirmed} investigation={investigation} />
             </li>
           ))}
         </ul>
@@ -86,19 +79,15 @@ export default function ReviewTab({ incident, investigation, user }: TabProps) {
 
 function CandidateCard({
   candidate: c,
-  user,
   unconfirmed,
   investigation,
 }: {
   candidate: CandidateAction;
-  user: DemoUser;
   unconfirmed: FindingOut[];
   investigation: InvestigationOut | null;
 }) {
   const path = c.path;
   const target = path.target_service_id;
-  const roles = requiredRoles(path);
-
   return (
     <Card
       title={
@@ -142,14 +131,13 @@ function CandidateCard({
           <h4 className="mb-1 text-sm font-semibold text-slate-800">Exact arguments</h4>
           <CodeBlock value={candidateArgs(c)} label={`Exact arguments for ${c.actionType}`} />
           <p className="mt-1 text-xs text-slate-600">
-            Preview derived from graph evidence. The canonical proposal, its SHA-256 spec hash and expiry are created
-            server-side in Phase 5.
+            Preview derived from graph evidence. A real proposal with its SHA-256 spec hash is created server-side when
+            an investigation runs.
           </p>
         </div>
 
         <SupportingEvidence evidence={path.evidence} empty="No evidence attached to this path." />
         <UnconfirmedFindings investigation={investigation} unconfirmed={unconfirmed} />
-        <DecisionControls user={user} roles={roles} actionType={c.actionType} />
       </div>
     </Card>
   );
@@ -159,17 +147,14 @@ function CandidateCard({
 function ProposalCard({
   proposal: p,
   path,
-  user,
   unconfirmed,
   investigation,
 }: {
   proposal: ProposedActionOut;
   path: ExplanationPath | undefined;
-  user: DemoUser;
   unconfirmed: FindingOut[];
   investigation: InvestigationOut | null;
 }) {
-  const roles = path ? requiredRoles(path) : [];
   const runbook = path?.runbooks.find((r) => r.id === p.runbook_id);
   return (
     <Card
@@ -229,13 +214,12 @@ function ProposalCard({
           <h4 className="mt-3 mb-1 text-sm font-semibold text-slate-800">Spec hash (SHA-256)</h4>
           <CodeBlock inline value={p.spec_hash} label="Spec hash" className="[overflow-wrap:anywhere]" />
           <p className="mt-1 text-xs text-slate-600">
-            An approval binds to this exact spec and hash. Recording a decision needs the Phase 5 review API.
+            An approval binds to this exact spec and hash.
           </p>
         </div>
 
         <SupportingEvidence evidence={p.evidence} empty="No evidence attached to this proposal." />
         <UnconfirmedFindings investigation={investigation} unconfirmed={unconfirmed} />
-        <DecisionControls user={user} roles={roles} actionType={p.action_type} />
       </div>
     </Card>
   );
@@ -351,64 +335,5 @@ function OwnerTeam({ serviceId }: { serviceId: string }) {
         </li>
       ))}
     </ul>
-  );
-}
-
-function DecisionControls({ user, roles, actionType }: { user: DemoUser; roles: string[]; actionType: string }) {
-  const [comment, setComment] = useState("");
-  const baseId = useId();
-  const reasonsId = `${baseId}-reasons`;
-  const commentId = `${baseId}-comment`;
-  const reasons = disabledReasons(user, roles);
-  const reviewer = can(user, "action:review");
-  const held = rolesFor(user);
-  const satisfied = reviewer ? roles.filter((r) => held.includes(r)) : [];
-
-  return (
-    <fieldset className="min-w-0 rounded-md border border-slate-200 bg-slate-50 p-3">
-      <legend className="px-1 text-sm font-semibold text-slate-800">Decision for {actionType}</legend>
-      <label htmlFor={commentId} className="block text-sm font-medium text-slate-700">
-        Comment (optional)
-      </label>
-      <textarea
-        id={commentId}
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        maxLength={1000}
-        rows={3}
-        className="mt-1 block w-full rounded-md border border-slate-300 bg-white p-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-        aria-describedby={`${commentId}-count`}
-      />
-      <p id={`${commentId}-count`} className="mt-0.5 text-xs text-slate-500">
-        {comment.length}/1000 characters. Nothing is sent until the review API exists.
-      </p>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {DECISIONS.map((d) => (
-          <button
-            key={d}
-            type="button"
-            className={d === "APPROVE" ? "btn-primary" : "btn-secondary"}
-            disabled
-            aria-disabled="true"
-            aria-describedby={reasonsId}
-          >
-            {d}
-          </button>
-        ))}
-      </div>
-      {satisfied.length > 0 ? (
-        <p className="mt-3 text-sm text-emerald-800">
-          ✓ Role {satisfied.join(", ")} satisfied for {user}.
-        </p>
-      ) : null}
-      <div className="mt-2 text-sm text-slate-800">
-        <p className="font-medium">Why these controls are disabled:</p>
-        <ul id={reasonsId} className="list-disc pl-5">
-          {reasons.map((r) => (
-            <li key={r}>{r}</li>
-          ))}
-        </ul>
-      </div>
-    </fieldset>
   );
 }

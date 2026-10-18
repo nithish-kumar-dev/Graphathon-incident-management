@@ -40,12 +40,13 @@ The table shows required properties first, then the main optional ones. The full
 | AgentAction | proposal_id, version, action_type, spec_json, spec_hash, target_service_id, mode, status | **Each revision is a new node** with the same proposal_id and version+1. spec_hash is the sha256 of canonical JSON |
 | **ApprovalRecord** *(new)* | decision, spec_hash, action_version, approver_id, decided_at_ms | decision APPROVE/REJECT/REQUEST_REVISION/ESCALATE; expires_at_ms; policy_decision_id |
 | AgentMemory | memory_type, verification_status, outcome, summary | episodic/procedural; draft/verified/rejected/superseded; successful/failed/unknown; provenance_refs; validated_at_ms; validation_method human/ground_truth (Phase 3); embedding properties (below) |
+| **AgentEvent** *(Phase 5, migration v0003)* | kind, status, at_ms, revision, detail | One orchestrator step transition (`started` / `completed` / `failed` / `skipped` / `waiting`). Idempotent id; `PART_OF` its AgentSession. Read in causal order by `GET /api/investigations/{id}/events` |
 | SchemaMigration | (written by the migration runner) | version, name, checksum, applied_at_ms. Not tenant-scoped |
 
 **Additive properties (Phase 2, no migration needed):**
 
 - `Alert`: `service_id`, `dedup_count`, `last_fired_at_ms`, `dedup_source_refs` (at most 50)
-- `AgentSession`: `branch_status_json`, `requested_by`, plus the status enum `queued` / `running` / `awaiting_review` / `completed` / `failed` / `escalated` / `inconclusive` / `timed_out`
+- `AgentSession`: `retrieval_json` (Phase 5: the retrieval snapshot used by the run, capped at 400,000 characters), `branch_status_json`, `requested_by`, plus the status enum `queued` / `running` / `awaiting_review` / `completed` / `failed` / `escalated` / `inconclusive` / `timed_out`
 
 `schema_version` stays 1, because older nodes remain valid.
 
@@ -96,6 +97,7 @@ Approved additions (O5):
 (Incident)-[:HAS_EVENT]->(TimelineEvent)
 (AgentSession)-[:INVESTIGATES]->(Incident)
 (ApprovalRecord)-[:DECIDED_BY]->(Responder)
+(AgentEvent)-[:PART_OF]->(AgentSession)          (Phase 5)
 
 Phase 3 addition (approved with RAG):
 (Document)-[:HAS_CHUNK]->(DocumentChunk)

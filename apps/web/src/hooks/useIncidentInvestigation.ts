@@ -16,13 +16,15 @@ export interface IncidentInvestigationState {
   polling: boolean;
   lastUpdated: Date | null;
   start: (mode: Mode) => Promise<void>;
+  /** Fetch the run now (e.g. right after a review decision) instead of waiting for the next poll. */
+  refresh: () => Promise<void>;
   /** Drop the remembered investigation id for this incident. */
   forget: () => void;
 }
 
 /**
- * Current investigation for one incident. There is no "list investigations for an incident" endpoint,
- * so the id lives in state and in localStorage per incident. Mount with `key={incidentId}`.
+ * Current investigation for one incident. The id lives in state and in localStorage per incident
+ * (the run list endpoint is used by the History tab, not here). Mount with `key={incidentId}`.
  */
 export function useIncidentInvestigation(incidentId: string): IncidentInvestigationState {
   const { client, user } = useApi();
@@ -62,6 +64,17 @@ export function useIncidentInvestigation(incidentId: string): IncidentInvestigat
     [client, incidentId],
   );
 
+  const refresh = useCallback(async () => {
+    if (!investigationId) return;
+    try {
+      const fresh = await client.getInvestigation(investigationId);
+      setInitial(fresh);
+      setNonce((n) => n + 1);
+    } catch {
+      // The poll loop will surface a persistent failure; a missed refresh is harmless.
+    }
+  }, [client, investigationId]);
+
   const forget = useCallback(() => {
     writeStorage(STORAGE_KEYS.investigationFor(incidentId), null);
     setInvestigationId(null);
@@ -82,6 +95,7 @@ export function useIncidentInvestigation(incidentId: string): IncidentInvestigat
     polling: polled.polling,
     lastUpdated: polled.lastUpdated,
     start,
+    refresh,
     forget,
   };
 }

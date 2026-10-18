@@ -1,38 +1,41 @@
-import type { ComponentType } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useApi } from "../api/client";
-import { ErrorBanner, SeverityBadge, Spinner, StatusBadge, Tabs, type TabItem } from "../components/ui";
-import ActivityTab from "../features/activity/ActivityTab";
-import EvidenceTab from "../features/evidence/EvidenceTab";
-import MemoryTab from "../features/memory/MemoryTab";
-import OverviewTab from "../features/overview/OverviewTab";
-import ReviewTab from "../features/review/ReviewTab";
-import { TAB_IDS, TAB_LABELS, type TabId, type TabProps } from "../features/types";
+import { ErrorBanner, Spinner, Tabs, type TabItem } from "../components/ui";
+import EvidenceGraphTab from "../features/graph/EvidenceGraphTab";
+import HistoryTab from "../features/history/HistoryTab";
+import { InvestigationSessionProvider, useInvestigationSession } from "../features/investigation/InvestigationSession";
+import LiveInvestigationTab from "../features/investigation/LiveInvestigationTab";
+import { ProcessTracker } from "../features/investigation/ProcessTracker";
+import { summarizeStage, type StageSummary } from "../features/investigation/model";
+import KnowledgeMemoryTab from "../features/knowledge/KnowledgeMemoryTab";
+import { NavProvider } from "../features/NavContext";
+import HumanReviewTab from "../features/review/HumanReviewTab";
+import { TAB_IDS, TAB_LABELS, type TabId } from "../features/types";
 import { useAsync } from "../hooks/useAsync";
-import { useIncidentInvestigation } from "../hooks/useIncidentInvestigation";
-import { InvestigateControls } from "./InvestigateControls";
+import { IncidentHeader } from "./IncidentHeader";
 
-const TAB_COMPONENTS: Record<TabId, ComponentType<TabProps>> = {
-  overview: OverviewTab,
-  evidence: EvidenceTab,
-  activity: ActivityTab,
-  memory: MemoryTab,
-  review: ReviewTab,
+const TAB_CONTENT: Record<TabId, () => ReactNode> = {
+  live: () => <LiveInvestigationTab />,
+  evidence: () => <EvidenceGraphTab />,
+  knowledge: () => <KnowledgeMemoryTab />,
+  review: () => <HumanReviewTab />,
+  history: () => <HistoryTab />,
 };
 
 export interface IncidentWorkspaceProps {
   incidentId: string;
   tab: TabId;
   onTabChange: (tab: TabId) => void;
+  /** Reports the live stage so the incident navigator can show it without extra requests. */
+  onSummaryChange?: (incidentId: string, summary: StageSummary) => void;
 }
 
-/** Mount with `key={incidentId}` so investigation state never leaks between incidents. */
-export function IncidentWorkspace({ incidentId, tab, onTabChange }: IncidentWorkspaceProps) {
+export function IncidentWorkspace({ incidentId, tab, onTabChange, onSummaryChange }: IncidentWorkspaceProps) {
   const { client, user } = useApi();
   const { data: incident, error, loading, reload } = useAsync(
     (signal) => client.getIncident(incidentId, signal),
     [client, incidentId, user],
   );
-  const investigation = useIncidentInvestigation(incidentId);
 
   if (!incident) {
     return (
@@ -43,40 +46,50 @@ export function IncidentWorkspace({ incidentId, tab, onTabChange }: IncidentWork
     );
   }
 
-  const tabProps: TabProps = { incident, investigation: investigation.investigation, user, reloadIncident: reload };
-  const tabs: TabItem<TabId>[] = TAB_IDS.map((id) => {
-    const Component = TAB_COMPONENTS[id];
-    return { id, label: TAB_LABELS[id], content: <Component {...tabProps} /> };
-  });
+  return (
+    <InvestigationSessionProvider key={incident.id} incident={incident} incidentRefreshing={loading} reloadIncident={reload}>
+      <NavProvider value={onTabChange}>
+        <Workspace tab={tab} onTabChange={onTabChange} onSummaryChange={onSummaryChange} />
+      </NavProvider>
+    </InvestigationSessionProvider>
+  );
+}
+
+function Workspace({
+  tab,
+  onTabChange,
+  onSummaryChange,
+}: {
+  tab: TabId;
+  onTabChange: (tab: TabId) => void;
+  onSummaryChange?: (incidentId: string, summary: StageSummary) => void;
+}) {
+  const { incident, run, view, user } = useInvestigationSession();
+
+  const status = run.investigation?.status ?? "none";
+  const stage = view.currentStage;
+  useEffect(() => {
+    onSummaryChange?.(incident.id, summarizeStage(incident, run.investigation));
+    // Only the phase or current stage matters for the navigator.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [incident.id, status, stage]);
+
+  const viewInvestigation = () => {
+    onTabChange("live");
+    setTimeout(() => {
+      const el = document.getElementById("agent-monitor");
+      el?.scrollIntoView?.({ block: "start" });
+      el?.focus();
+    }, 0);
+  };
+
+  const tabs: TabItem<TabId>[] = TAB_IDS.map((id) => ({ id, label: TAB_LABELS[id], content: TAB_CONTENT[id]() }));
 
   return (
-    <div className="flex flex-col gap-4">
-      <header className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-sm font-semibold text-slate-700">{incident.key}</span>
-          <StatusBadge status={incident.status} />
-          <SeverityBadge severity={incident.severity} />
-          {loading ? <Spinner size="sm" label="Refreshing incident" /> : null}
-        </div>
-        <h2 className="text-xl font-semibold text-slate-900">{incident.title}</h2>
-        <p className="text-sm text-slate-700">
-          Affected services:{" "}
-          {incident.affected_services.length > 0
-            ? incident.affected_services.map((s, i) => (
-                <span key={s.id}>
-                  {i > 0 ? ", " : null}
-                  <span className="font-medium">{s.name ?? s.id}</span>{" "}
-                  <code className="font-mono text-xs text-slate-500">{s.id}</code>
-                  {s.tier ? <span className="text-xs text-slate-500"> ({s.tier})</span> : null}
-                </span>
-              ))
-            : "none"}
-        </p>
-        <ErrorBanner error={error} title="Could not refresh incident" onRetry={reload} />
-      </header>
-
-      <InvestigateControls user={user} state={investigation} />
-
+    <div className="flex min-w-0 flex-col gap-4">
+      <IncidentHeader user={user} onViewInvestigation={viewInvestigation} />
+      {/* Above the tabs so progress is visible from every section. */}
+      <ProcessTracker stages={view.stages} compact={tab !== "live"} />
       <Tabs label="Incident sections" tabs={tabs} selectedId={tab} onSelect={onTabChange} />
     </div>
   );

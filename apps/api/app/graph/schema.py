@@ -41,12 +41,18 @@ LABEL_PROPS: dict[str, frozenset[str]] = {
         "findings_json", "branch_status_json", "requested_by",
         # Phase 4 outcome
         "summary", "investigator", "overall_uncertainty", "gate_json", "error",
+        # Phase 5: the retrieval context this run actually used
+        "retrieval_json",
     }),
+    # Phase 5: one row per orchestrator step (written as it happens), so progress is visible mid-run.
+    "AgentEvent": frozenset({"kind", "status", "at_ms", "detail", "revision"}),
     "AgentAction": frozenset({
         "proposal_id", "version", "action_type", "spec_json", "spec_hash", "target_service_id", "risk",
         "mode", "status", "approval_expires_at_ms",
         # Phase 4 proposals
         "deployment_id", "runbook_id", "rationale",
+        # Phase 5: result of the simulated execution
+        "execution_json",
     }),
     "ApprovalRecord": frozenset({
         "decision", "spec_hash", "action_version", "approver_id", "decided_at_ms", "expires_at_ms", "scope",
@@ -83,6 +89,7 @@ REQUIRED_PROPS: dict[str, frozenset[str]] = {
     "Decision": frozenset({"title", "statement", "status", "effective_from_ms"}),
     "Document": frozenset({"title", "doc_type"}),
     "AgentSession": frozenset({"thread_id", "mode", "status", "started_at_ms"}),
+    "AgentEvent": frozenset({"kind", "status", "at_ms"}),
     "AgentAction": frozenset({
         "proposal_id", "version", "action_type", "spec_json", "spec_hash", "target_service_id", "mode", "status",
     }),
@@ -102,6 +109,7 @@ ENUMS: dict[tuple[str, str], frozenset[str]] = {
     ("AgentSession", "status"): frozenset({
         "queued", "running", "awaiting_review", "completed", "failed", "escalated", "inconclusive", "timed_out",
     }),
+    ("AgentEvent", "status"): frozenset({"started", "completed", "failed", "skipped", "waiting"}),
     ("AgentAction", "mode"): frozenset({"recommendation_only", "simulation"}),
     ("AgentAction", "risk"): frozenset({"low", "medium", "high"}),
     ("AgentAction", "status"): frozenset({
@@ -150,6 +158,7 @@ _APPROVED_ADDITIONS = {
     ("AgentSession", "INVESTIGATES", "Incident"),
     ("ApprovalRecord", "DECIDED_BY", "Responder"),
     ("Document", "HAS_CHUNK", "DocumentChunk"),   # Phase 3 hybrid retrieval (approved: RAG selected)
+    ("AgentEvent", "PART_OF", "AgentSession"),    # Phase 5 run progress
 }
 ALLOWED_EDGES = frozenset(_PHASE1_EDGES | _APPROVED_ADDITIONS)
 REL_TYPES = frozenset(rel for _, rel, _ in ALLOWED_EDGES)

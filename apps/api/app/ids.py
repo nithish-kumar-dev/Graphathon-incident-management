@@ -22,7 +22,7 @@ KINDS = {
     "Incident": "inc", "Alert": "alr", "Evidence": "ev", "TimelineEvent": "tl", "Service": "svc",
     "Team": "team", "Responder": "rsp", "Deployment": "dep", "Runbook": "rb", "Decision": "dec",
     "Document": "doc", "AgentSession": "ses", "AgentAction": "act", "ApprovalRecord": "apr", "AgentMemory": "mem",
-    "DocumentChunk": "chunk",
+    "DocumentChunk": "chunk", "AgentEvent": "evt",
 }
 
 
@@ -41,6 +41,8 @@ def _field(kind: str, example: str):
 IncidentIdPath = _path("inc", "nova.inc.101")
 ServiceIdPath = _path("svc", "nova.svc.payment")
 InvestigationIdPath = _path("ses", "nova.ses.092")
+ActionIdPath = _path("act", "nova.act.01k7example.1.v1")
+MemoryIdPath = _path("mem", "nova.mem.092.rollback_success")
 
 IncidentId = _field("inc", "nova.inc.101")
 ServiceId = _field("svc", "nova.svc.checkout")

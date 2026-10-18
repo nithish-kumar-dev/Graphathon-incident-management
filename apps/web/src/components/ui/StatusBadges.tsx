@@ -141,7 +141,10 @@ const PROPOSAL_STATUS: Record<string, BadgeTone> = {
   proposed: "info",
   pending_review: "accent",
   approved: "success",
+  executed_simulated: "success",
   rejected: "danger",
+  revision_requested: "warning",
+  escalated: "warning",
   expired: "neutral",
   superseded: "neutral",
 };

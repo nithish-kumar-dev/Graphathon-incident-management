@@ -35,12 +35,23 @@ Send `X-Demo-User: <user>`. In Swagger, use **Authorize** and the `DemoUser` sch
 | `GET /api/incidents/{id}/retrieval` | Hybrid investigator context: graph + keyword + optional vector (`RetrievalBundle`) | incident:read. Read-only. Still 200 when the embedding provider is down (`steps.vector.status: failed`). See below and `docs/retrieval.md` |
 | `GET /api/services/{id}/context` | Owners and members, `DEPENDS_ON` both ways, decisions in effect, runbooks, recent deployments | `depth` (1–3), `deployment_days` (1–90), `limit` |
 | `POST /api/investigations` | Create an investigation (`AgentSession`, status `queued`) | `mode`: recommendation_only (default) or simulation. 200 returns the existing active run in the same mode; 409 if one is active in another mode, or the incident is resolved |
-| `GET /api/investigations/{id}` | Status, per-branch state (graph / memory / telemetry), findings with `claim_type`, evidence refs | |
+| `GET /api/investigations/{id}` | Status, per-branch state (graph / memory / telemetry, with `started_at` / `ended_at`), findings with `claim_type`, evidence refs, `proposed_actions` | Each action carries `required_approver_role`, `approval_policy_id`, `reviews[]` and, after a simulated execution, `execution` |
+| `GET /api/incidents/{id}/investigations` | Runs for an incident, newest first | `limit` (1–50). Items: id, mode, status, requested_by, started_at, ended_at, revision_count, investigator, summary, error |
+| `GET /api/investigations/{id}/events` | Orchestrator step events in causal order | Clients poll this; there is no SSE. Dedupe by `id`. `status`: started / completed / failed / skipped / waiting |
+| `GET /api/investigations/{id}/retrieval` | The retrieval context the run actually used | 404 `no_snapshot` while the run is live or if none was stored. Not used by the web UI yet |
+| `GET /api/actions/{id}` | One proposed action with its reviews and execution | |
+| `POST /api/actions/{id}/review` | Record a human decision: `{decision: APPROVE\|REJECT\|REQUEST_REVISION\|ESCALATE, comment?}` | Needs `action:review` and the policy's `required_approver_role`. APPROVE on a simulation-mode action runs the **simulated** executor. See below |
+| `POST /api/memories/{id}/validate` | `{outcome: successful\|failed}` verifies the draft memory written by an execution | Needs `action:review`. Only after validation does the memory appear in `GET .../memories` (precedent `supports` / `warns_against`) |
+| `POST /api/memories/{id}/reject` | Discard a draft memory | Needs `action:review` |
 
-Not available yet:
+### Review (Phase 5)
 
-- **`POST /api/actions/{id}/review`** arrives in Phase 5, together with human-in-the-loop review.
-- **Running an investigation** arrives in Phase 4 with the LangGraph orchestrator. Until then investigations stay `queued`.
+- The run ends as `awaiting_review`. The review is a **separate authenticated request** after that, not a LangGraph `interrupt()` and resume. The approval is bound to the action's `spec_hash` and version, so the effect is the same and nothing waits inside a checkpoint.
+- Only `simulation` runs produce a `pending_review` action. A `recommendation_only` run leaves the action `proposed`, and a review returns 409 `recommendation_only`.
+- Errors: 403 `missing_approver_role`, 403 `no_responder_identity`, 409 `action_not_reviewable`, 409 `no_active_policy`, 409 `spec_hash_mismatch`, 404 unknown action.
+- Outcomes: APPROVE then `executed_simulated` (investigation `completed`, a draft memory is written). REJECT then `rejected`. REQUEST_REVISION then `revision_requested`: **no new version is created**; the investigation is `completed` and the user starts a new run. ESCALATE then `escalated` (investigation `escalated`).
+- Execution exists only for `rollback_deployment_simulated` and never touches a real system.
+- New timeline types: `action_approved`, `action_rejected`, `action_revision_requested`, `action_escalated`, `action_executed_simulated`.
 
 ## Explanation paths
 

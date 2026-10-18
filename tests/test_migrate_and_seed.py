@@ -16,7 +16,7 @@ def _edge_count(g) -> int:
 
 def test_migration_rerun_is_noop(db, seeded_graph):
     r = migrate.migrate(db, seeded_graph.name)
-    assert r.applied == [] and r.skipped == [1, 2] and r.created == []
+    assert r.applied == [] and r.skipped == [1, 2, 3] and r.created == []
 
 
 def test_all_unique_constraints_operational(seeded_graph):
@@ -71,7 +71,7 @@ def test_seed_shape(seeded_graph):
     assert nova == len(novacommerce.NODES)
     assert counts["Service"] == 5 + 2          # nova + decoy
     assert counts["Incident"] == 2 + 1
-    assert counts[schema.MIGRATION_LABEL] == len(migrate.MIGRATIONS) == 2
+    assert counts[schema.MIGRATION_LABEL] == len(migrate.MIGRATIONS) == 3
 
 
 def test_seed_is_value_stable(seeded_graph):

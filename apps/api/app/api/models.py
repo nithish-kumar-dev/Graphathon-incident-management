@@ -275,6 +275,9 @@ class InvestigationIn(_In):
 class BranchState(_Out):
     status: BranchStatus
     detail: str | None = None
+    started_at: datetime | None = Field(default=None, description="From the run's AgentEvent rows; null for runs that "
+                                                                  "predate them")
+    ended_at: datetime | None = None
 
 
 class FindingOut(_Out):
@@ -302,8 +305,40 @@ class GateOut(_Out):
     violations: list[ViolationOut] = []
 
 
+ReviewDecision = Literal["APPROVE", "REJECT", "REQUEST_REVISION", "ESCALATE"]
+
+
+class ReviewIn(_In):
+    decision: ReviewDecision
+    comment: str | None = Field(default=None, max_length=1000)
+
+
+class ReviewOut(_Out):
+    """An ApprovalRecord HAS_REVIEW on an AgentAction. An APPROVE is bound to one spec hash and version."""
+    id: str
+    decision: ReviewDecision
+    approver_id: str
+    approver_handle: str | None = None
+    decided_at: datetime
+    expires_at: datetime | None = None
+    comment: str | None = None
+    spec_hash: str
+    action_version: int
+    policy_decision_id: str | None = None
+
+
+class ExecutionOut(_Out):
+    """Outcome of a SIMULATED execution. Nothing here touched a real system."""
+    simulated: Literal[True] = True
+    result: Literal["succeeded", "failed"]
+    ticket: str | None = None
+    executed_at: datetime
+    note: str | None = None
+
+
 class ProposedActionOut(_Out):
-    """An AgentAction PART_OF the investigation. Proposals are never executed in Phase 4."""
+    """An AgentAction PART_OF the investigation. Actions are only ever executed in simulation, after a valid
+    human APPROVE."""
     id: str
     proposal_id: str
     version: int
@@ -318,7 +353,68 @@ class ProposedActionOut(_Out):
     spec: dict
     spec_hash: str
     evidence: list[EvidenceRef]
+    required_approver_role: str | None = Field(default=None, description="From the active Decision governing the "
+                                                                         "target service; null = no policy (fail closed)")
+    approval_policy_id: str | None = None
+    reviews: list[ReviewOut] = []
+    execution: ExecutionOut | None = None
     integrity_warnings: list[str] = []
+
+
+class ReviewResult(_Out):
+    action: ProposedActionOut
+    review: ReviewOut
+    investigation_status: InvestigationStatus
+    memory_id: str | None = Field(default=None, description="Draft memory written after a simulated execution; "
+                                                            "excluded from retrieval until a human validates it")
+    message: str
+
+
+class InvestigationSummary(_Out):
+    id: str
+    mode: Mode
+    status: InvestigationStatus
+    requested_by: str | None = None
+    started_at: datetime
+    ended_at: datetime | None = None
+    revision_count: int = 0
+    investigator: str | None = None
+    summary: str | None = None
+    error: str | None = None
+
+
+class InvestigationList(_Out):
+    incident_id: str
+    items: list[InvestigationSummary]
+
+
+EventStatus = Literal["started", "completed", "failed", "skipped", "waiting"]
+
+
+class AgentEventOut(_Out):
+    """One orchestrator step transition, written as it happened. Idempotent ids: clients dedupe by `id`."""
+    id: str
+    kind: str
+    status: EventStatus
+    at: datetime
+    revision: int = 0
+    detail: str | None = None
+
+
+class InvestigationEvents(_Out):
+    investigation_id: str
+    status: InvestigationStatus
+    events: list[AgentEventOut]
+
+
+class MemoryReviewIn(_In):
+    outcome: Literal["successful", "failed"]
+
+
+class MemoryReviewOut(_Out):
+    id: str
+    verification_status: str
+    outcome: str
 
 
 class InvestigationOut(_Out):

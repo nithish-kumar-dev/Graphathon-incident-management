@@ -81,6 +81,10 @@ Branch rules: each branch has a timeout (`BRANCH_TIMEOUT_S`, default 20 s) and o
 | unexpected exception | `failed` (+ `error`: exception type only) |
 | overall run deadline passed | `timed_out` |
 
+## Step events (Phase 5)
+
+Every node except `persist_outcome` and `notify` is wrapped by `_traced`, which writes `AgentEvent` nodes (`started`, then `completed` / `failed` / `skipped` / `waiting`) through `orchestrator/events.py`. They are best effort and never fail a run. `human_review` records `waiting`, and the run then ends as `awaiting_review`; the decision arrives later through `POST /api/actions/{id}/review` (no `interrupt()`).
+
 ## Revision loop
 
 If the investigator raises `InvestigatorError` (`malformed`, `timeout`, `unavailable`) or the gate returns `revise`, `revision` is incremented, the violation details become `feedback`, and the investigator runs again. The loop is bounded by `MAX_INVESTIGATION_REVISIONS` (default 2): at most 3 investigator attempts. A `revise` at the limit is converted to `recommendation_only` or `inconclusive` as a guard. Persisted as `revision_count` on the session.
