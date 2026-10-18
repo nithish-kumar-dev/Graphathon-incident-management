@@ -1,0 +1,36 @@
+{
+  "id": "nova.ses.01p4failed101",
+  "thread_id": "inv-01p4failed101",
+  "incident_id": "nova.inc.101",
+  "incident_key": "INC-101",
+  "mode": "recommendation_only",
+  "status": "failed",
+  "requested_by": "demo-responder",
+  "started_at": "2026-10-17T14:10:00Z",
+  "ended_at": "2026-10-17T14:11:30Z",
+  "revision_count": 0,
+  "branches": {
+    "graph_context": {
+      "status": "completed",
+      "detail": null
+    },
+    "memory_context": {
+      "status": "completed",
+      "detail": null
+    },
+    "telemetry_context": {
+      "status": "failed",
+      "detail": "investigator unavailable"
+    }
+  },
+  "findings": [],
+  "evidence_refs": [],
+  "integrity_warnings": [],
+  "data_classification": "synthetic",
+  "summary": null,
+  "investigator": "ollama:qwen2.5:7b",
+  "overall_uncertainty": null,
+  "error": "investigator unavailable after 3 attempts",
+  "gate": null,
+  "proposed_actions": []
+}

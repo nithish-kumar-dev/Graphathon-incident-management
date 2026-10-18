@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "nova.inc.101",
+      "key": "INC-101",
+      "title": "Checkout 5xx spike after payment release",
+      "severity": "sev2",
+      "status": "open",
+      "started_at": "2026-10-17T14:05:00Z",
+      "resolved_at": null,
+      "affected_service_ids": [
+        "nova.svc.checkout"
+      ],
+      "alert_count": 2,
+      "data_classification": "synthetic"
+    },
+    {
+      "id": "nova.inc.092",
+      "key": "INC-092",
+      "title": "Checkout 5xx: payment connection pool exhausted",
+      "severity": "sev2",
+      "status": "resolved",
+      "started_at": "2026-08-12T09:20:00Z",
+      "resolved_at": "2026-08-12T10:05:00Z",
+      "affected_service_ids": [
+        "nova.svc.checkout"
+      ],
+      "alert_count": 1,
+      "data_classification": "synthetic"
+    }
+  ],
+  "limit": 50,
+  "offset": 0
+}

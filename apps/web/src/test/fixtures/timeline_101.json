@@ -1,0 +1,29 @@
+{
+  "incident_id": "nova.inc.101",
+  "events": [
+    {
+      "id": "nova.tl.101.1",
+      "at": "2026-10-17T14:04:00Z",
+      "type": "alert_fired",
+      "actor": "monitoring",
+      "summary": "checkout 5xx alert",
+      "ref_id": "nova.alr.101.checkout_5xx"
+    },
+    {
+      "id": "nova.tl.101.2",
+      "at": "2026-10-17T14:05:00Z",
+      "type": "status_change",
+      "actor": "storefront-oncall",
+      "summary": "incident opened",
+      "ref_id": null
+    },
+    {
+      "id": "nova.tl.101.3",
+      "at": "2026-10-17T14:06:00Z",
+      "type": "alert_fired",
+      "actor": "monitoring",
+      "summary": "payment latency alert",
+      "ref_id": "nova.alr.101.payment_latency"
+    }
+  ]
+}

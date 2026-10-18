@@ -1,0 +1,118 @@
+{
+  "service": {
+    "id": "nova.svc.payment",
+    "name": "payment",
+    "tier": "tier1"
+  },
+  "owners": [
+    {
+      "id": "nova.team.payments",
+      "name": "Payments",
+      "members": [
+        {
+          "id": "nova.rsp.payments_lead",
+          "handle": "payments-lead",
+          "roles": [
+            "approver:payment",
+            "oncall:payment"
+          ]
+        },
+        {
+          "id": "nova.rsp.payments_oncall",
+          "handle": "payments-oncall",
+          "roles": [
+            "oncall:payment"
+          ]
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "service": {
+        "id": "nova.svc.auth",
+        "name": "auth",
+        "tier": "tier1"
+      },
+      "depth": 1,
+      "path": [
+        "nova.svc.payment",
+        "nova.svc.auth"
+      ],
+      "rel": "DEPENDS_ON"
+    },
+    {
+      "service": {
+        "id": "nova.svc.ledger",
+        "name": "ledger",
+        "tier": "tier1"
+      },
+      "depth": 1,
+      "path": [
+        "nova.svc.payment",
+        "nova.svc.ledger"
+      ],
+      "rel": "DEPENDS_ON"
+    }
+  ],
+  "dependents": [
+    {
+      "service": {
+        "id": "nova.svc.checkout",
+        "name": "checkout",
+        "tier": "tier1"
+      },
+      "depth": 1,
+      "path": [
+        "nova.svc.checkout",
+        "nova.svc.payment"
+      ],
+      "rel": "DEPENDS_ON"
+    }
+  ],
+  "active_decisions": [
+    {
+      "id": "nova.dec.payment.rollback_v2",
+      "title": "Payment rollback policy v2",
+      "statement": "Payment rollbacks require payments lead approval because ledger reconciliation must be paused.",
+      "status": "active",
+      "effective_from": "2026-06-01T00:00:00Z",
+      "effective_to": null,
+      "required_approver_role": "approver:payment",
+      "documented_in": [
+        {
+          "id": "nova.doc.adr_031",
+          "title": "ADR-031 Payment rollbacks require payments lead approval",
+          "uri": "synthetic://wiki/adr/031",
+          "doc_type": "adr"
+        }
+      ],
+      "supersedes": [
+        "nova.dec.payment.rollback_v1"
+      ]
+    }
+  ],
+  "runbooks": [
+    {
+      "id": "nova.rb.payment.rollback",
+      "title": "Payment service deployment rollback",
+      "version": "3",
+      "uri": "synthetic://runbooks/payment-rollback",
+      "allowed_action_types": [
+        "rollback_deployment_simulated"
+      ]
+    }
+  ],
+  "recent_deployments": [
+    {
+      "id": "nova.dep.payment.v2_4",
+      "version": "v2.4",
+      "deployed_at": "2026-10-17T13:52:00Z",
+      "status": "live",
+      "source_ref": "synthetic://deploys/payment/v2.4"
+    }
+  ],
+  "depth": 2,
+  "as_of": "2026-10-17T15:00:00Z",
+  "data_classification": "synthetic"
+}

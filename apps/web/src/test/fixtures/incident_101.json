@@ -1,0 +1,170 @@
+{
+  "id": "nova.inc.101",
+  "key": "INC-101",
+  "title": "Checkout 5xx spike after payment release",
+  "severity": "sev2",
+  "status": "open",
+  "started_at": "2026-10-17T14:05:00Z",
+  "resolved_at": null,
+  "affected_service_ids": [
+    "nova.svc.checkout"
+  ],
+  "alert_count": 2,
+  "data_classification": "synthetic",
+  "affected_services": [
+    {
+      "id": "nova.svc.checkout",
+      "name": "checkout",
+      "tier": "tier1"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "nova.alr.101.checkout_5xx",
+      "fingerprint": "checkout:http_5xx_rate",
+      "severity": "critical",
+      "fired_at": "2026-10-17T14:04:00Z",
+      "last_fired_at": null,
+      "dedup_count": 0,
+      "summary": "checkout 5xx rate 11% (threshold 2%)",
+      "source_ref": "synthetic://alerts/101-a"
+    },
+    {
+      "id": "nova.alr.101.payment_latency",
+      "fingerprint": "payment:p99_latency",
+      "severity": "warning",
+      "fired_at": "2026-10-17T14:06:00Z",
+      "last_fired_at": null,
+      "dedup_count": 0,
+      "summary": "payment p99 2.8s (threshold 800ms)",
+      "source_ref": "synthetic://alerts/101-b"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "nova.ev.101.deploy",
+      "kind": "deploy_event",
+      "source_ref": "synthetic://deploys/payment/v2.4",
+      "observed_at": "2026-10-17T13:52:00Z",
+      "excerpt": "payment v2.4 rolled out 100% at 13:52Z",
+      "observed_on_service_ids": [
+        "nova.svc.payment"
+      ],
+      "refers_to_deployment_ids": [
+        "nova.dep.payment.v2_4"
+      ]
+    },
+    {
+      "id": "nova.ev.101.checkout_errors",
+      "kind": "metric",
+      "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-10-17T14:04Z",
+      "observed_at": "2026-10-17T14:04:00Z",
+      "excerpt": "checkout 5xx 11%, upstream=payment timeouts",
+      "observed_on_service_ids": [
+        "nova.svc.checkout"
+      ],
+      "refers_to_deployment_ids": []
+    },
+    {
+      "id": "nova.ev.101.payment_latency",
+      "kind": "metric",
+      "source_ref": "synthetic://metrics/payment/p99?t=2026-10-17T14:06Z",
+      "observed_at": "2026-10-17T14:06:00Z",
+      "excerpt": "payment p99 2.8s; db pool wait 2.1s",
+      "observed_on_service_ids": [
+        "nova.svc.payment"
+      ],
+      "refers_to_deployment_ids": []
+    }
+  ],
+  "explanation_paths": [
+    {
+      "kind": "rollback_candidate",
+      "claim_type": "correlated",
+      "summary": "Deployment v2.4 of nova.svc.payment at 2026-10-17T13:52:00+00:00 is referenced by incident evidence nova.ev.101.deploy; nova.svc.payment is reached from nova.svc.checkout via 1 DEPENDS_ON hop(s). Correlation only.",
+      "hops": [
+        {
+          "from_label": "Incident",
+          "from_id": "nova.inc.101",
+          "rel": "AFFECTS",
+          "to_label": "Service",
+          "to_id": "nova.svc.checkout"
+        },
+        {
+          "from_label": "Service",
+          "from_id": "nova.svc.checkout",
+          "rel": "DEPENDS_ON",
+          "to_label": "Service",
+          "to_id": "nova.svc.payment"
+        },
+        {
+          "from_label": "Deployment",
+          "from_id": "nova.dep.payment.v2_4",
+          "rel": "DEPLOYED_TO",
+          "to_label": "Service",
+          "to_id": "nova.svc.payment"
+        },
+        {
+          "from_label": "Incident",
+          "from_id": "nova.inc.101",
+          "rel": "HAS_EVIDENCE",
+          "to_label": "Evidence",
+          "to_id": "nova.ev.101.deploy"
+        },
+        {
+          "from_label": "Evidence",
+          "from_id": "nova.ev.101.deploy",
+          "rel": "REFERS_TO",
+          "to_label": "Deployment",
+          "to_id": "nova.dep.payment.v2_4"
+        }
+      ],
+      "target_service_id": "nova.svc.payment",
+      "deployment": {
+        "id": "nova.dep.payment.v2_4",
+        "version": "v2.4",
+        "deployed_at": "2026-10-17T13:52:00Z",
+        "status": "live",
+        "source_ref": "synthetic://deploys/payment/v2.4"
+      },
+      "evidence": [
+        {
+          "id": "nova.ev.101.deploy",
+          "kind": "deploy_event",
+          "source_ref": "synthetic://deploys/payment/v2.4",
+          "observed_at": "2026-10-17T13:52:00Z",
+          "excerpt": "payment v2.4 rolled out 100% at 13:52Z"
+        }
+      ],
+      "governing_decisions": [
+        {
+          "id": "nova.dec.payment.rollback_v2",
+          "title": "Payment rollback policy v2",
+          "status": "active",
+          "required_approver_role": "approver:payment",
+          "documented_in": [
+            {
+              "id": "nova.doc.adr_031",
+              "title": "ADR-031 Payment rollbacks require payments lead approval",
+              "uri": "synthetic://wiki/adr/031",
+              "doc_type": "adr"
+            }
+          ]
+        }
+      ],
+      "runbooks": [
+        {
+          "id": "nova.rb.payment.rollback",
+          "title": "Payment service deployment rollback",
+          "version": "3",
+          "uri": "synthetic://runbooks/payment-rollback",
+          "allowed_action_types": [
+            "rollback_deployment_simulated"
+          ]
+        }
+      ],
+      "approval_policy": "policy_in_force"
+    }
+  ],
+  "as_of": "2026-10-17T15:00:00Z"
+}

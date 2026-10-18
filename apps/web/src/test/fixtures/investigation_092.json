@@ -1,0 +1,81 @@
+{
+  "id": "nova.ses.092",
+  "thread_id": "seed-thread-nova-092",
+  "incident_id": "nova.inc.092",
+  "incident_key": "INC-092",
+  "mode": "simulation",
+  "status": "completed",
+  "requested_by": null,
+  "started_at": "2026-08-12T09:40:00Z",
+  "ended_at": "2026-08-12T10:05:00Z",
+  "revision_count": 0,
+  "branches": {
+    "graph_context": {
+      "status": "not_recorded",
+      "detail": null
+    },
+    "memory_context": {
+      "status": "not_recorded",
+      "detail": null
+    },
+    "telemetry_context": {
+      "status": "not_recorded",
+      "detail": null
+    }
+  },
+  "findings": [
+    {
+      "claim_type": "confirmed",
+      "statement": "payment v2.3 connection pool regression caused checkout 5xx",
+      "evidence": [
+        {
+          "id": "nova.ev.092.deploy",
+          "kind": "deploy_event",
+          "source_ref": "synthetic://deploys/payment/v2.3",
+          "observed_at": "2026-08-12T09:05:00Z",
+          "excerpt": "payment v2.3 rolled out 100% at 09:05Z"
+        },
+        {
+          "id": "nova.ev.092.checkout_errors",
+          "kind": "metric",
+          "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-08-12T09:18Z",
+          "observed_at": "2026-08-12T09:18:00Z",
+          "excerpt": "checkout 5xx 14%, upstream=payment timeouts"
+        },
+        {
+          "id": "nova.ev.092.recovery",
+          "kind": "metric",
+          "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-08-12T10:00Z",
+          "observed_at": "2026-08-12T10:00:00Z",
+          "excerpt": "checkout 5xx back to 0.3% after payment rollback"
+        }
+      ],
+      "integrity_warnings": []
+    }
+  ],
+  "evidence_refs": [
+    {
+      "id": "nova.ev.092.checkout_errors",
+      "kind": "metric",
+      "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-08-12T09:18Z",
+      "observed_at": "2026-08-12T09:18:00Z",
+      "excerpt": "checkout 5xx 14%, upstream=payment timeouts"
+    },
+    {
+      "id": "nova.ev.092.deploy",
+      "kind": "deploy_event",
+      "source_ref": "synthetic://deploys/payment/v2.3",
+      "observed_at": "2026-08-12T09:05:00Z",
+      "excerpt": "payment v2.3 rolled out 100% at 09:05Z"
+    },
+    {
+      "id": "nova.ev.092.recovery",
+      "kind": "metric",
+      "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-08-12T10:00Z",
+      "observed_at": "2026-08-12T10:00:00Z",
+      "excerpt": "checkout 5xx back to 0.3% after payment rollback"
+    }
+  ],
+  "integrity_warnings": [],
+  "data_classification": "synthetic"
+}

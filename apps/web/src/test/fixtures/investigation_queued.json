@@ -1,0 +1,30 @@
+{
+  "id": "nova.ses.01example",
+  "thread_id": "inv-01example",
+  "incident_id": "nova.inc.101",
+  "incident_key": "INC-101",
+  "mode": "recommendation_only",
+  "status": "queued",
+  "requested_by": "demo-responder",
+  "started_at": "2026-08-12T09:40:00Z",
+  "ended_at": null,
+  "revision_count": 0,
+  "branches": {
+    "graph_context": {
+      "status": "pending",
+      "detail": null
+    },
+    "memory_context": {
+      "status": "pending",
+      "detail": null
+    },
+    "telemetry_context": {
+      "status": "pending",
+      "detail": null
+    }
+  },
+  "findings": [],
+  "evidence_refs": [],
+  "integrity_warnings": [],
+  "data_classification": "synthetic"
+}

@@ -1,0 +1,623 @@
+{
+  "incident_id": "nova.inc.101",
+  "as_of": "2026-10-17T15:00:00Z",
+  "extracted": {
+    "service_ids": [
+      "nova.svc.checkout"
+    ],
+    "service_names": [
+      "checkout"
+    ],
+    "error_terms": [
+      "5xx",
+      "latency",
+      "p99",
+      "pool",
+      "timeouts"
+    ],
+    "query_text": "Checkout 5xx spike after payment release. checkout 5xx rate 11% (threshold 2%) payment p99 2.8s (threshold 800ms) Services: checkout. Signals: 5xx, latency, p99, pool, timeouts."
+  },
+  "graph_context": {
+    "incident": {
+      "id": "nova.inc.101",
+      "key": "INC-101",
+      "title": "Checkout 5xx spike after payment release",
+      "severity": "sev2",
+      "status": "open",
+      "started_at": "2026-10-17T14:05:00Z",
+      "resolved_at": null,
+      "affected_service_ids": [
+        "nova.svc.checkout"
+      ],
+      "alert_count": 2,
+      "data_classification": "synthetic"
+    },
+    "alerts": [
+      {
+        "id": "nova.alr.101.checkout_5xx",
+        "fingerprint": "checkout:http_5xx_rate",
+        "severity": "critical",
+        "fired_at": "2026-10-17T14:04:00Z",
+        "last_fired_at": null,
+        "dedup_count": 0,
+        "summary": "checkout 5xx rate 11% (threshold 2%)",
+        "source_ref": "synthetic://alerts/101-a"
+      },
+      {
+        "id": "nova.alr.101.payment_latency",
+        "fingerprint": "payment:p99_latency",
+        "severity": "warning",
+        "fired_at": "2026-10-17T14:06:00Z",
+        "last_fired_at": null,
+        "dedup_count": 0,
+        "summary": "payment p99 2.8s (threshold 800ms)",
+        "source_ref": "synthetic://alerts/101-b"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "nova.ev.101.deploy",
+        "kind": "deploy_event",
+        "source_ref": "synthetic://deploys/payment/v2.4",
+        "observed_at": "2026-10-17T13:52:00Z",
+        "excerpt": "payment v2.4 rolled out 100% at 13:52Z",
+        "observed_on_service_ids": [
+          "nova.svc.payment"
+        ],
+        "refers_to_deployment_ids": [
+          "nova.dep.payment.v2_4"
+        ]
+      },
+      {
+        "id": "nova.ev.101.checkout_errors",
+        "kind": "metric",
+        "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-10-17T14:04Z",
+        "observed_at": "2026-10-17T14:04:00Z",
+        "excerpt": "checkout 5xx 11%, upstream=payment timeouts",
+        "observed_on_service_ids": [
+          "nova.svc.checkout"
+        ],
+        "refers_to_deployment_ids": []
+      },
+      {
+        "id": "nova.ev.101.payment_latency",
+        "kind": "metric",
+        "source_ref": "synthetic://metrics/payment/p99?t=2026-10-17T14:06Z",
+        "observed_at": "2026-10-17T14:06:00Z",
+        "excerpt": "payment p99 2.8s; db pool wait 2.1s",
+        "observed_on_service_ids": [
+          "nova.svc.payment"
+        ],
+        "refers_to_deployment_ids": []
+      }
+    ],
+    "explanation_paths": [
+      {
+        "kind": "rollback_candidate",
+        "claim_type": "correlated",
+        "summary": "Deployment v2.4 of nova.svc.payment at 2026-10-17T13:52:00+00:00 is referenced by incident evidence nova.ev.101.deploy; nova.svc.payment is reached from nova.svc.checkout via 1 DEPENDS_ON hop(s). Correlation only.",
+        "hops": [
+          {
+            "from_label": "Incident",
+            "from_id": "nova.inc.101",
+            "rel": "AFFECTS",
+            "to_label": "Service",
+            "to_id": "nova.svc.checkout"
+          },
+          {
+            "from_label": "Service",
+            "from_id": "nova.svc.checkout",
+            "rel": "DEPENDS_ON",
+            "to_label": "Service",
+            "to_id": "nova.svc.payment"
+          },
+          {
+            "from_label": "Deployment",
+            "from_id": "nova.dep.payment.v2_4",
+            "rel": "DEPLOYED_TO",
+            "to_label": "Service",
+            "to_id": "nova.svc.payment"
+          },
+          {
+            "from_label": "Incident",
+            "from_id": "nova.inc.101",
+            "rel": "HAS_EVIDENCE",
+            "to_label": "Evidence",
+            "to_id": "nova.ev.101.deploy"
+          },
+          {
+            "from_label": "Evidence",
+            "from_id": "nova.ev.101.deploy",
+            "rel": "REFERS_TO",
+            "to_label": "Deployment",
+            "to_id": "nova.dep.payment.v2_4"
+          }
+        ],
+        "target_service_id": "nova.svc.payment",
+        "deployment": {
+          "id": "nova.dep.payment.v2_4",
+          "version": "v2.4",
+          "deployed_at": "2026-10-17T13:52:00Z",
+          "status": "live",
+          "source_ref": "synthetic://deploys/payment/v2.4"
+        },
+        "evidence": [
+          {
+            "id": "nova.ev.101.deploy",
+            "kind": "deploy_event",
+            "source_ref": "synthetic://deploys/payment/v2.4",
+            "observed_at": "2026-10-17T13:52:00Z",
+            "excerpt": "payment v2.4 rolled out 100% at 13:52Z"
+          }
+        ],
+        "governing_decisions": [
+          {
+            "id": "nova.dec.payment.rollback_v2",
+            "title": "Payment rollback policy v2",
+            "status": "active",
+            "required_approver_role": "approver:payment",
+            "documented_in": [
+              {
+                "id": "nova.doc.adr_031",
+                "title": "ADR-031 Payment rollbacks require payments lead approval",
+                "uri": "synthetic://wiki/adr/031",
+                "doc_type": "adr"
+              }
+            ]
+          }
+        ],
+        "runbooks": [
+          {
+            "id": "nova.rb.payment.rollback",
+            "title": "Payment service deployment rollback",
+            "version": "3",
+            "uri": "synthetic://runbooks/payment-rollback",
+            "allowed_action_types": [
+              "rollback_deployment_simulated"
+            ]
+          }
+        ],
+        "approval_policy": "policy_in_force"
+      }
+    ],
+    "dependencies": {
+      "nova.svc.checkout": [
+        {
+          "service": {
+            "id": "nova.svc.auth",
+            "name": "auth",
+            "tier": "tier1"
+          },
+          "depth": 1,
+          "path": [
+            "nova.svc.checkout",
+            "nova.svc.auth"
+          ],
+          "rel": "DEPENDS_ON"
+        },
+        {
+          "service": {
+            "id": "nova.svc.inventory",
+            "name": "inventory",
+            "tier": "tier2"
+          },
+          "depth": 1,
+          "path": [
+            "nova.svc.checkout",
+            "nova.svc.inventory"
+          ],
+          "rel": "DEPENDS_ON"
+        },
+        {
+          "service": {
+            "id": "nova.svc.payment",
+            "name": "payment",
+            "tier": "tier1"
+          },
+          "depth": 1,
+          "path": [
+            "nova.svc.checkout",
+            "nova.svc.payment"
+          ],
+          "rel": "DEPENDS_ON"
+        },
+        {
+          "service": {
+            "id": "nova.svc.ledger",
+            "name": "ledger",
+            "tier": "tier1"
+          },
+          "depth": 2,
+          "path": [
+            "nova.svc.checkout",
+            "nova.svc.payment",
+            "nova.svc.ledger"
+          ],
+          "rel": "DEPENDS_ON"
+        }
+      ]
+    },
+    "ownership": {
+      "nova.svc.checkout": [
+        {
+          "id": "nova.team.storefront",
+          "name": "Storefront",
+          "members": [
+            {
+              "id": "nova.rsp.storefront_oncall",
+              "handle": "storefront-oncall",
+              "roles": [
+                "oncall:checkout"
+              ]
+            }
+          ]
+        }
+      ],
+      "nova.svc.payment": [
+        {
+          "id": "nova.team.payments",
+          "name": "Payments",
+          "members": [
+            {
+              "id": "nova.rsp.payments_lead",
+              "handle": "payments-lead",
+              "roles": [
+                "approver:payment",
+                "oncall:payment"
+              ]
+            },
+            {
+              "id": "nova.rsp.payments_oncall",
+              "handle": "payments-oncall",
+              "roles": [
+                "oncall:payment"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "decisions": {
+      "nova.svc.checkout": [],
+      "nova.svc.payment": [
+        {
+          "id": "nova.dec.payment.rollback_v2",
+          "title": "Payment rollback policy v2",
+          "statement": "Payment rollbacks require payments lead approval because ledger reconciliation must be paused.",
+          "status": "active",
+          "effective_from": "2026-06-01T00:00:00Z",
+          "effective_to": null,
+          "required_approver_role": "approver:payment",
+          "documented_in": [
+            {
+              "id": "nova.doc.adr_031",
+              "title": "ADR-031 Payment rollbacks require payments lead approval",
+              "uri": "synthetic://wiki/adr/031",
+              "doc_type": "adr"
+            }
+          ],
+          "supersedes": [
+            "nova.dec.payment.rollback_v1"
+          ]
+        }
+      ]
+    },
+    "runbooks": {
+      "nova.svc.checkout": [],
+      "nova.svc.payment": [
+        {
+          "id": "nova.rb.payment.rollback",
+          "title": "Payment service deployment rollback",
+          "version": "3",
+          "uri": "synthetic://runbooks/payment-rollback",
+          "allowed_action_types": [
+            "rollback_deployment_simulated"
+          ]
+        }
+      ]
+    },
+    "recent_deployments": [
+      {
+        "id": "nova.dep.payment.v2_4",
+        "version": "v2.4",
+        "deployed_at": "2026-10-17T13:52:00Z",
+        "status": "live",
+        "source_ref": "synthetic://deploys/payment/v2.4",
+        "service_id": "nova.svc.payment"
+      },
+      {
+        "id": "nova.dep.inventory.v1_9",
+        "version": "v1.9",
+        "deployed_at": "2026-10-16T10:00:00Z",
+        "status": "live",
+        "source_ref": "synthetic://deploys/inventory/v1.9",
+        "service_id": "nova.svc.inventory"
+      }
+    ]
+  },
+  "memory_context": {
+    "items": [
+      {
+        "id": "nova.mem.092.rollback_success",
+        "summary": "Rolling back a payment deployment resolved checkout 5xx caused by payment DB connection pool exhaustion (INC-092).",
+        "memory_type": "episodic",
+        "outcome": "successful",
+        "verification_status": "verified",
+        "validation_method": "human",
+        "about_incident_id": "nova.inc.092",
+        "about_incident_key": "INC-092",
+        "applicability": "shared_service",
+        "precedent": "supports",
+        "shared_service_ids": [
+          "nova.svc.checkout"
+        ],
+        "grounded_in": [
+          {
+            "id": "nova.ev.092.deploy",
+            "kind": "deploy_event",
+            "source_ref": "synthetic://deploys/payment/v2.3",
+            "observed_at": "2026-08-12T09:05:00Z",
+            "excerpt": "payment v2.3 rolled out 100% at 09:05Z"
+          },
+          {
+            "id": "nova.ev.092.recovery",
+            "kind": "metric",
+            "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-08-12T10:00Z",
+            "observed_at": "2026-08-12T10:00:00Z",
+            "excerpt": "checkout 5xx back to 0.3% after payment rollback"
+          }
+        ],
+        "validated_by": [
+          "nova.rsp.payments_lead"
+        ],
+        "derived_from_action_ids": [
+          "nova.act.092.rollback.v1"
+        ],
+        "matched_by": [
+          "graph",
+          "keyword",
+          "vector"
+        ],
+        "score": 0.7784,
+        "components": [
+          {
+            "name": "applicability",
+            "value": 0.3
+          },
+          {
+            "name": "environment",
+            "value": 0.05
+          },
+          {
+            "name": "error_terms",
+            "value": 0.06
+          },
+          {
+            "name": "recency",
+            "value": 0.049
+          },
+          {
+            "name": "verified_outcome",
+            "value": 0.15
+          },
+          {
+            "name": "vector_similarity",
+            "value": 0.1194
+          },
+          {
+            "name": "keyword",
+            "value": 0.05
+          }
+        ],
+        "rationale": [
+          "about INC-092, which also affected nova.svc.checkout",
+          "verified successful outcome (human, by nova.rsp.payments_lead)",
+          "grounded in nova.ev.092.deploy, nova.ev.092.recovery",
+          "shares error terms: 5xx, pool"
+        ]
+      },
+      {
+        "id": "nova.mem.092.restart_failed",
+        "summary": "Restarting checkout pods did not reduce checkout 5xx during INC-092; the fault was upstream in payment.",
+        "memory_type": "episodic",
+        "outcome": "failed",
+        "verification_status": "verified",
+        "validation_method": "human",
+        "about_incident_id": "nova.inc.092",
+        "about_incident_key": "INC-092",
+        "applicability": "shared_service",
+        "precedent": "warns_against",
+        "shared_service_ids": [
+          "nova.svc.checkout"
+        ],
+        "grounded_in": [
+          {
+            "id": "nova.ev.092.restart",
+            "kind": "ticket",
+            "source_ref": "synthetic://tickets/OPS-4411",
+            "observed_at": "2026-08-12T09:35:00Z",
+            "excerpt": "checkout pods restarted 09:31Z; 5xx unchanged at 09:35Z"
+          }
+        ],
+        "validated_by": [
+          "nova.rsp.storefront_oncall"
+        ],
+        "derived_from_action_ids": [],
+        "matched_by": [
+          "graph",
+          "keyword",
+          "vector"
+        ],
+        "score": 0.7099,
+        "components": [
+          {
+            "name": "applicability",
+            "value": 0.3
+          },
+          {
+            "name": "environment",
+            "value": 0.05
+          },
+          {
+            "name": "error_terms",
+            "value": 0.03
+          },
+          {
+            "name": "recency",
+            "value": 0.049
+          },
+          {
+            "name": "verified_outcome",
+            "value": 0.12
+          },
+          {
+            "name": "vector_similarity",
+            "value": 0.1109
+          },
+          {
+            "name": "keyword",
+            "value": 0.05
+          }
+        ],
+        "rationale": [
+          "about INC-092, which also affected nova.svc.checkout",
+          "verified failed outcome (human, by nova.rsp.storefront_oncall)",
+          "grounded in nova.ev.092.restart",
+          "shares error terms: 5xx"
+        ]
+      }
+    ],
+    "excluded": {
+      "draft": 1
+    }
+  },
+  "knowledge_context": {
+    "items": [
+      {
+        "id": "nova.chunk.pm_092.0",
+        "claim_type": "context",
+        "document_id": "nova.doc.pm_092",
+        "document_title": "Postmortem INC-092 payment connection pool exhaustion",
+        "document_classification": "internal",
+        "ordinal": 0,
+        "source_ref": "synthetic://wiki/postmortems/092#chunk-0",
+        "text_excerpt": "Summary: payment v2.3 exhausted its database connection pool. Checkout called payment, timed out and returned HTTP 5xx to customers at a 14 percent rate.\n\nWhat did not help: restarting checkout pods at 09:31Z. The fault was upstream in payment.\n\nResolution: the payments lead approved a rollback of payment to v2.2 at 09:52Z after pausing ledger reconciliation. Checkout 5xx returned to 0.3 percent by 10:00Z.\n\nFollow-up: alert on payment DB pool wait time; review connection pool sizing in every payment release.",
+        "graph_links": [
+          "Document nova.doc.pm_092 -[RELATES_TO]-> Service nova.svc.payment"
+        ],
+        "matched_by": [
+          "graph",
+          "keyword",
+          "vector"
+        ],
+        "score": 0.8721,
+        "components": [
+          {
+            "name": "graph_link",
+            "value": 0.4
+          },
+          {
+            "name": "vector_similarity",
+            "value": 0.2821
+          },
+          {
+            "name": "keyword",
+            "value": 0.15
+          },
+          {
+            "name": "error_terms",
+            "value": 0.04
+          }
+        ],
+        "rationale": [
+          "Document nova.doc.pm_092 -[RELATES_TO]-> Service nova.svc.payment",
+          "vector similarity 0.81"
+        ]
+      },
+      {
+        "id": "nova.chunk.adr_031.0",
+        "claim_type": "context",
+        "document_id": "nova.doc.adr_031",
+        "document_title": "ADR-031 Payment rollbacks require payments lead approval",
+        "document_classification": "internal",
+        "ordinal": 0,
+        "source_ref": "synthetic://wiki/adr/031#chunk-0",
+        "text_excerpt": "Status: active since 2026-06-01. Supersedes ADR-017.\n\nDecision: a rollback of the payment service requires approval from the payments lead (role approver:payment). Ledger reconciliation must be paused before the rollback starts and resumed after error rates return to baseline.\n\nRationale: two rollbacks under ADR-017 left the ledger with duplicate settlement entries.",
+        "graph_links": [
+          "Decision nova.dec.payment.rollback_v2 -[DOCUMENTED_IN]-> Document nova.doc.adr_031",
+          "Document nova.doc.adr_031 -[RELATES_TO]-> Service nova.svc.payment"
+        ],
+        "matched_by": [
+          "graph",
+          "vector"
+        ],
+        "score": 0.6353,
+        "components": [
+          {
+            "name": "graph_link",
+            "value": 0.4
+          },
+          {
+            "name": "vector_similarity",
+            "value": 0.2353
+          }
+        ],
+        "rationale": [
+          "Decision nova.dec.payment.rollback_v2 -[DOCUMENTED_IN]-> Document nova.doc.adr_031",
+          "Document nova.doc.adr_031 -[RELATES_TO]-> Service nova.svc.payment",
+          "vector similarity 0.67"
+        ]
+      },
+      {
+        "id": "nova.chunk.adr_017.0",
+        "claim_type": "context",
+        "document_id": "nova.doc.adr_017",
+        "document_title": "ADR-017 Payment rollbacks by on-call",
+        "document_classification": "internal",
+        "ordinal": 0,
+        "source_ref": "synthetic://wiki/adr/017#chunk-0",
+        "text_excerpt": "Status: superseded by ADR-031 on 2026-06-01.\n\nDecision: the payments on-call engineer may roll back a payment service deployment without further approval when checkout errors rise after a release.\n\nConsequence: fast mitigation, but ledger reconciliation was occasionally left running during rollbacks.",
+        "graph_links": [],
+        "matched_by": [
+          "keyword",
+          "vector"
+        ],
+        "score": 0.385,
+        "components": [
+          {
+            "name": "vector_similarity",
+            "value": 0.235
+          },
+          {
+            "name": "keyword",
+            "value": 0.15
+          }
+        ],
+        "rationale": [
+          "no graph link to this incident's services or policies; text match only",
+          "vector similarity 0.67"
+        ]
+      }
+    ],
+    "excluded": {}
+  },
+  "steps": {
+    "graph": {
+      "status": "completed",
+      "detail": null,
+      "candidates": 5
+    },
+    "keyword": {
+      "status": "completed",
+      "detail": null,
+      "candidates": 5
+    },
+    "vector": {
+      "status": "completed",
+      "detail": null,
+      "candidates": 6
+    }
+  },
+  "embedding_model": "nomic-embed-text",
+  "data_classification": "synthetic"
+}
