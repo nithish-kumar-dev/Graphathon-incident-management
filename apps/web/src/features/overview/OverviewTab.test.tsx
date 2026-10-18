@@ -163,16 +163,16 @@ describe("OverviewTab", () => {
 
 describe("OverviewTab with Phase 4 results", () => {
   const completed = () => clone<InvestigationOut>(fixtures.investigation_completed_101);
-  const TEL = "nova.ev.tel.96886385b4b97b90";
-  const TEL_REF = "synthetic://telemetry/nova.svc.payment/db_pool_wait_ms?t=2026-10-17T14:00:00Z";
+
+  const TEL_REF_OF = (inv: InvestigationOut) => inv.findings[1]!.evidence[0]!;
 
   it("completed run: summary, investigator, gate, findings with confidence, and the real proposal", () => {
     const inv = completed();
     const proposal = inv.proposed_actions![0]!;
+    const observed = TEL_REF_OF(inv);
     renderOverview(incident101(), inv);
 
     expect(screen.getByRole("region", { name: "Investigation summary" })).toHaveTextContent(inv.summary!);
-    expect(screen.getByText(/the deployment link is a correlation; no canary comparison/)).toBeInTheDocument();
     expect(screen.getByTitle("Investigator: stub-v1")).toHaveTextContent("stub-v1");
     expect(screen.getByText("gate: accept")).toBeInTheDocument();
     expect(screen.queryByRole("list", { name: "Gate violations" })).not.toBeInTheDocument();
@@ -180,16 +180,16 @@ describe("OverviewTab with Phase 4 results", () => {
 
     const findings = screen.getByRole("list", { name: "Investigation findings" });
     const items = within(findings).getAllByRole("listitem").filter((li) => li.parentElement === findings);
-    expect(items).toHaveLength(2);
+    expect(items).toHaveLength(inv.findings.length);
     expect(within(items[0]!).getByText("Correlated · not confirmed")).toBeInTheDocument();
-    expect(within(items[0]!).getByText("confidence 70%")).toBeInTheDocument();
-    expect(within(items[0]!).getByText(/No canary or pre-deploy load comparison/)).toBeInTheDocument();
+    expect(within(items[0]!).getByText("confidence 80%")).toBeInTheDocument();
+    expect(within(items[0]!).getByText(/Deployment v2\.4 of payment/)).toBeInTheDocument();
     expect(within(items[0]!).getByText("nova.ev.101.deploy")).toBeInTheDocument();
-    expect(within(items[0]!).getByText(TEL)).toBeInTheDocument();
+    expect(within(items[0]!).getByText(inv.findings[0]!.evidence.find((e) => e.id.startsWith("nova.ev.tel."))!.id)).toBeInTheDocument();
     expect(within(items[0]!).getByText("None recorded.")).toBeInTheDocument();
     expect(within(items[1]!).getByText("Observed")).toBeInTheDocument();
-    expect(within(items[1]!).getByText("confidence 95%")).toBeInTheDocument();
-    expect(within(items[1]!).getByText(TEL_REF)).toBeInTheDocument();
+    expect(within(items[1]!).getByText("confidence 85%")).toBeInTheDocument();
+    expect(within(items[1]!).getByText(observed.source_ref)).toBeInTheDocument();
 
     const actions = screen.getByRole("list", { name: "Proposed actions" });
     expect(within(actions).getByText(proposal.id)).toBeInTheDocument();
@@ -199,14 +199,14 @@ describe("OverviewTab with Phase 4 results", () => {
     expect(within(actions).getByTitle("Proposal status: proposed")).toBeInTheDocument();
     expect(within(actions).getByText("Proposal")).toBeInTheDocument();
     expect(within(actions).getByText(proposal.rationale)).toBeInTheDocument();
-    expect(within(actions).getByRole("list", { name: `Evidence for proposal ${proposal.id}` })).toHaveTextContent(TEL);
+    expect(within(actions).getByRole("list", { name: `Evidence for proposal ${proposal.id}` })).toHaveTextContent(proposal.evidence[0]!.id);
     expect(within(actions).getByText("Requires approver:payment")).toBeInTheDocument();
     // The path-derived preview is replaced by the real proposal.
     expect(screen.queryByText("Preview — derived from graph paths")).not.toBeInTheDocument();
     expect(within(actions).getAllByRole("listitem").filter((li) => li.parentElement === actions)).toHaveLength(1);
     expect(screen.getByText(/Proposal only — execution requires human approval/)).toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
-    expect(document.body.textContent).not.toMatch(/confirmed cause/i);
+    expect(document.body.textContent).not.toMatch(/(?<!not a )confirmed cause/i);
   });
 
   it("falls back to the path-derived preview when the run proposed nothing", () => {
@@ -222,19 +222,19 @@ describe("OverviewTab with Phase 4 results", () => {
     const inv = completed();
     inv.findings[0]!.contradicting_evidence = [
       {
-        id: "nova.ev.101.checkout_errors",
+        id: "nova.ev.tel.contradiction",
         kind: "metric",
-        source_ref: "synthetic://metrics/checkout/http_5xx?t=2026-10-17T14:04Z",
+        source_ref: "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:04Z",
         observed_at: "2026-10-17T14:04:00Z",
         excerpt: null,
       },
     ];
     renderOverview(incident101(), inv);
     const contra = screen.getByRole("list", { name: "Contradicting evidence for finding 1" });
-    expect(within(contra).getByText("nova.ev.101.checkout_errors")).toBeInTheDocument();
-    expect(within(contra).getByText("synthetic://metrics/checkout/http_5xx?t=2026-10-17T14:04Z")).toBeInTheDocument();
+    expect(within(contra).getByText("nova.ev.tel.contradiction")).toBeInTheDocument();
+    expect(within(contra).getByText("synthetic://telemetry/payment/error_rate?t=2026-10-17T14:04Z")).toBeInTheDocument();
     const supporting = screen.getByRole("list", { name: "Evidence for finding 1" });
-    expect(within(supporting).queryByText("nova.ev.101.checkout_errors")).not.toBeInTheDocument();
+    expect(within(supporting).queryByText("nova.ev.tel.contradiction")).not.toBeInTheDocument();
   });
 
   it("escalated run: escalated banner and every gate violation", () => {
@@ -242,14 +242,13 @@ describe("OverviewTab with Phase 4 results", () => {
     renderOverview(incident101(), inv);
     expect(screen.getByTestId("investigation-state")).toHaveTextContent("Escalated to a human");
     expect(screen.getByText("gate: escalate")).toBeInTheDocument();
-    expect(screen.getByTitle("Investigator: ollama:qwen2.5:7b")).toBeInTheDocument();
+    expect(screen.getByTitle("Investigator: stub-v1")).toBeInTheDocument();
     const violations = screen.getByRole("list", { name: "Gate violations" });
     const items = within(violations).getAllByRole("listitem");
-    expect(items).toHaveLength(2);
-    expect(items[0]).toHaveTextContent("action_not_allowed");
+    expect(items).toHaveLength(1);
+    expect(items[0]).toHaveTextContent("unknown_runbook");
     expect(items[0]).toHaveTextContent("proposed_actions[0]");
-    expect(items[0]).toHaveTextContent("run_shell is not an allowed action type");
-    expect(items[1]).toHaveTextContent("revision_limit_reached");
+    expect(items[0]).toHaveTextContent("runbook nova.rb.payment.nonexistent does not exist");
     // No real proposal, so the preview is shown and labelled as such.
     expect(screen.getByText("Preview — derived from graph paths")).toBeInTheDocument();
   });
@@ -257,7 +256,7 @@ describe("OverviewTab with Phase 4 results", () => {
   it("failed run: the error is shown", () => {
     renderOverview(incident101(), clone<InvestigationOut>(fixtures.investigation_failed_101));
     expect(screen.getByTestId("investigation-state")).toHaveTextContent("Failed — the run did not finish");
-    expect(screen.getByRole("alert")).toHaveTextContent("investigator unavailable after 3 attempts");
+    expect(screen.getByRole("alert")).toHaveTextContent("unexpected RuntimeError");
     expect(screen.queryByRole("region", { name: "Investigation summary" })).not.toBeInTheDocument();
   });
 

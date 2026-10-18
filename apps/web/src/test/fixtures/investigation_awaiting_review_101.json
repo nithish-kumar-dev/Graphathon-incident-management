@@ -1,32 +1,32 @@
 {
-  "id": "nova.ses.01p4awaiting101",
-  "thread_id": "inv-01p4awaiting101",
+  "id": "nova.ses.01m5560zc0a73drhwhahzkjrze",
+  "thread_id": "inv-01m5560zc0a73drhwhahzkjrze",
   "incident_id": "nova.inc.101",
   "incident_key": "INC-101",
   "mode": "simulation",
   "status": "awaiting_review",
   "requested_by": "demo-responder",
-  "started_at": "2026-10-17T14:10:00Z",
-  "ended_at": null,
+  "started_at": "2026-10-17T15:00:00Z",
+  "ended_at": "2026-10-17T15:00:00Z",
   "revision_count": 0,
   "branches": {
     "graph_context": {
       "status": "completed",
-      "detail": null
+      "detail": "3 evidence, 1 explanation path(s), 0 knowledge chunk(s)"
     },
     "memory_context": {
       "status": "completed",
-      "detail": null
+      "detail": "2 verified memory item(s); excluded: draft 1"
     },
     "telemetry_context": {
       "status": "completed",
-      "detail": null
+      "detail": "45 observation(s) on nova.svc.checkout, nova.svc.payment"
     }
   },
   "findings": [
     {
       "claim_type": "correlated",
-      "statement": "Payment deployment v2.4 (nova.dep.payment.v2_4) at 13:52Z is followed by rising payment db pool wait and checkout 5xx from 14:04Z.",
+      "statement": "Deployment v2.4 of payment (nova.dep.payment.v2_4, deployed 2026-10-17 13:52Z) correlates with INC-101 (Checkout 5xx spike after payment release); payment is on the DEPENDS_ON path from checkout.",
       "evidence": [
         {
           "id": "nova.ev.101.deploy",
@@ -36,37 +36,280 @@
           "excerpt": "payment v2.4 rolled out 100% at 13:52Z"
         },
         {
-          "id": "nova.ev.tel.96886385b4b97b90",
-          "kind": "telemetry",
-          "source_ref": "synthetic://telemetry/nova.svc.payment/db_pool_wait_ms?t=2026-10-17T14:00:00Z",
-          "observed_at": "2026-10-17T14:00:00Z",
-          "excerpt": "payment db_pool_wait_ms p95 2100 (baseline 40)"
+          "id": "nova.ev.101.checkout_errors",
+          "kind": "metric",
+          "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-10-17T14:04Z",
+          "observed_at": "2026-10-17T14:04:00Z",
+          "excerpt": "checkout 5xx 11%, upstream=payment timeouts"
+        },
+        {
+          "id": "nova.ev.101.payment_latency",
+          "kind": "metric",
+          "source_ref": "synthetic://metrics/payment/p99?t=2026-10-17T14:06Z",
+          "observed_at": "2026-10-17T14:06:00Z",
+          "excerpt": "payment p99 2.8s; db pool wait 2.1s"
+        },
+        {
+          "id": "nova.ev.tel.4f21021b39984881",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T15:00Z"
+        },
+        {
+          "id": "nova.ev.tel.c14f5c42c45c6701",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T15:00Z"
+        },
+        {
+          "id": "nova.ev.tel.b32f27cf2a009ca6",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T15:00Z"
+        },
+        {
+          "id": "nova.ev.tel.f089cd9ce0b70c23",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T15:00Z"
+        },
+        {
+          "id": "nova.ev.tel.c7bebf74f8b70f93",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T15:00Z"
         }
       ],
       "contradicting_evidence": [],
-      "confidence": 0.7,
-      "uncertainty": "No canary or pre-deploy load comparison; the pool wait rise could also come from traffic.",
+      "confidence": 0.8,
+      "uncertainty": "Correlation from timing and the dependency path, not a confirmed cause: 8 supporting and 0 contradicting item(s). A human must confirm. Precedent, not proof: nova.mem.092.rollback_success (INC-092).",
       "integrity_warnings": []
     },
     {
       "claim_type": "observed",
-      "statement": "payment db_pool_wait_ms p95 rose from about 40 ms to 2100 ms by 14:00Z.",
+      "statement": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T15:00Z; anomalous in 4 reading(s) from 2026-10-17 14:15Z.",
       "evidence": [
         {
-          "id": "nova.ev.tel.96886385b4b97b90",
-          "kind": "telemetry",
-          "source_ref": "synthetic://telemetry/nova.svc.payment/db_pool_wait_ms?t=2026-10-17T14:00:00Z",
-          "observed_at": "2026-10-17T14:00:00Z",
-          "excerpt": "payment db_pool_wait_ms p95 2100 (baseline 40)"
+          "id": "nova.ev.tel.3f0aa8495ff8af57",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T14:15Z",
+          "observed_at": "2026-10-17T14:15:00Z",
+          "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T14:15Z"
+        },
+        {
+          "id": "nova.ev.tel.93ec4117f9e13283",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T14:30Z",
+          "observed_at": "2026-10-17T14:30:00Z",
+          "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T14:30Z"
+        },
+        {
+          "id": "nova.ev.tel.96eeed61c63fd6d9",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T14:45Z",
+          "observed_at": "2026-10-17T14:45:00Z",
+          "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T14:45Z"
+        },
+        {
+          "id": "nova.ev.tel.4f21021b39984881",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T15:00Z"
         }
       ],
       "contradicting_evidence": [],
-      "confidence": 0.95,
-      "uncertainty": null,
+      "confidence": 0.85,
+      "uncertainty": "Synthetic telemetry reading. It shows a symptom, not its cause.",
+      "integrity_warnings": []
+    },
+    {
+      "claim_type": "observed",
+      "statement": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T15:00Z; anomalous in 4 reading(s) from 2026-10-17 14:15Z.",
+      "evidence": [
+        {
+          "id": "nova.ev.tel.504a86695103731e",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T14:15Z",
+          "observed_at": "2026-10-17T14:15:00Z",
+          "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T14:15Z"
+        },
+        {
+          "id": "nova.ev.tel.1472147a0d824619",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T14:30Z",
+          "observed_at": "2026-10-17T14:30:00Z",
+          "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T14:30Z"
+        },
+        {
+          "id": "nova.ev.tel.e719665e4eb54819",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T14:45Z",
+          "observed_at": "2026-10-17T14:45:00Z",
+          "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T14:45Z"
+        },
+        {
+          "id": "nova.ev.tel.c14f5c42c45c6701",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T15:00Z"
+        }
+      ],
+      "contradicting_evidence": [],
+      "confidence": 0.85,
+      "uncertainty": "Synthetic telemetry reading. It shows a symptom, not its cause.",
+      "integrity_warnings": []
+    },
+    {
+      "claim_type": "observed",
+      "statement": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T15:00Z; anomalous in 5 reading(s) from 2026-10-17 14:00Z.",
+      "evidence": [
+        {
+          "id": "nova.ev.tel.29ff19d6ae542b08",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T14:00Z",
+          "observed_at": "2026-10-17T14:00:00Z",
+          "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T14:00Z"
+        },
+        {
+          "id": "nova.ev.tel.bd3f6886801d0094",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T14:15Z",
+          "observed_at": "2026-10-17T14:15:00Z",
+          "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T14:15Z"
+        },
+        {
+          "id": "nova.ev.tel.f5cdd26b0a318451",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T14:30Z",
+          "observed_at": "2026-10-17T14:30:00Z",
+          "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T14:30Z"
+        },
+        {
+          "id": "nova.ev.tel.82c2bd4f0b64fc41",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T14:45Z",
+          "observed_at": "2026-10-17T14:45:00Z",
+          "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T14:45Z"
+        },
+        {
+          "id": "nova.ev.tel.b32f27cf2a009ca6",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T15:00Z"
+        }
+      ],
+      "contradicting_evidence": [],
+      "confidence": 0.85,
+      "uncertainty": "Synthetic telemetry reading. It shows a symptom, not its cause.",
+      "integrity_warnings": []
+    },
+    {
+      "claim_type": "observed",
+      "statement": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T15:00Z; anomalous in 5 reading(s) from 2026-10-17 14:00Z.",
+      "evidence": [
+        {
+          "id": "nova.ev.tel.ebeed8ceaef37b32",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:00Z",
+          "observed_at": "2026-10-17T14:00:00Z",
+          "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T14:00Z"
+        },
+        {
+          "id": "nova.ev.tel.d0dfd689051d899f",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:15Z",
+          "observed_at": "2026-10-17T14:15:00Z",
+          "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T14:15Z"
+        },
+        {
+          "id": "nova.ev.tel.cea55c265f99a7c6",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:30Z",
+          "observed_at": "2026-10-17T14:30:00Z",
+          "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T14:30Z"
+        },
+        {
+          "id": "nova.ev.tel.96939dd75ed450e5",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:45Z",
+          "observed_at": "2026-10-17T14:45:00Z",
+          "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T14:45Z"
+        },
+        {
+          "id": "nova.ev.tel.f089cd9ce0b70c23",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T15:00Z"
+        }
+      ],
+      "contradicting_evidence": [],
+      "confidence": 0.85,
+      "uncertainty": "Synthetic telemetry reading. It shows a symptom, not its cause.",
+      "integrity_warnings": []
+    },
+    {
+      "claim_type": "observed",
+      "statement": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T15:00Z; anomalous in 5 reading(s) from 2026-10-17 14:00Z.",
+      "evidence": [
+        {
+          "id": "nova.ev.tel.97fc1952f2e68a7e",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T14:00Z",
+          "observed_at": "2026-10-17T14:00:00Z",
+          "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T14:00Z"
+        },
+        {
+          "id": "nova.ev.tel.f3d916ff1b44a5e3",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T14:15Z",
+          "observed_at": "2026-10-17T14:15:00Z",
+          "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T14:15Z"
+        },
+        {
+          "id": "nova.ev.tel.ab3d64285d4988c9",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T14:30Z",
+          "observed_at": "2026-10-17T14:30:00Z",
+          "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T14:30Z"
+        },
+        {
+          "id": "nova.ev.tel.0f9ee4849b52668c",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T14:45Z",
+          "observed_at": "2026-10-17T14:45:00Z",
+          "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T14:45Z"
+        },
+        {
+          "id": "nova.ev.tel.c7bebf74f8b70f93",
+          "kind": "metric",
+          "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T15:00Z",
+          "observed_at": "2026-10-17T15:00:00Z",
+          "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T15:00Z"
+        }
+      ],
+      "contradicting_evidence": [],
+      "confidence": 0.85,
+      "uncertainty": "Synthetic telemetry reading. It shows a symptom, not its cause.",
       "integrity_warnings": []
     }
   ],
   "evidence_refs": [
+    {
+      "id": "nova.ev.101.checkout_errors",
+      "kind": "metric",
+      "source_ref": "synthetic://metrics/checkout/http_5xx?t=2026-10-17T14:04Z",
+      "observed_at": "2026-10-17T14:04:00Z",
+      "excerpt": "checkout 5xx 11%, upstream=payment timeouts"
+    },
     {
       "id": "nova.ev.101.deploy",
       "kind": "deploy_event",
@@ -75,18 +318,177 @@
       "excerpt": "payment v2.4 rolled out 100% at 13:52Z"
     },
     {
-      "id": "nova.ev.tel.96886385b4b97b90",
-      "kind": "telemetry",
-      "source_ref": "synthetic://telemetry/nova.svc.payment/db_pool_wait_ms?t=2026-10-17T14:00:00Z",
+      "id": "nova.ev.101.payment_latency",
+      "kind": "metric",
+      "source_ref": "synthetic://metrics/payment/p99?t=2026-10-17T14:06Z",
+      "observed_at": "2026-10-17T14:06:00Z",
+      "excerpt": "payment p99 2.8s; db pool wait 2.1s"
+    },
+    {
+      "id": "nova.ev.tel.0f9ee4849b52668c",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T14:45Z",
+      "observed_at": "2026-10-17T14:45:00Z",
+      "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T14:45Z"
+    },
+    {
+      "id": "nova.ev.tel.1472147a0d824619",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T14:30Z",
+      "observed_at": "2026-10-17T14:30:00Z",
+      "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T14:30Z"
+    },
+    {
+      "id": "nova.ev.tel.29ff19d6ae542b08",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T14:00Z",
       "observed_at": "2026-10-17T14:00:00Z",
-      "excerpt": "payment db_pool_wait_ms p95 2100 (baseline 40)"
+      "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T14:00Z"
+    },
+    {
+      "id": "nova.ev.tel.3f0aa8495ff8af57",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T14:15Z",
+      "observed_at": "2026-10-17T14:15:00Z",
+      "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T14:15Z"
+    },
+    {
+      "id": "nova.ev.tel.4f21021b39984881",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T15:00Z",
+      "observed_at": "2026-10-17T15:00:00Z",
+      "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T15:00Z"
+    },
+    {
+      "id": "nova.ev.tel.504a86695103731e",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T14:15Z",
+      "observed_at": "2026-10-17T14:15:00Z",
+      "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T14:15Z"
+    },
+    {
+      "id": "nova.ev.tel.82c2bd4f0b64fc41",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T14:45Z",
+      "observed_at": "2026-10-17T14:45:00Z",
+      "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T14:45Z"
+    },
+    {
+      "id": "nova.ev.tel.93ec4117f9e13283",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T14:30Z",
+      "observed_at": "2026-10-17T14:30:00Z",
+      "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T14:30Z"
+    },
+    {
+      "id": "nova.ev.tel.96939dd75ed450e5",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:45Z",
+      "observed_at": "2026-10-17T14:45:00Z",
+      "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T14:45Z"
+    },
+    {
+      "id": "nova.ev.tel.96eeed61c63fd6d9",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/checkout/http_5xx_rate?t=2026-10-17T14:45Z",
+      "observed_at": "2026-10-17T14:45:00Z",
+      "excerpt": "checkout http_5xx_rate 11% (baseline 0.3%) at 2026-10-17T14:45Z"
+    },
+    {
+      "id": "nova.ev.tel.97fc1952f2e68a7e",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T14:00Z",
+      "observed_at": "2026-10-17T14:00:00Z",
+      "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T14:00Z"
+    },
+    {
+      "id": "nova.ev.tel.ab3d64285d4988c9",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T14:30Z",
+      "observed_at": "2026-10-17T14:30:00Z",
+      "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T14:30Z"
+    },
+    {
+      "id": "nova.ev.tel.b32f27cf2a009ca6",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T15:00Z",
+      "observed_at": "2026-10-17T15:00:00Z",
+      "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T15:00Z"
+    },
+    {
+      "id": "nova.ev.tel.bd3f6886801d0094",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T14:15Z",
+      "observed_at": "2026-10-17T14:15:00Z",
+      "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T14:15Z"
+    },
+    {
+      "id": "nova.ev.tel.c14f5c42c45c6701",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T15:00Z",
+      "observed_at": "2026-10-17T15:00:00Z",
+      "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T15:00Z"
+    },
+    {
+      "id": "nova.ev.tel.c7bebf74f8b70f93",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T15:00Z",
+      "observed_at": "2026-10-17T15:00:00Z",
+      "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T15:00Z"
+    },
+    {
+      "id": "nova.ev.tel.cea55c265f99a7c6",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:30Z",
+      "observed_at": "2026-10-17T14:30:00Z",
+      "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T14:30Z"
+    },
+    {
+      "id": "nova.ev.tel.d0dfd689051d899f",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:15Z",
+      "observed_at": "2026-10-17T14:15:00Z",
+      "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T14:15Z"
+    },
+    {
+      "id": "nova.ev.tel.e719665e4eb54819",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/checkout/upstream_timeout_count?t=2026-10-17T14:45Z",
+      "observed_at": "2026-10-17T14:45:00Z",
+      "excerpt": "checkout upstream_timeout_count 480 (baseline 2) at 2026-10-17T14:45Z"
+    },
+    {
+      "id": "nova.ev.tel.ebeed8ceaef37b32",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T14:00Z",
+      "observed_at": "2026-10-17T14:00:00Z",
+      "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T14:00Z"
+    },
+    {
+      "id": "nova.ev.tel.f089cd9ce0b70c23",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/error_rate?t=2026-10-17T15:00Z",
+      "observed_at": "2026-10-17T15:00:00Z",
+      "excerpt": "payment error_rate 4.5% (baseline 0.2%) at 2026-10-17T15:00Z"
+    },
+    {
+      "id": "nova.ev.tel.f3d916ff1b44a5e3",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/p99_latency_ms?t=2026-10-17T14:15Z",
+      "observed_at": "2026-10-17T14:15:00Z",
+      "excerpt": "payment p99_latency_ms 2800 (baseline 320) at 2026-10-17T14:15Z"
+    },
+    {
+      "id": "nova.ev.tel.f5cdd26b0a318451",
+      "kind": "metric",
+      "source_ref": "synthetic://telemetry/payment/db_pool_wait_ms?t=2026-10-17T14:30Z",
+      "observed_at": "2026-10-17T14:30:00Z",
+      "excerpt": "payment db_pool_wait_ms 2100 (baseline 40) at 2026-10-17T14:30Z"
     }
   ],
-  "integrity_warnings": [],
-  "data_classification": "synthetic",
-  "summary": "Checkout 5xx on INC-101 correlates with payment deployment v2.4 and a rise in payment db pool wait. A simulated rollback of nova.dep.payment.v2_4 is proposed for human review. This is a hypothesis; the cause is not confirmed.",
+  "summary": "INC-101: 1 correlated explanation(s), 5 observation(s). Leading correlation: Deployment v2.4 of payment (nova.dep.payment.v2_4, deployed 2026-10-17 13:52Z) correlates with INC-101 (Checkout 5xx spike after payment release); payment is on the DEPENDS_ON path from checkout. Recommendation only, pending human approval: rollback_deployment_simulated on nova.svc.payment.",
   "investigator": "stub-v1",
-  "overall_uncertainty": "medium: the deployment link is a correlation; no canary comparison is available.",
+  "overall_uncertainty": "Nothing here is confirmed; a human must confirm any cause. Precedent (not proof): nova.mem.092.rollback_success: Rolling back a payment deployment resolved checkout 5xx caused by payment DB connection pool exhaustion (INC-092). Do not repeat: Restarting checkout pods did not reduce checkout 5xx during INC-092; the fault was upstream in payment. (nova.mem.092.restart_failed).",
   "error": null,
   "gate": {
     "decision": "accept",
@@ -94,8 +496,8 @@
   },
   "proposed_actions": [
     {
-      "id": "nova.act.01p4inc101rollback.v1",
-      "proposal_id": "nova.prop.01p4inc101rollback",
+      "id": "nova.act.01m5560zc0a73drhwhahzkjrze.1.v1",
+      "proposal_id": "nova.prop.01m5560zc0a73drhwhahzkjrze.1",
       "version": 1,
       "action_type": "rollback_deployment_simulated",
       "status": "pending_review",
@@ -104,14 +506,14 @@
       "deployment_id": "nova.dep.payment.v2_4",
       "runbook_id": "nova.rb.payment.rollback",
       "risk": "medium",
-      "rationale": "Roll back payment v2.4 (simulated) per runbook nova.rb.payment.rollback: the deployment correlates with the db pool wait rise and checkout 5xx. Correlation only; the cause is not confirmed.",
+      "rationale": "Recommend rollback deployment simulated of payment v2.4 per runbook nova.rb.payment.rollback (Payment service deployment rollback); pending human approval under policy in force.",
       "spec": {
         "action_type": "rollback_deployment_simulated",
-        "tenant_id": "nova",
-        "env": "prod",
-        "service_id": "nova.svc.payment",
         "deployment_id": "nova.dep.payment.v2_4",
-        "runbook_id": "nova.rb.payment.rollback"
+        "env": "prod",
+        "runbook_id": "nova.rb.payment.rollback",
+        "service_id": "nova.svc.payment",
+        "tenant_id": "nova"
       },
       "spec_hash": "efa9151799087f32bd378abafa54a28e22cdfcee9e2a0123e7356a1333785f3d",
       "evidence": [
@@ -121,15 +523,11 @@
           "source_ref": "synthetic://deploys/payment/v2.4",
           "observed_at": "2026-10-17T13:52:00Z",
           "excerpt": "payment v2.4 rolled out 100% at 13:52Z"
-        },
-        {
-          "id": "nova.ev.tel.96886385b4b97b90",
-          "kind": "telemetry",
-          "source_ref": "synthetic://telemetry/nova.svc.payment/db_pool_wait_ms?t=2026-10-17T14:00:00Z",
-          "observed_at": "2026-10-17T14:00:00Z",
-          "excerpt": "payment db_pool_wait_ms p95 2100 (baseline 40)"
         }
-      ]
+      ],
+      "integrity_warnings": []
     }
-  ]
+  ],
+  "integrity_warnings": [],
+  "data_classification": "synthetic"
 }

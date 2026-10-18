@@ -161,11 +161,11 @@ describe("ActivityTab", () => {
   it("shows the investigator, gate decision, violations and revision count of a Phase 4 run", async () => {
     installMockApi();
     renderTab({ investigation: clone<InvestigationOut>(fixtures.investigation_escalated_101) });
-    expect(screen.getByTitle("Investigator: ollama:qwen2.5:7b")).toBeInTheDocument();
+    expect(screen.getByTitle("Investigator: stub-v1")).toBeInTheDocument();
     expect(screen.getByText("gate: escalate")).toBeInTheDocument();
     const violations = screen.getByRole("list", { name: "Gate violations (activity)" });
-    expect(violations).toHaveTextContent("action_not_allowed");
-    expect(violations).toHaveTextContent("run_shell is not an allowed action type");
+    expect(violations).toHaveTextContent("unknown_runbook");
+    expect(violations).toHaveTextContent("runbook nova.rb.payment.nonexistent does not exist");
     expect(screen.getByText("Revisions").nextElementSibling).toHaveTextContent("2");
     expect(screen.queryByText("Error")).not.toBeInTheDocument();
     await screen.findByRole("table", { name: "Retrieval steps" });
@@ -176,7 +176,7 @@ describe("ActivityTab", () => {
     const inv = clone<InvestigationOut>(fixtures.investigation_failed_101);
     inv.investigator = "stub-fallback(ollama timeout)";
     renderTab({ investigation: inv });
-    expect(screen.getByText("Error").nextElementSibling).toHaveTextContent("investigator unavailable after 3 attempts");
+    expect(screen.getByText("Error").nextElementSibling).toHaveTextContent("unexpected RuntimeError");
     expect(screen.getByText("stub-fallback(ollama timeout)")).toHaveAttribute("title", expect.stringMatching(/^Fallback/));
     expect(screen.getByText("Gate decision").nextElementSibling).toHaveTextContent("not recorded");
     await screen.findByRole("table", { name: "Retrieval steps" });

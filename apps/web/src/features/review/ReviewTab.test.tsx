@@ -192,7 +192,7 @@ describe("ReviewTab", () => {
     });
     expect(screen.getByLabelText("Spec hash").textContent).toBe(proposal.spec_hash);
     expect(proposal.spec_hash).toMatch(/^[0-9a-f]{64}$/);
-    expect(within(proposals).getByText("nova.ev.tel.96886385b4b97b90")).toBeInTheDocument();
+    expect(within(proposals).getByText(proposal.evidence[0]!.id)).toBeInTheDocument();
     expect(screen.getByText("Payment service deployment rollback")).toBeInTheDocument();
     expect(screen.getByText(/Role approver:payment satisfied for payments-lead/)).toBeInTheDocument();
 

@@ -360,6 +360,7 @@ export interface ProposedActionOut {
   spec: Record<string, unknown>;
   spec_hash: string;
   evidence: EvidenceRef[];
+  integrity_warnings?: string[];
 }
 
 export interface InvestigationOut {
