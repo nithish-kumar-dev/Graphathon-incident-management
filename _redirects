@@ -1,3 +1,3 @@
-/api/*     https://graph-sentinal-graphhacks-19.onrender.com/api/:splat   200
-/healthz   https://graph-sentinal-graphhacks-19.onrender.com/healthz      200
-/readyz    https://graph-sentinal-graphhacks-19.onrender.com/readyz       200
+/api/*     https://graphathon-incident-management.onrender.com/api/:splat   200
+/healthz   https://graphathon-incident-management.onrender.com/healthz      200
+/readyz    https://graphathon-incident-management.onrender.com/readyz       200

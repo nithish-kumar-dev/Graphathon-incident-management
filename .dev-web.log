@@ -1916,3 +1916,4 @@ Error: connect ECONNREFUSED 127.0.0.1:8001
 11:35:05 PM [vite] (client) hmr update /src/layout/IncidentList.tsx, /src/index.css
 11:37:57 PM [vite] (client) page reload src/App.test.tsx
 11:37:57 PM [vite] (client) page reload src/App.test.tsx
+10:23:35 AM [vite] (client) page reload public/_redirects

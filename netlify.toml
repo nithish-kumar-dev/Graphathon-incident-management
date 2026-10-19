@@ -10,18 +10,18 @@
 # Replace the host with your Render service URL.
 [[redirects]]
   from = "/api/*"
-  to = "https://graph-sentinal-graphhacks-19.onrender.com/api/:splat"
+  to = "https://graphathon-incident-management.onrender.com/api/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "/healthz"
-  to = "https://graph-sentinal-graphhacks-19.onrender.com/healthz"
+  to = "https://graphathon-incident-management.onrender.com/healthz"
   status = 200
   force = true
 
 [[redirects]]
   from = "/readyz"
-  to = "https://graph-sentinal-graphhacks-19.onrender.com/readyz"
+  to = "https://graphathon-incident-management.onrender.com/readyz"
   status = 200
   force = true
