@@ -48,9 +48,9 @@ function NoRunView() {
             actions={<span className="inline-flex rounded-full bg-surface-muted px-2.5 py-1 text-[11px] font-semibold text-muted ring-1 ring-inset ring-line">Not started</span>}
           >
             <p className="text-sm text-muted">No agent run is selected for this incident. Existing evidence and response history remain available.</p>
-            {resolved ? <p className="mt-1.5 text-sm text-muted">Starting a new run will investigate this already-resolved incident using available records.</p> : null}
           </SectionCard>
 
+          {!resolved ? (
           <SectionCard
             title="Investigate this incident"
             headingLevel={3}
@@ -98,6 +98,7 @@ function NoRunView() {
               <p className="text-xs text-faint">Recommendation-only mode · nothing here can change production systems</p>
             </div>
           </SectionCard>
+          ) : null}
         </div>
 
         <SectionCard title="Recorded incident timeline" subtitle="Response events · not agent activity" headingLevel={3} className="min-w-0 xl:self-start">

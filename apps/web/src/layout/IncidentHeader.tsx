@@ -56,6 +56,9 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
   const action = primaryActionFor(view.phase);
   const others = incident.affected_services.length > 1 ? incident.affected_services.length - 1 : 0;
   const needsPermission = action.kind !== "view";
+  // The API rejects new runs on resolved incidents (409 incident_resolved), so offer none; a run already in progress can still be resumed or viewed.
+  const resolved = incident.status === "resolved";
+  const showControls = !resolved || action.kind !== "start";
   // The tracker is paced, so the backend can be finished while the user still sees the run moving.
   // Offering "View investigation" or "Re-investigate" then contradicts what is on screen.
   const catchingUp = !displaySettled;
@@ -100,8 +103,11 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
           />
         </div>
 
+        {showControls ? (
         <div className="flex min-w-0 flex-col gap-1.5">
           <div className="flex flex-wrap items-center gap-2">
+            {!resolved ? (
+              <>
             <label htmlFor={selectId} className="sr-only">
               Mode
             </label>
@@ -118,6 +124,8 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
                 </option>
               ))}
             </select>
+              </>
+            ) : null}
             {/* The wrapper carries the tooltip: disabled buttons do not get hover events in every browser. */}
             <span title={needsPermission ? reason : undefined} className="inline-flex">
               <button
@@ -132,7 +140,7 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
                 {run.starting ? "Starting…" : catchingUp ? "Investigating…" : action.label}
               </button>
             </span>
-            {action.kind === "view" && !catchingUp ? (
+            {action.kind === "view" && !catchingUp && !resolved ? (
               <span title={reason} className="inline-flex">
                 <button type="button" className="btn-secondary" disabled={!allowed || busy} onClick={() => void run.start(mode)}>
                   Re-investigate
@@ -140,8 +148,11 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
               </span>
             ) : null}
           </div>
-          <p className="max-w-md text-xs leading-snug text-muted">{MODE_HINTS[action.kind === "resume" && inv ? inv.mode : mode]}</p>
+          {!resolved ? (
+            <p className="max-w-md text-xs leading-snug text-muted">{MODE_HINTS[action.kind === "resume" && inv ? inv.mode : mode]}</p>
+          ) : null}
         </div>
+        ) : null}
       </div>
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-line pt-3.5">
@@ -168,7 +179,7 @@ export function IncidentHeader({ user, onViewInvestigation }: IncidentHeaderProp
         )}
       </div>
 
-      {reason && needsPermission ? (
+      {reason && needsPermission && showControls ? (
         <p id={helpId} className="text-xs text-muted">
           {reason}
         </p>

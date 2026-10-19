@@ -35,6 +35,9 @@ async def lifespan(app: FastAPI):
     """Starts the in-process orchestrator worker when enabled, and stops it cleanly on shutdown.
     Settings honour a test override of get_settings, so a test client never starts a worker on the dev graph."""
     settings = app.dependency_overrides.get(get_settings, get_settings)()
+    if settings.startup_data != "none":
+        from app.seeds.startup import prepare
+        prepare(settings)   # before the worker, so it never polls a graph that does not exist yet
     worker = None
     if settings.orchestrator_enabled:
         from app.orchestrator.runner import Worker

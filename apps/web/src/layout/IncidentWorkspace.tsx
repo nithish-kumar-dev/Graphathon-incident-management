@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { useApi } from "../api/client";
+import type { IncidentStatus } from "../api/types";
 import { ErrorBanner, Spinner, Tabs, type TabItem } from "../components/ui";
 import EvidenceGraphTab from "../features/graph/EvidenceGraphTab";
 import HistoryTab from "../features/history/HistoryTab";
@@ -30,9 +31,11 @@ export interface IncidentWorkspaceProps {
   onTabChange: (tab: TabId) => void;
   /** Reports the live stage so the incident navigator can show it without extra requests. */
   onSummaryChange?: (incidentId: string, summary: StageSummary) => void;
+  /** Reports the incident's current status (e.g. open -> investigating) so the navigator badge follows it. */
+  onStatusChange?: (incidentId: string, status: IncidentStatus) => void;
 }
 
-export function IncidentWorkspace({ incidentId, refreshKey = 0, tab, onTabChange, onSummaryChange }: IncidentWorkspaceProps) {
+export function IncidentWorkspace({ incidentId, refreshKey = 0, tab, onTabChange, onSummaryChange, onStatusChange }: IncidentWorkspaceProps) {
   const { client, user } = useApi();
   const { data: incident, error, loading, reload } = useAsync(
     (signal) => client.getIncident(incidentId, signal),
@@ -51,7 +54,7 @@ export function IncidentWorkspace({ incidentId, refreshKey = 0, tab, onTabChange
   return (
     <InvestigationSessionProvider key={incident.id} incident={incident} incidentRefreshing={loading} reloadIncident={reload}>
       <NavProvider value={onTabChange}>
-        <Workspace tab={tab} onTabChange={onTabChange} onSummaryChange={onSummaryChange} />
+        <Workspace tab={tab} onTabChange={onTabChange} onSummaryChange={onSummaryChange} onStatusChange={onStatusChange} />
       </NavProvider>
     </InvestigationSessionProvider>
   );
@@ -61,12 +64,19 @@ function Workspace({
   tab,
   onTabChange,
   onSummaryChange,
+  onStatusChange,
 }: {
   tab: TabId;
   onTabChange: (tab: TabId) => void;
   onSummaryChange?: (incidentId: string, summary: StageSummary) => void;
+  onStatusChange?: (incidentId: string, status: IncidentStatus) => void;
 }) {
   const { incident, run, view, user } = useInvestigationSession();
+
+  useEffect(() => {
+    onStatusChange?.(incident.id, incident.status);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [incident.id, incident.status]);
 
   const status = run.investigation?.status ?? "none";
   const stage = view.currentStage;

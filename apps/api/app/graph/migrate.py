@@ -6,7 +6,8 @@
   go into a new migration.
 - Introspective. It creates only the indexes and constraints the server does not already report.
 - Unique constraints are created only after a duplicate check on that label returns zero.
-- A Redis lock stops two runners from migrating the same graph at the same time.
+- A Redis lock stops two runners from migrating the same graph at the same time (skipped on servers
+  that only allow GRAPH.* commands, see `_lock`).
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ from dataclasses import dataclass, field
 from types import ModuleType
 
 from falkordb import FalkorDB, Graph
+from redis.exceptions import NoPermissionError
 
 from app.graph import schema
 from app.graph.migrations import v0001_schema_v1, v0002_hybrid_retrieval, v0003_agent_events
@@ -240,17 +242,29 @@ def _ident(name: str) -> str:
 
 
 class _lock:
+    """Hosted FalkorDB (FalkorDB Cloud) users may only run GRAPH.* commands. There the lock is skipped:
+    migrations are introspective and idempotent, and a deployment runs one API instance."""
+
     def __init__(self, db: FalkorDB, graph_name: str, ttl_s: int = 120) -> None:
         self.conn = db.connection
         self.key = f"graphathon:migration_lock:{graph_name}"
         self.token = secrets.token_hex(8)
         self.ttl_s = ttl_s
+        self.held = False
 
     def __enter__(self) -> None:
-        if not self.conn.set(self.key, self.token, nx=True, ex=self.ttl_s):
+        try:
+            acquired = self.conn.set(self.key, self.token, nx=True, ex=self.ttl_s)
+        except NoPermissionError:
+            log.warning("no permission for SET on this server; migrating %s without a lock", self.key)
+            return
+        if not acquired:
             raise MigrationError(f"another migration holds {self.key}")
+        self.held = True
 
     def __exit__(self, *exc: object) -> None:
+        if not self.held:
+            return
         current = self.conn.get(self.key)
         if current in (self.token, self.token.encode()):
             self.conn.delete(self.key)

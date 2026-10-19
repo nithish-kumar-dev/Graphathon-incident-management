@@ -1,4 +1,5 @@
-"""Seed a synthetic tenant (idempotent, MERGE-only). Never runs at app startup.
+"""Seed a synthetic tenant (idempotent, MERGE-only). At app startup only when STARTUP_DATA=seed|reset
+(app/seeds/startup.py).
 
     .venv/bin/python scripts/seed.py            # NovaCommerce ("nova")
     .venv/bin/python scripts/seed.py --tenant acme

@@ -1869,3 +1869,50 @@
 10:32:33 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
 10:34:47 PM [vite] (client) hmr update /src/index.css
 10:34:56 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+11:15:34 PM [vite] http proxy error: /readyz
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:15:34 PM [vite] http proxy error: /api/incidents?limit=50
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:15:34 PM [vite] http proxy error: /api/demo/controls?incident_id=nova.inc.103
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:15:34 PM [vite] http proxy error: /api/incidents/nova.inc.103
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:15:34 PM [vite] http proxy error: /readyz
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:15:34 PM [vite] http proxy error: /api/incidents?limit=50
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:15:34 PM [vite] http proxy error: /api/demo/controls?incident_id=nova.inc.103
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:15:34 PM [vite] http proxy error: /api/incidents/nova.inc.103
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:15:37 PM [vite] http proxy error: /api/incidents/nova.inc.103
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1637:16)
+11:19:23 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentList.tsx, /src/layout/IncidentHeader.tsx, /src/features/investigation/InvestigationSession.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx
+11:19:23 PM [vite] (client) hmr invalidate /src/layout/IncidentList.tsx Could not Fast Refresh ("stageText" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+11:19:23 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+11:19:23 PM [vite] (client) hmr invalidate /src/features/investigation/InvestigationSession.tsx Could not Fast Refresh ("progressSignature" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+11:19:23 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/graph/EvidenceGraphTab.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/ui.tsx, /src/features/investigation/ActivityTimeline.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+11:19:23 PM [vite] (client) hmr invalidate /src/features/investigation/ui.tsx Could not Fast Refresh ("VISUAL" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+11:19:23 PM [vite] (client) hmr update /src/index.css, /src/layout/IncidentHeader.tsx, /src/features/investigation/ProcessTracker.tsx, /src/features/history/HistoryTab.tsx, /src/features/knowledge/KnowledgeMemoryTab.tsx, /src/features/review/HumanReviewTab.tsx, /src/features/investigation/FindingsPanel.tsx, /src/features/investigation/AgentMonitor.tsx
+11:19:23 PM [vite] (client) hmr invalidate /src/features/investigation/ActivityTimeline.tsx Could not Fast Refresh ("visibleEvents" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+11:19:23 PM [vite] (client) hmr update /src/index.css, /src/features/investigation/LiveInvestigationTab.tsx, /src/features/history/HistoryTab.tsx
+11:19:23 PM [vite] (client) hmr update /src/layout/IncidentHeader.tsx, /src/index.css
+11:19:40 PM [vite] (client) hmr update /src/features/investigation/LiveInvestigationTab.tsx, /src/index.css
+11:20:19 PM [vite] (client) page reload src/App.test.tsx
+11:32:35 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+11:32:35 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+11:32:35 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+11:34:13 PM [vite] (client) hmr update /src/layout/IncidentWorkspace.tsx, /src/index.css
+11:35:05 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+11:35:05 PM [vite] (client) hmr update /src/layout/IncidentList.tsx, /src/index.css
+11:37:57 PM [vite] (client) page reload src/App.test.tsx
+11:37:57 PM [vite] (client) page reload src/App.test.tsx

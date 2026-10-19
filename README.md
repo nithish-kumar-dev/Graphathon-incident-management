@@ -268,6 +268,7 @@ cd apps/web && npm install && npm run dev       # http://127.0.0.1:5173  (proxie
 | `EMBEDDING_PROVIDER` | `ollama` or `none` |
 | `ORCHESTRATOR_ENABLED` | Runs the investigation worker inside the API process (or use `scripts/run_worker.py`) |
 | `DEMO_CONTROLS_ENABLED` | Shows the demo panel that toggles the two key graph edges |
+| `STARTUP_DATA` | `none` (default), `seed` (migrate + seed + index at API start, keeps existing data) or `reset` (also deletes the seeded tenants' nodes first). Use `reset` for a demo deployment that should start clean |
 | `MAX_INVESTIGATION_REVISIONS`, `BRANCH_TIMEOUT_S`, `LLM_TIMEOUT_S` | Agent bounds and timeouts |
 
 > **Note:** an investigation writes to the graph permanently (evidence, session, proposals). Back up first with `scripts/backup_falkordb.sh` if you are using the dev graph.

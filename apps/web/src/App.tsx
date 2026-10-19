@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import type { StageSummary } from "./features/investigation/model";
 import { ApiProvider, type ApiClient } from "./api/client";
-import type { DemoUser } from "./api/types";
+import type { DemoUser, IncidentStatus } from "./api/types";
 import { DEFAULT_DEMO_USER, isDemoUser } from "./auth/permissions";
 import { EmptyState } from "./components/ui";
 import { DemoControlsPanel } from "./layout/DemoControlsPanel";
@@ -30,6 +30,11 @@ export default function App({ client }: AppProps) {
   const onGraphChanged = useCallback(() => setGraphEpoch((n) => n + 1), []);
   const [summaries, setSummaries] = useState<Record<string, StageSummary>>({});
   const onSummaryChange = useCallback((id: string, s: StageSummary) => setSummaries((prev) => ({ ...prev, [id]: s })), []);
+  const [liveStatuses, setLiveStatuses] = useState<Record<string, IncidentStatus>>({});
+  const onStatusChange = useCallback(
+    (id: string, s: IncidentStatus) => setLiveStatuses((prev) => (prev[id] === s ? prev : { ...prev, [id]: s })),
+    [],
+  );
 
   const setUser = useCallback((u: DemoUser) => {
     writeStorage(STORAGE_KEYS.demoUser, u);
@@ -82,6 +87,7 @@ export default function App({ client }: AppProps) {
             <IncidentList
               selectedId={route.incidentId}
               liveSummaries={summaries}
+              liveStatuses={liveStatuses}
               onSelect={(incidentId) => navigate({ incidentId })}
             />
           </aside>
@@ -95,6 +101,7 @@ export default function App({ client }: AppProps) {
                   refreshKey={graphEpoch}
                   tab={route.tab}
                   onSummaryChange={onSummaryChange}
+                  onStatusChange={onStatusChange}
                   onTabChange={(tab) => navigate({ incidentId: route.incidentId, tab })}
                 />
               ) : (

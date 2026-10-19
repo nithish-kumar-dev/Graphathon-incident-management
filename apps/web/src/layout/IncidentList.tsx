@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useApi } from "../api/client";
-import type { IncidentSummary } from "../api/types";
+import type { IncidentStatus, IncidentSummary } from "../api/types";
 import { EmptyState, ErrorBanner, SeverityBadge, Spinner, StatusBadge, cx } from "../components/ui";
 import { STAGE_LABELS, STAGE_STATUS_LABELS, summarizeStage, type StageSummary } from "../features/investigation/model";
 import { useAsync } from "../hooks/useAsync";
@@ -12,6 +12,8 @@ export interface IncidentListProps {
   onSelect: (incidentId: string) => void;
   /** Live stage summaries reported by the open incident workspace. */
   liveSummaries?: Readonly<Record<string, StageSummary>>;
+  /** Newer status than the fetched list has, reported by the open workspace (e.g. open -> investigating). */
+  liveStatuses?: Readonly<Record<string, IncidentStatus>>;
 }
 
 type Scope = "active" | "resolved";
@@ -47,7 +49,7 @@ function useRememberedSummaries(items: readonly IncidentSummary[] | undefined) {
   return summaries;
 }
 
-export function IncidentList({ selectedId, onSelect, liveSummaries }: IncidentListProps) {
+export function IncidentList({ selectedId, onSelect, liveSummaries, liveStatuses }: IncidentListProps) {
   const { client, user } = useApi();
   const { data, error, loading, reload } = useAsync(
     (signal) => client.listIncidents({ limit: 50 }, signal),
@@ -57,12 +59,15 @@ export function IncidentList({ selectedId, onSelect, liveSummaries }: IncidentLi
   const remembered = useRememberedSummaries(data?.items);
 
   const { active, resolved } = useMemo(() => {
-    const items = data?.items ?? [];
+    const items = (data?.items ?? []).map((i) => {
+      const status = liveStatuses?.[i.id];
+      return status && status !== i.status ? { ...i, status } : i;
+    });
     return {
       active: items.filter((i) => i.status !== "resolved"),
       resolved: items.filter((i) => i.status === "resolved"),
     };
-  }, [data]);
+  }, [data, liveStatuses]);
   const shown = scope === "active" ? active : resolved;
 
   return (

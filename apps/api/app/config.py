@@ -59,6 +59,9 @@ class Settings(BaseSettings):
     # Phase 6: demo-only endpoints that flip two graph edges. Off unless a demo environment asks for it.
     demo_controls_enabled: bool = False
 
+    # Graph data prepared when the API starts (app/seeds/startup.py): "none", "seed" or "reset".
+    startup_data: str = "none"
+
     @field_validator("graph_name")
     @classmethod
     def _graph_name(cls, v: str) -> str:
@@ -84,6 +87,13 @@ class Settings(BaseSettings):
     def _llm(cls, v: str) -> str:
         if v not in {"stub", "gemini"}:
             raise ValueError("llm_provider must be 'stub' or 'gemini'")
+        return v
+
+    @field_validator("startup_data")
+    @classmethod
+    def _startup_data(cls, v: str) -> str:
+        if v not in {"none", "seed", "reset"}:
+            raise ValueError("startup_data must be 'none', 'seed' or 'reset'")
         return v
 
     @field_validator("embedding_provider")

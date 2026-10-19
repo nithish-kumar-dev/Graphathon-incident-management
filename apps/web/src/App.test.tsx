@@ -2,7 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import App from "./App";
-import { errorEnvelope, installMockApi } from "./test/mockApi";
+import { errorEnvelope, fixtures, installMockApi } from "./test/mockApi";
 
 describe("App", () => {
   it("renders the synthetic-workspace marker and the incident list from fixtures", async () => {
@@ -74,6 +74,36 @@ describe("App", () => {
     const alert = await screen.findByRole("alert");
     expect(alert).toHaveTextContent("incident_resolved");
     expect(alert).toHaveTextContent("req-409-abcdef");
+  });
+
+  it("offers no way to start an investigation on a resolved incident", async () => {
+    installMockApi();
+    window.localStorage.setItem("graphathon.demoUser", "payments-lead");
+    window.location.hash = "#/incidents/nova.inc.092";
+    render(<App />);
+    expect(await screen.findByText("Incident resolved")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /start investigation/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Re-investigate" })).not.toBeInTheDocument();
+  });
+
+  it("moves the navigator badge from Open to Investigating when a run starts, without a manual refresh", async () => {
+    const api = installMockApi();
+    // The list endpoint stays stale (open); only the incident detail reflects the server-side status change.
+    api.on("GET", "/api/incidents/nova.inc.101", () => ({
+      body: { ...fixtures.incident_101, status: api.requestsTo("POST", "/api/investigations").length > 0 ? "investigating" : "open" },
+    }));
+    window.localStorage.setItem("graphathon.demoUser", "payments-lead");
+    window.location.hash = "#/incidents/nova.inc.101";
+    const user = userEvent.setup();
+    render(<App />);
+
+    const list = await screen.findByRole("list", { name: "Incident list" });
+    const row = () => within(list).getByRole("button", { name: /INC-101/ });
+    expect(within(row()).getByText("Open")).toBeInTheDocument();
+
+    await user.click(await screen.findByRole("button", { name: "Start Investigation" }));
+    await waitFor(() => expect(within(row()).getByText("Investigating")).toBeInTheDocument());
+    expect(within(row()).queryByText("Open")).not.toBeInTheDocument();
   });
 
   it("maps legacy tab hashes to the new sections", async () => {

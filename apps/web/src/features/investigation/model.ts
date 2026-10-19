@@ -442,7 +442,7 @@ export function deriveHeadline(incident: IncidentSummary, inv: InvestigationOut 
   switch (phase) {
     case "none":
       return incident.status === "resolved"
-        ? "This incident is resolved. Start an investigation to re-examine it, or review the stored evidence."
+        ? "This incident is resolved. Review the stored evidence and history."
         : "No investigation started. Start an investigation to see agents retrieve evidence and analyze possible causes.";
     case "queued":
       return "Investigation requested. Waiting for the orchestrator to pick it up.";

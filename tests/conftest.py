@@ -35,7 +35,7 @@ NOW = novacommerce.SEED_AT_MS  # deterministic "now" for time-dependent queries
 @pytest.fixture(scope="session")
 def settings() -> Settings:
     return Settings(_env_file=ROOT / ".env", falkordb_url=TEST_FALKORDB_URL, graph_name=TEST_GRAPH,
-                    tenant_allowlist="nova,acme", orchestrator_enabled=False)
+                    tenant_allowlist="nova,acme", orchestrator_enabled=False, startup_data="none")
 
 
 @pytest.fixture(scope="session")
