@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 
 from app.api.deps import SettingsDep
@@ -19,11 +19,14 @@ def healthz() -> dict[str, str]:
 
 
 @router.get("/readyz")
-def readyz(settings: SettingsDep) -> JSONResponse:
+def readyz(request: Request, settings: SettingsDep) -> JSONResponse:
     checks = {
         "falkordb": graph_client.ping_url(settings.falkordb_url),
         "postgres": postgres.ping(settings.postgres_dsn.get_secret_value()),
     }
+    data_ready = getattr(request.app.state, "data_ready", None)   # set only when STARTUP_DATA is on
+    if data_ready is not None:
+        checks["data"] = data_ready.is_set()
     ready = all(checks.values())
     if not ready:
         log.warning("readiness failed: %s", sorted(k for k, v in checks.items() if not v))

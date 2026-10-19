@@ -74,3 +74,28 @@ def test_seed_works_when_the_server_forbids_plain_redis_commands(db, startup_set
     s = startup_settings.model_copy(update={"startup_data": "seed"})
     prepare(s)
     assert integrity.run(db.select_graph(s.graph_name)).ok
+
+
+def test_seed_skips_a_tenant_that_is_already_seeded(db, startup_settings):
+    s = startup_settings.model_copy(update={"startup_data": "seed"})
+    prepare(s)
+    g = db.select_graph(s.graph_name)
+    g.query("MATCH (i:Incident {id: 'nova.inc.101'}) SET i.title = 'edited since start'")
+    prepare(s)
+    assert g.ro_query("MATCH (i:Incident {id: 'nova.inc.101'}) RETURN i.title").result_set[0][0] == "edited since start"
+
+
+def test_api_serves_while_startup_data_runs_and_readyz_reports_it(make_client, startup_settings):
+    import time
+
+    api = make_client(startup_settings.graph_name, startup_data="reset", tenant_allowlist="nova",
+                      embedding_provider="none")
+    with api:  # runs the lifespan; the data is prepared on a background thread
+        deadline = time.monotonic() + 60
+        while not (r := api.get("/readyz")).json()["checks"]["data"]:
+            assert time.monotonic() < deadline, r.json()
+            time.sleep(0.2)
+        assert r.status_code == 200
+        r = api.get("/api/incidents", params={"limit": 50}, headers={"X-Demo-User": "demo-viewer"})
+        assert r.status_code == 200 and len(r.json()["items"]) > 0
+    assert "data" not in api.get("/readyz").json()["checks"]

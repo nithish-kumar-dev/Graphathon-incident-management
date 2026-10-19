@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import threading
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -30,25 +31,52 @@ Graph-grounded incident investigation API.
 log = logging.getLogger("app.orchestrator")
 
 
+def _start_worker(app: FastAPI, settings) -> None:
+    if settings.orchestrator_enabled:
+        from app.orchestrator.runner import Worker
+        worker = Worker(settings)
+        worker.start()
+        app.state.orchestrator = worker
+
+
+def _prepare_then_start(app: FastAPI, settings, stopping: threading.Event, lock: threading.Lock) -> None:
+    """STARTUP_DATA runs here, off the event loop: the port opens at once (Render's port scan, Netlify's
+    proxy timeout) and /readyz reports `data: false` until the graph is ready. The worker starts after,
+    so it never polls a graph that does not exist yet."""
+    from app.seeds.startup import prepare
+    try:
+        prepare(settings)
+    except Exception:
+        log.exception("startup data failed; the API stays up, /readyz reports data: false")
+        return
+    with lock:
+        if stopping.is_set():
+            return
+        app.state.data_ready.set()
+        _start_worker(app, settings)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Starts the in-process orchestrator worker when enabled, and stops it cleanly on shutdown.
     Settings honour a test override of get_settings, so a test client never starts a worker on the dev graph."""
     settings = app.dependency_overrides.get(get_settings, get_settings)()
-    if settings.startup_data != "none":
-        from app.seeds.startup import prepare
-        prepare(settings)   # before the worker, so it never polls a graph that does not exist yet
-    worker = None
-    if settings.orchestrator_enabled:
-        from app.orchestrator.runner import Worker
-        worker = Worker(settings)
-        worker.start()
-    app.state.orchestrator = worker
+    app.state.orchestrator = None
+    stopping, lock = threading.Event(), threading.Lock()
+    if settings.startup_data == "none":
+        _start_worker(app, settings)
+    else:
+        app.state.data_ready = threading.Event()
+        threading.Thread(target=_prepare_then_start, args=(app, settings, stopping, lock),
+                         name="startup-data", daemon=True).start()
     try:
         yield
     finally:
-        if worker is not None:
-            worker.stop()
+        with lock:
+            stopping.set()
+            app.state.data_ready = None
+        if app.state.orchestrator is not None:
+            app.state.orchestrator.stop()
 
 
 def create_app() -> FastAPI:

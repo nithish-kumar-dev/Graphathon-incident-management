@@ -2,9 +2,11 @@
 
 Controlled by STARTUP_DATA:
     none   do nothing (default; local dev runs the scripts by hand)
-    seed   migrate_graph + seed + index_documents. Idempotent, keeps data created since.
-    reset  as `seed`, but first deletes every node of each seeded tenant (scripts/reset_graph.py).
-           Investigations, actions and memories created since the last start are lost.
+    seed   migrate_graph + seed + index_documents, skipped for a tenant whose seed nodes all exist already.
+           Keeps data created since, and a restart costs one query.
+    reset  deletes every node of each seeded tenant (scripts/reset_graph.py), then seeds and indexes.
+           Investigations, actions and memories created since the last start are lost. On a remote graph
+           this takes minutes; the API serves meanwhile and /readyz reports data: false.
 
 Only tenants that are both in TENANT_ALLOWLIST and have a seed module are touched. Reset uses DETACH DELETE
 and never drops a constraint or the graph itself (docs/schema/falkordb.md, "Known server issue").
@@ -39,6 +41,9 @@ def prepare(settings: Settings) -> None:
         if mode == "reset":
             deleted = g.query("MATCH (n {tenant_id: $t}) DETACH DELETE n", {"t": tenant}).nodes_deleted
             log.info("startup data: deleted %d nodes of tenant %s", deleted, tenant)
+        elif _already_seeded(g, seed):
+            log.info("startup data: tenant %s already seeded, skipped", tenant)
+            continue
         nodes, edges = apply_seed(g, seed)
         repo = GraphRepository(g, Scope(seed.TENANT, seed.ENV), timeout_ms=10_000)
         rep = indexer.index_all(repo, embeddings.from_settings(settings),
@@ -53,3 +58,11 @@ def prepare(settings: Settings) -> None:
     if not report.ok:
         log.warning("startup data: integrity problems: %s", report.problems)
     log.info("startup data: done in %.1fs", time.monotonic() - started)
+
+
+def _already_seeded(g, seed) -> bool:
+    """One query instead of a full re-seed: a remote graph costs a round trip per MERGE (~100s on a cold start)."""
+    ids = [node_id for _, node_id, _ in seed.NODES]
+    found = g.ro_query("MATCH (n {tenant_id: $t}) WHERE n.id IN $ids RETURN count(n)",
+                       {"t": seed.TENANT, "ids": ids}).result_set[0][0]
+    return found == len(ids)
